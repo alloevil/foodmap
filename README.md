@@ -1,14 +1,39 @@
-# foodmap
+<p align="center">
+  <img src="./assets/hero.svg" width="100%" alt="foodmap — 微博美食博主主页动态 → AI 抽取推荐菜品 → 可视化地图">
+</p>
+
+<p align="center">
+  <img alt="Node" src="https://img.shields.io/badge/Node-%E2%89%A518-339933?logo=node.js&logoColor=white">
+  <img alt="Puppeteer" src="https://img.shields.io/badge/Puppeteer-24-40B5A4?logo=puppeteer&logoColor=white">
+  <img alt="Static" src="https://img.shields.io/badge/前端-纯静态%2F零依赖-5e6ad2">
+  <img alt="License" src="https://img.shields.io/badge/License-MIT-blue">
+  <img alt="Stars" src="https://img.shields.io/github/stars/alloevil/foodmap?style=flat&logo=github&color=yellow">
+</p>
+
+<p align="center">
+  <a href="#在线演示">在线演示</a> ·
+  <a href="#快速开始">快速开始</a> ·
+  <a href="#原理">原理</a> ·
+  <a href="#已知限制">已知限制</a>
+</p>
+
+---
 
 抓取美食博主的微博个人主页动态,识别带地理位置标记的餐馆,用 AI 抽取推荐菜品和拜访时间,生成可视化地图。
 
+---
+
+## 🗺 效果
+
 ![美食地图截图](docs/screenshot.png)
 
-> 以陈晓卿(@陈晓卿)公开微博主页动态抓取、抽取生成,截图为真实数据(餐厅名/菜品/引用均来自其公开发布的内容)。仓库自带这份示例数据(`data/陈晓卿/restaurants.json`),可直接看 [GitHub Pages 演示](#) 或克隆后 `node server.mjs` 本地打开。
+> 以陈晓卿(@陈晓卿)公开微博主页动态抓取、抽取生成,截图为真实数据(餐厅名/菜品/引用均来自其公开发布的内容)。仓库自带这份示例数据(`data/陈晓卿/restaurants.json`),可直接看在线演示或克隆后 `node server.mjs` 本地打开。
 
 ## 在线演示
 
-本仓库开了 GitHub Pages,纯静态托管(`index.html` 直接 fetch `data/<name>/restaurants.json`,本地和线上是同一套代码,没有独立的后端 API)。默认展示随仓库附带的陈晓卿示例数据;换 `?name=<博主名>` 可切换到你自己本地跑出来的数据(需要该数据也被部署到同一站点)。
+**👉 [alloevil.github.io/foodmap](https://alloevil.github.io/foodmap/)**
+
+纯静态托管在 GitHub Pages(`index.html` 直接 fetch `data/<name>/restaurants.json`,本地和线上是同一套代码,没有独立的后端 API)。默认展示随仓库附带的陈晓卿示例数据;换 `?name=<博主名>` 可切换到你自己本地跑出来的数据(需要该数据也被部署到同一站点)。
 
 ## 快速开始
 
