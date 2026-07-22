@@ -1,0 +1,7 @@
+node_modules/
+cookies.json
+config.json
+ai-config.json
+data/*/posts_raw.json
+*.log
+.DS_Store

@@ -1,0 +1,22 @@
+{
+  "name": "foodmap",
+  "version": "1.0.0",
+  "description": "抓取美食博主的微博主页动态，识别带地理位置标记的餐馆，用 AI 抽取推荐菜品，生成可视化地图",
+  "type": "commonjs",
+  "scripts": {
+    "test": "node --test",
+    "login": "node login.mjs",
+    "serve": "node server.mjs"
+  },
+  "dependencies": {
+    "puppeteer": "^24.43.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
