@@ -2,24 +2,24 @@
      width="1200" height="320" viewBox="0 0 1200 320"
      role="img" aria-labelledby="title desc">
   <title id="title">foodmap</title>
-  <desc id="desc">A dark map hero showing scattered glowing pins across an abstract world silhouette, representing restaurants extracted from a food blogger's Weibo posts.</desc>
+  <desc id="desc">A warm cream hero showing scattered terracotta pins across an abstract world silhouette, representing restaurants extracted from a food blogger's Weibo posts.</desc>
 
   <defs>
     <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#5e6ad2"/>
-      <stop offset="100%" stop-color="#828fff"/>
+      <stop offset="0%" stop-color="#c1642a"/>
+      <stop offset="100%" stop-color="#e0a05a"/>
     </linearGradient>
     <radialGradient id="pinGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#828fff" stop-opacity="0.9"/>
-      <stop offset="100%" stop-color="#828fff" stop-opacity="0"/>
+      <stop offset="0%" stop-color="#c1642a" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#c1642a" stop-opacity="0"/>
     </radialGradient>
   </defs>
 
   <!-- Background -->
-  <rect width="1200" height="320" fill="#010102"/>
+  <rect width="1200" height="320" fill="#f5ede0"/>
 
   <!-- Abstract world dot-grid silhouette (loosely China/Asia-weighted, echoing the real data) -->
-  <g fill="#23252a">
+  <g fill="#d8c8ab">
     <circle cx="120" cy="120" r="2.5"/><circle cx="140" cy="130" r="2.5"/><circle cx="160" cy="115" r="2.5"/>
     <circle cx="300" cy="90" r="2.5"/><circle cx="320" cy="105" r="2.5"/><circle cx="340" cy="95" r="2.5"/>
     <circle cx="600" cy="150" r="2.5"/><circle cx="620" cy="140" r="2.5"/><circle cx="640" cy="160" r="2.5"/>
@@ -37,16 +37,16 @@
     <circle cx="665" cy="165" r="22" fill="url(#pinGlow)"/>
     <circle cx="700" cy="145" r="18" fill="url(#pinGlow)"/>
     <circle cx="640" cy="185" r="16" fill="url(#pinGlow)"/>
-    <circle cx="665" cy="165" r="4" fill="#828fff"/>
-    <circle cx="700" cy="145" r="3.5" fill="#828fff"/>
-    <circle cx="640" cy="185" r="3" fill="#828fff"/>
-    <circle cx="720" cy="170" r="3" fill="#828fff"/>
-    <circle cx="680" cy="200" r="3" fill="#828fff"/>
+    <circle cx="665" cy="165" r="4" fill="#c1642a"/>
+    <circle cx="700" cy="145" r="3.5" fill="#c1642a"/>
+    <circle cx="640" cy="185" r="3" fill="#c1642a"/>
+    <circle cx="720" cy="170" r="3" fill="#c1642a"/>
+    <circle cx="680" cy="200" r="3" fill="#c1642a"/>
   </g>
 
   <!-- Title -->
-  <text x="90" y="150" font-family="-apple-system, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="64" font-weight="700" fill="#f7f8f8">foodmap</text>
-  <text x="90" y="190" font-family="-apple-system, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="22" fill="#8a8f98">微博美食博主主页动态 → AI 抽取推荐菜品 → 可视化地图</text>
+  <text x="90" y="150" font-family="-apple-system, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="64" font-weight="700" fill="#2b2118">foodmap</text>
+  <text x="90" y="190" font-family="-apple-system, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="22" fill="#8a7a66">微博美食博主主页动态 → AI 抽取推荐菜品 → 可视化地图</text>
 
   <!-- Accent underline -->
   <rect x="90" y="205" width="140" height="4" rx="2" fill="url(#accent)"/>
