@@ -69,6 +69,7 @@ async function main() {
       extracted.push({
         name: r.name, dishes: r.dishes, quote: r.quote,
         geo: post.geo, createdAt: post.createdAt, postId: post.id, postUrl: post.postUrl,
+        regionName: post.regionName,
       });
     });
     console.log(`进度 ${Math.min(i + batchSize, candidates.length)}/${candidates.length}  已识别餐厅动态 ${extracted.length}`);
