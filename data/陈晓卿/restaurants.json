@@ -14,7 +14,13 @@
         "quote": "扫街顺德，打卡细妹五香牛杂"
       }
     ],
-    "region": "佛山市"
+    "region": "佛山市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "顺德区"
+    }
   },
   {
     "name": "民信老店",
@@ -32,7 +38,13 @@
         "quote": "扫街顺德，民信老店人满为患，吃了双皮奶和姜撞奶"
       }
     ],
-    "region": "佛山市"
+    "region": "佛山市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "顺德区"
+    }
   },
   {
     "name": "口了口能",
@@ -54,7 +66,13 @@
         "quote": "回味口了口能餐馆，多道粤式菜肴令人难忘，尤其是柚子皮配白鳝和紫苏豉油爆炒鱼云肉"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "西城区"
+    }
   },
   {
     "name": "螺蛳粉先生",
@@ -91,7 +109,13 @@
         "quote": "在螺蛳粉先生吃到老板阿才切的脆皮猪颈肉，配桂林米粉，极为美味"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "西城区"
+    }
   },
   {
     "name": "艾丁湖商务会馆",
@@ -108,7 +132,13 @@
         "quote": "剧组圣诞日在海淀区吴家场艾丁湖商务会馆2楼清真馆子吃红柳枝烤串，味道新疆风味"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "西城区"
+    }
   },
   {
     "name": "甘家口柴氏",
@@ -123,7 +153,13 @@
         "quote": "在甘家口柴氏吃撑了，约石世仑老师一会儿喝砖茶"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "西城区"
+    }
   },
   {
     "name": "高水杨米粉",
@@ -140,7 +176,13 @@
         "quote": "四川绵阳高水名小吃，鸭子桥北里，粉细汤宽，坐看北京交通"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "西城区"
+    }
   },
   {
     "name": "淮南牛肉汤",
@@ -158,7 +200,13 @@
         "quote": "武圣路松榆西里9号，被评为在北京三十年吃到的最接近安徽的牛肉汤"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "大董",
@@ -185,7 +233,13 @@
         "quote": "参加大董春菜品鉴会，提及台湾厨神陈岚舒到访及乐沐餐厅停业"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "万柳阁",
@@ -202,7 +256,13 @@
         "quote": "龙潭湖东门万柳阁粤式火锅，肉和汤底不错，特色油条必点"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "鲜芋仙",
@@ -217,7 +277,13 @@
         "quote": "九点半带陈乐去鲜芋仙白石桥店（家乐福东20米），对方贴心等候"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "西城区"
+    }
   },
   {
     "name": "小河边徽菜",
@@ -232,7 +298,13 @@
         "quote": "安徽无为人开的小破饭馆，地道农村菜，环境简陋但菜品地道"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "尚品羊汤",
@@ -250,7 +322,13 @@
         "quote": "在万丰路尚品羊汤花25元吃了一碗羊汤，味道不如同春和等名店，烧饼也不够酥香"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "西城区"
+    }
   },
   {
     "name": "天下盐",
@@ -267,7 +345,13 @@
         "quote": "在天下盐吃了一道惊艳的凉菜，误以为是南瓜丝或苤蓝，实为西兰花梗"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "爱尚螺蛳粉",
@@ -285,7 +369,13 @@
         "quote": "美味食源螺蛳粉搬迁至东四北大街改名爱尚螺蛳粉，螺蛳粉和招牌牛肉笋尖炒饭各涨价两元"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "故乡福星",
@@ -303,7 +393,13 @@
         "quote": "韩国农家菜故乡福星原址重张，猪肉香甜，泡菜鲜脆开胃解腻"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "海淀区"
+    }
   },
   {
     "name": "北关早餐摊(无具体店名)",
@@ -323,7 +419,13 @@
         "quote": "高铁到家后次日早起赶到北关，吃了油馍、盒子、sa、牛肉汤"
       }
     ],
-    "region": "宿州市"
+    "region": "宿州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "安徽省",
+      "city": "埇桥区"
+    }
   },
   {
     "name": "不夜天",
@@ -343,7 +445,13 @@
         "quote": "宿怀路近纺织路的\"不夜天\"早点，据信是宿州最好的鳝丝辣汤所在"
       }
     ],
-    "region": "宿州市"
+    "region": "宿州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "安徽省",
+      "city": "埇桥区"
+    }
   },
   {
     "name": "Coquillages Astoux&Brun",
@@ -361,7 +469,13 @@
         "quote": "在戛纳路边店大啖生蚝、贻贝，人满为患"
       }
     ],
-    "region": "Provence-Alpes-Côte d'Azur"
+    "region": "Provence-Alpes-Côte d'Azur",
+    "location": {
+      "continent": "欧洲",
+      "country": "法国",
+      "province": "Provence-Alpes-Côte d'Azur",
+      "city": "滨海阿尔卑斯省"
+    }
   },
   {
     "name": "La Bravade",
@@ -379,7 +493,13 @@
         "quote": "戛纳小巷深处的家庭小海鲜馆，法国北方风格煮贻贝最出色，推荐辣味，龙虾面也不错"
       }
     ],
-    "region": "Provence-Alpes-Côte d'Azur"
+    "region": "Provence-Alpes-Côte d'Azur",
+    "location": {
+      "continent": "欧洲",
+      "country": "法国",
+      "province": "Provence-Alpes-Côte d'Azur",
+      "city": "滨海阿尔卑斯省"
+    }
   },
   {
     "name": "仙芋鲜",
@@ -394,7 +514,13 @@
         "quote": "孩子课外班下课后在仙芋鲜吃东西，感叹\"治愈\""
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "西城区"
+    }
   },
   {
     "name": "无（小爆肚店）",
@@ -417,7 +543,13 @@
         "quote": "六里桥怡莲园北路居民楼里的小爆肚店，推荐羊肉汆面"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "西城区"
+    }
   },
   {
     "name": "凯琳",
@@ -434,7 +566,13 @@
         "quote": "在凯琳吃卤煮，回忆起二十多年前凯琳老店还在虎坊桥路口的旧事"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "开化大酒店",
@@ -451,7 +589,13 @@
         "quote": "在开化大酒店吃到用发酵米浆拌豆丝鲜肉蒸制的汽糕"
       }
     ],
-    "region": "衢州市"
+    "region": "衢州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "浙江省",
+      "city": "衢州市"
+    }
   },
   {
     "name": "玉林小吃",
@@ -468,7 +612,13 @@
         "quote": "十四中对面米粉街的玉林小吃，米酒拌肉煮制的生料粉，鲜极了"
       }
     ],
-    "region": "南宁市"
+    "region": "南宁市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广西壮族自治区",
+      "city": "南宁市"
+    }
   },
   {
     "name": "四娭毑",
@@ -488,7 +638,13 @@
         "quote": "宵夜在四娭毑吃口味虾等腊味，令人发指地下酒"
       }
     ],
-    "region": "湖南省"
+    "region": "湖南省",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "湖南省",
+      "city": "雨花区"
+    }
   },
   {
     "name": "王师傅豆皮",
@@ -505,7 +661,13 @@
         "quote": "汉口高雄路王师傅豆皮，浇卤水风格，12块钱一份的牛肉豆皮买得最快"
       }
     ],
-    "region": "武汉市"
+    "region": "武汉市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "湖北省",
+      "city": "武昌区"
+    }
   },
   {
     "name": "Sushi Den",
@@ -520,7 +682,13 @@
         "quote": "珍珠街上的Sushi Den，来美国吃的最开心的一餐，等位辛苦但值得再去"
       }
     ],
-    "region": "西班牙"
+    "region": "西班牙",
+    "location": {
+      "continent": "欧洲",
+      "country": "西班牙",
+      "province": null,
+      "city": null
+    }
   },
   {
     "name": "无(路边店未提名)",
@@ -537,7 +705,13 @@
         "quote": "在集集乡一家路边店首次吃到刺葱煎豆腐，香气介于薄荷和茴香之间"
       }
     ],
-    "region": "臺灣"
+    "region": "臺灣",
+    "location": {
+      "continent": "亚洲",
+      "country": "臺灣",
+      "province": null,
+      "city": "南投縣"
+    }
   },
   {
     "name": "阿霞饭店",
@@ -554,7 +728,13 @@
         "quote": "台南阿霞饭店六人套餐，最难忘红蟳米糕，糯米花生虾仁香菇配膏肥海蟹"
       }
     ],
-    "region": "臺南市"
+    "region": "臺南市",
+    "location": {
+      "continent": "亚洲",
+      "country": "臺灣",
+      "province": null,
+      "city": "臺南市"
+    }
   },
   {
     "name": "仁和路民生早點",
@@ -573,7 +753,13 @@
         "quote": "在仁和路民生早點吃烧饼卷油条配豆浆，店家为眷村背景祖籍江苏"
       }
     ],
-    "region": "臺灣"
+    "region": "臺灣",
+    "location": {
+      "continent": "亚洲",
+      "country": "臺灣",
+      "province": null,
+      "city": "南投縣"
+    }
   },
   {
     "name": "无(巷子深处未提名)",
@@ -590,7 +776,13 @@
         "quote": "在北京巷子深处一家北京阿姨开的小面店吃了一碗重庆小面，质量始终如一"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "Shake Shack",
@@ -608,7 +800,13 @@
         "quote": "午餐排大队吃了著名的奶昔小屋Shake Shack，感叹汉堡店能做到这个程度"
       }
     ],
-    "region": "新泽西州"
+    "region": "新泽西州",
+    "location": {
+      "continent": "北美洲",
+      "country": "美国",
+      "province": "新泽西州",
+      "city": "Hudson County"
+    }
   },
   {
     "name": "广州酒家",
@@ -625,7 +823,13 @@
         "quote": "在广州酒家叹早茶，食在广州第一家"
       }
     ],
-    "region": "广州市"
+    "region": "广州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "荔湾区"
+    }
   },
   {
     "name": "好酒好蔡",
@@ -649,7 +853,13 @@
         "quote": "受邀参加好酒好蔡北京店内测试菜"
       }
     ],
-    "region": "广州市"
+    "region": "广州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "天河区"
+    }
   },
   {
     "name": "猪肉婆",
@@ -702,7 +912,13 @@
         "quote": "中午在海天总部吃工作餐，晚餐在猪肉婆，芬姐准备了当季头茬荔枝等菜品"
       }
     ],
-    "region": "佛山市"
+    "region": "佛山市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "顺德区"
+    }
   },
   {
     "name": "无（顺德农家菜馆）",
@@ -719,7 +935,13 @@
         "quote": "顺德小农家菜馆，盐油蒸鱼用深坑王草鱼清蒸，细嫩鲜甜令人惊艳"
       }
     ],
-    "region": "佛山市"
+    "region": "佛山市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "顺德区"
+    }
   },
   {
     "name": "无（马鞍北路肥肠粉店）",
@@ -738,7 +960,13 @@
         "quote": "成都马鞍北路路边摊，吃了肥肠粉、拌肥肠和锅盔，味精重态度差"
       }
     ],
-    "region": "成都市"
+    "region": "成都市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "四川省",
+      "city": "金牛区"
+    }
   },
   {
     "name": "无（合肥舒城小碗菜小馆）",
@@ -755,7 +983,13 @@
         "quote": "第二次来合肥这家小馆吃舒城小碗菜，感慨安徽大别山菜肴低调亲和"
       }
     ],
-    "region": "合肥市"
+    "region": "合肥市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "安徽省",
+      "city": "庐阳区"
+    }
   },
   {
     "name": "无名小店(硚口四医院背后)",
@@ -775,7 +1009,13 @@
         "quote": "先在无名小店吃热干面及面窝等，再去五里新村吃豆皮"
       }
     ],
-    "region": "武汉市"
+    "region": "武汉市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "湖北省",
+      "city": "汉阳区"
+    }
   },
   {
     "name": "方中山",
@@ -792,7 +1032,13 @@
         "quote": "朋友带去方中山喝胡辣汤，门口人山人海"
       }
     ],
-    "region": "郑州市"
+    "region": "郑州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "河南省",
+      "city": "金水区"
+    }
   },
   {
     "name": "雅居小馆",
@@ -809,7 +1055,13 @@
         "quote": "新开的雅居小馆需排队，几道家常菜做得不错"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "西城区"
+    }
   },
   {
     "name": "无名小店(十五奎巷)",
@@ -831,7 +1083,13 @@
         "quote": "河坊街十五奎巷一家老杭州风味小店，老板按沈宏非喜好上菜"
       }
     ],
-    "region": "杭州市"
+    "region": "杭州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "浙江省",
+      "city": "上城区"
+    }
   },
   {
     "name": "无名长沙米粉店(双井桥东南)",
@@ -851,7 +1109,13 @@
         "quote": "新发现的长沙米粉店，每天空运米粉，扁粉绵软有弹性"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "佘阿姨摊位",
@@ -868,7 +1132,13 @@
         "quote": "厦门佘阿姨的花生汤摊位，不喝一碗不算来过厦门"
       }
     ],
-    "region": "厦门市"
+    "region": "厦门市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "福建省",
+      "city": "厦门市"
+    }
   },
   {
     "name": "革鼎潮汕牛肉火锅",
@@ -883,7 +1153,13 @@
         "quote": "家门口新开的潮汕牛肉火锅店，刚开业就排大队，未提及具体菜品"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "荣小馆",
@@ -903,7 +1179,13 @@
         "quote": "带朋友到荣小馆吃台州菜，品尝沙蒜、鹰爪虾、食饼筒和新鲜杨梅"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "日丰园",
@@ -925,7 +1207,13 @@
         "quote": "小平岛日丰园，每次来大连必吃，尝试多种海鲜奇妙搭配"
       }
     ],
-    "region": "辽宁省"
+    "region": "辽宁省",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "辽宁省",
+      "city": "甘井子区"
+    }
   },
   {
     "name": "白天鹅宾馆",
@@ -940,7 +1228,13 @@
         "quote": "拜会广州餐饮大佬彭树挺，回忆白天鹅宾馆往事，非就餐体验描述"
       }
     ],
-    "region": "广州市"
+    "region": "广州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "荔湾区"
+    }
   },
   {
     "name": "niajo西班牙餐厅",
@@ -958,7 +1252,13 @@
         "quote": "回北京在niajo西班牙餐厅吃了褡裢火烧和伊比利亚腊味合蒸"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "韩江",
@@ -976,7 +1276,13 @@
         "quote": "霄云路韩江牛肉火锅靠谱，推荐北京最靠谱的潮汕牛杂和粿条"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "格日勒阿妈",
@@ -993,7 +1299,13 @@
         "quote": "在格日勒阿妈喝奶茶，小点心炸果条与童年春节食品\"小果子（蚂蚱腿）\"相似"
       }
     ],
-    "region": "呼和浩特市"
+    "region": "呼和浩特市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "内蒙古自治区",
+      "city": "新城区"
+    }
   },
   {
     "name": "马老四",
@@ -1008,7 +1320,13 @@
         "quote": "提到\"马老四\"，疑似餐厅名，但无具体就餐描述"
       }
     ],
-    "region": "呼和浩特市"
+    "region": "呼和浩特市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "内蒙古自治区",
+      "city": "回民区"
+    }
   },
   {
     "name": "栢记",
@@ -1025,7 +1343,13 @@
         "quote": "在鸭脷洲栢记与蔡澜先生逛街市选游水海鲜上楼烹制"
       }
     ],
-    "region": "香港"
+    "region": "香港",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "香港"
+    }
   },
   {
     "name": "八十八粉",
@@ -1043,7 +1367,13 @@
         "quote": "在八十八粉店，老友粉比螺蛳粉做得好，猪脚比锅烧做得好"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "老陈",
@@ -1063,7 +1393,13 @@
         "quote": "回宿州去老陈的小馆，吃了老公鸡、鲤鱼，最惊艳的是掺了萝卜的酱豆配猪油渣花卷"
       }
     ],
-    "region": "宿州市"
+    "region": "宿州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "安徽省",
+      "city": "埇桥区"
+    }
   },
   {
     "name": "春光大酒店",
@@ -1083,7 +1419,13 @@
         "quote": "双河镇春光大酒店，四菜一汤90元，超级好吃"
       }
     ],
-    "region": "六安市"
+    "region": "六安市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "安徽省",
+      "city": "金安区"
+    }
   },
   {
     "name": "青草店",
@@ -1098,7 +1440,13 @@
         "quote": "仅提及\"青草店\"名称，无具体就餐描述或菜品信息"
       }
     ],
-    "region": "汕头市"
+    "region": "汕头市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "汕头市"
+    }
   },
   {
     "name": "潮阳塔脚干面(小店)",
@@ -1117,7 +1465,13 @@
         "quote": "在东厦中学对面吃潮阳塔脚干面，干拌面配猪肉汆汤，加猪粉肠、猪肉饼提鲜"
       }
     ],
-    "region": "汕头市"
+    "region": "汕头市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "汕头市"
+    }
   },
   {
     "name": "潮菜研究会",
@@ -1134,7 +1488,13 @@
         "quote": "在汕头潮菜研究会吃到压轴菜生腌醉蟹冰淇淋"
       }
     ],
-    "region": "汕头市"
+    "region": "汕头市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "汕头市"
+    }
   },
   {
     "name": "无(甜品小店)",
@@ -1154,7 +1514,13 @@
         "quote": "在潮汕高铁站附近甜品小店吃当地甜蛋，一碗六元，还买了青萝卜干"
       }
     ],
-    "region": "潮州市"
+    "region": "潮州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "潮州市"
+    }
   },
   {
     "name": "无(炒粿条店)",
@@ -1172,7 +1538,13 @@
         "quote": "午饭在某店吃干炒粿条，大锅旺火，自选牛肉部位，加汤一套五十"
       }
     ],
-    "region": "汕头市"
+    "region": "汕头市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "汕头市"
+    }
   },
   {
     "name": "江南驿",
@@ -1190,7 +1562,13 @@
         "quote": "在杭州江南驿，用兔子老师熬的良心油鸡枞改良了炸酱面"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "海淀区"
+    }
   },
   {
     "name": "懂事儿",
@@ -1205,7 +1583,13 @@
         "quote": "东直门外餐厅\"懂事儿\"，昨天一桌菜让沈爷吃得很开心"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "黄亚细",
@@ -1220,7 +1604,13 @@
         "quote": "介绍黄亚细肉骨茶为胡椒口味的海南风格，但未描述具体就餐体验"
       }
     ],
-    "region": "新加坡"
+    "region": "新加坡",
+    "location": {
+      "continent": "亚洲",
+      "country": "新加坡",
+      "province": null,
+      "city": "新加坡"
+    }
   },
   {
     "name": "killiney",
@@ -1240,7 +1630,13 @@
         "quote": "始于1919年的新加坡最早咖啡屋killiney，每次必来喝加炼乳的南洋咖啡"
       }
     ],
-    "region": "新加坡"
+    "region": "新加坡",
+    "location": {
+      "continent": "亚洲",
+      "country": "新加坡",
+      "province": null,
+      "city": "新加坡"
+    }
   },
   {
     "name": "逸群海南鸡饭",
@@ -1257,7 +1653,13 @@
         "quote": "打卡蔡澜先生最喜欢的逸群海南鸡饭"
       }
     ],
-    "region": "新加坡"
+    "region": "新加坡",
+    "location": {
+      "continent": "亚洲",
+      "country": "新加坡",
+      "province": null,
+      "city": "新加坡"
+    }
   },
   {
     "name": "无(芽笼九巷)",
@@ -1276,7 +1678,13 @@
         "quote": "芽笼九巷宵夜，点了沙煲田鸡、白粥和湿炒牛河，雷雨中仓皇转移室内"
       }
     ],
-    "region": "新加坡"
+    "region": "新加坡",
+    "location": {
+      "continent": "亚洲",
+      "country": "新加坡",
+      "province": null,
+      "city": "新加坡"
+    }
   },
   {
     "name": "四季酒店(意大利餐厅)",
@@ -1291,7 +1699,13 @@
         "quote": "四季酒店意大利厨师Nello准备了今晚餐食，未提具体菜品"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "邓记食园",
@@ -1308,7 +1722,13 @@
         "quote": "定西路邓记食园，上海传统川菜，即将歇业，老客人纷纷前来寻找老味道"
       }
     ],
-    "region": "上海市"
+    "region": "上海市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "上海市",
+      "city": "徐汇区"
+    }
   },
   {
     "name": "淮扬府",
@@ -1332,7 +1752,13 @@
         "quote": "剪辑会期间由淮扬府外送热饭菜，并非堂食体验"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "北京厨房",
@@ -1364,7 +1790,13 @@
         "quote": "庆祝儿子摘眼镜，在北京厨房吃点心，推荐叉烧、肠粉、脆皮乳鸽，新菜鲜鲍鱼汁捞饭"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "大毛特色面馆",
@@ -1381,7 +1813,13 @@
         "quote": "冬至早晨在上海大毛特色面馆吃了一碗爆鱼雪菜面，感受弄堂烟火气"
       }
     ],
-    "region": "上海市"
+    "region": "上海市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "上海市",
+      "city": "虹口区"
+    }
   },
   {
     "name": "兴业饭店",
@@ -1406,7 +1844,13 @@
         "quote": "在镇海兴业饭店用餐，点了多道本地特色菜"
       }
     ],
-    "region": "宁波市"
+    "region": "宁波市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "浙江省",
+      "city": "镇海区"
+    }
   },
   {
     "name": "Bottga意库",
@@ -1423,7 +1867,13 @@
         "quote": "2017年最后一天在那不勒斯风格餐厅Bottga意库与年轻人共度，披萨让小朋友尽兴"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "官也街澳门火锅",
@@ -1440,7 +1890,13 @@
         "quote": "在国贸的官也街澳门火锅店完成了心愿，终于品尝到Frankie的火锅"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "库迈",
@@ -1458,7 +1914,13 @@
         "quote": "库迈主厨Marcus回墨西哥后设计了讲述回乡见闻的特别菜单"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "龙记老长沙米粉",
@@ -1476,7 +1938,13 @@
         "quote": "在龙记老长沙米粉吃了一碗牛肉、一碗猪脚"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "三林本帮馆",
@@ -1501,7 +1969,13 @@
         "quote": "在三林本帮馆吃了多道本帮菜"
       }
     ],
-    "region": "上海市"
+    "region": "上海市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "上海市",
+      "city": "浦东新区"
+    }
   },
   {
     "name": "无名麦饼店",
@@ -1521,7 +1995,13 @@
         "quote": "台州网友推荐的临海麦饼店，吃了拗面、麦油脂、锅盔及六种口味麦饼"
       }
     ],
-    "region": "台州市"
+    "region": "台州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "浙江省",
+      "city": "临海市"
+    }
   },
   {
     "name": "途中饭店",
@@ -1542,7 +2022,13 @@
         "quote": "钱江源头的途中饭店，再次品尝青蛳、马金豆腐等美味"
       }
     ],
-    "region": "衢州市"
+    "region": "衢州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "浙江省",
+      "city": "衢州市"
+    }
   },
   {
     "name": "无名京菜餐厅",
@@ -1559,7 +2045,13 @@
         "quote": "青年厨师段誉尚未正式开业的京菜餐厅，连续两天爆满，提到拔丝榴莲"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "囍凤楼",
@@ -1577,7 +2069,13 @@
         "quote": "昨天去了囍凤楼，点心正宗、花胶鸡火锅浓郁，性价比不错，是北京最有老香港市井风情的餐厅"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "番禺腰记",
@@ -1596,7 +2094,13 @@
         "quote": "昨晚跟着容太去番禺腰记吃禾虫，蒸禾虫、蛋烙禾虫、油炸禾虫配柠檬草，小馆接地气材料可靠"
       }
     ],
-    "region": "广州市"
+    "region": "广州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "番禺区"
+    }
   },
   {
     "name": "大哥茶餐厅",
@@ -1613,7 +2117,13 @@
         "quote": "在大哥茶餐厅，提到招牌菜黑炒牛河，称其为容太的香港食物记忆"
       }
     ],
-    "region": "广州市"
+    "region": "广州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "番禺区"
+    }
   },
   {
     "name": "大林苑",
@@ -1630,7 +2140,13 @@
         "quote": "在大林苑享用潮汕菜，同时缅怀潮菜大师林自然先生"
       }
     ],
-    "region": "深圳市"
+    "region": "深圳市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "深圳市"
+    }
   },
   {
     "name": "大马麻虾",
@@ -1651,7 +2167,13 @@
         "quote": "合肥大马麻虾店，五人吃了六百元，清蒸和油焖都很地道"
       }
     ],
-    "region": "合肥市"
+    "region": "合肥市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "安徽省",
+      "city": "包河区"
+    }
   },
   {
     "name": "悦景",
@@ -1668,7 +2190,13 @@
         "quote": "悦景出品上乘，最难忘一根叫\"深圳头条\"的油条"
       }
     ],
-    "region": "深圳市"
+    "region": "深圳市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "深圳市"
+    }
   },
   {
     "name": "好这口",
@@ -1685,7 +2213,13 @@
         "quote": "在北京大柳树的\"好这口\"吃重庆小面，需排队半小时"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "海淀区"
+    }
   },
   {
     "name": "汪姐家",
@@ -1717,7 +2251,13 @@
         "quote": "上海电视节后连续三年在汪姐家聚餐，共三十道菜，肚肺汤尤为印象深刻"
       }
     ],
-    "region": "上海市"
+    "region": "上海市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "上海市",
+      "city": "徐汇区"
+    }
   },
   {
     "name": "饿鱼",
@@ -1734,7 +2274,13 @@
         "quote": "与小宽胖约在朝阳公园\"饿鱼\"喝酒，聊起服务员祥子从藏红花到白老虎屯再到饿鱼的经历"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "无(刘新云南菜新店)",
@@ -1751,7 +2297,13 @@
         "quote": "在东郊录像期间尝到刘新云南菜新店，最喜欢见手青黄焖鸡，用煎面打底牛肝菌与云香鸡结合"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "明金",
@@ -1770,7 +2322,13 @@
         "quote": "在温州湖岭寻访\"温州牛肉馆\"原型，明金小店每天加工千斤牛肉，当季马蹄筍木槿花和炒红薯粉令人惊艳"
       }
     ],
-    "region": "温州市"
+    "region": "温州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "浙江省",
+      "city": "瑞安市"
+    }
   },
   {
     "name": "聚乐",
@@ -1787,7 +2345,13 @@
         "quote": "再访深巷小饭店聚乐，食材新鲜可口，老板娘热情"
       }
     ],
-    "region": "杭州市"
+    "region": "杭州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "浙江省",
+      "city": "上城区"
+    }
   },
   {
     "name": "Opera Bombana",
@@ -1804,7 +2368,13 @@
         "quote": "厨师马力诺离京告别，做家乡菜饯行"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "富苑宵夜,老四手捶牛丸,田记猪血汤,晶华鱼丸,广场甜豆花,八弟炒粿条",
@@ -1825,7 +2395,13 @@
         "quote": "离开前回顾了多家店的美食体验，依依不舍"
       }
     ],
-    "region": "汕头市"
+    "region": "汕头市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "汕头市"
+    }
   },
   {
     "name": "向日葵",
@@ -1840,7 +2416,13 @@
         "quote": "回国前最后一顿在开在日本超市里的向日葵餐厅就餐，物美价廉当地客人多"
       }
     ],
-    "region": "Northern Mariana Islands"
+    "region": "Northern Mariana Islands",
+    "location": {
+      "continent": "北美洲",
+      "country": "美国",
+      "province": "Northern Mariana Islands",
+      "city": "Saipan Municipality"
+    }
   },
   {
     "name": "大裤衩",
@@ -1860,7 +2442,13 @@
         "quote": "里昂风味小酒馆，吃了多种内脏料理"
       }
     ],
-    "region": "Auvergne-Rhône-Alpes"
+    "region": "Auvergne-Rhône-Alpes",
+    "location": {
+      "continent": "欧洲",
+      "country": "法国",
+      "province": "Auvergne-Rhône-Alpes",
+      "city": "Métropole de Lyon"
+    }
   },
   {
     "name": "大食堂",
@@ -1877,7 +2465,13 @@
         "quote": "里昂救济院一楼由原医院食堂改建的餐厅，年轻主厨主理，味道和想象力令人满意"
       }
     ],
-    "region": "Auvergne-Rhône-Alpes"
+    "region": "Auvergne-Rhône-Alpes",
+    "location": {
+      "continent": "欧洲",
+      "country": "法国",
+      "province": "Auvergne-Rhône-Alpes",
+      "city": "Métropole de Lyon"
+    }
   },
   {
     "name": "ninkasi",
@@ -1892,7 +2486,13 @@
         "quote": "在里昂品尝了当地精酿ninkasi，味道还行"
       }
     ],
-    "region": "Centre-Val de Loire"
+    "region": "Centre-Val de Loire",
+    "location": {
+      "continent": "欧洲",
+      "country": "法国",
+      "province": "Centre-Val de Loire",
+      "city": "谢尔省"
+    }
   },
   {
     "name": "云海肴",
@@ -1907,7 +2507,13 @@
         "quote": "提及云海肴新研发菜品，但语境为工作总结，非就餐体验"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "甄师傅新店",
@@ -1924,7 +2530,13 @@
         "quote": "周末在甄建军新店，见到其师王希富先生，讲述师徒情谊"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "阿蔡,老董",
@@ -1942,7 +2554,13 @@
         "quote": "在阿蔡处吃熏鲳鱼，在老董处吃臭豆腐刺身"
       }
     ],
-    "region": "杭州市"
+    "region": "杭州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "浙江省",
+      "city": "西湖区"
+    }
   },
   {
     "name": "Cosme",
@@ -1961,7 +2579,13 @@
         "quote": "在纽约餐厅Cosme吃墨西哥菜，蘑菇玉米饼和蛤蜊最为讨喜，招牌鸭肉也很有名"
       }
     ],
-    "region": "纽约"
+    "region": "纽约",
+    "location": {
+      "continent": "北美洲",
+      "country": "美国",
+      "province": "纽约州",
+      "city": "纽约"
+    }
   },
   {
     "name": "中央车站蚝吧",
@@ -1978,7 +2602,13 @@
         "quote": "在纽约中央车站蚝吧发现一款苦橙百香果风味的密歇根精酿啤酒"
       }
     ],
-    "region": "纽约"
+    "region": "纽约",
+    "location": {
+      "continent": "北美洲",
+      "country": "美国",
+      "province": "纽约州",
+      "city": "纽约"
+    }
   },
   {
     "name": "水果陈",
@@ -1995,7 +2625,13 @@
         "quote": "提到水果陈和手撕菠萝，疑似具体店铺体验但信息极少"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "山语",
@@ -2010,7 +2646,13 @@
         "quote": "两次在山语就餐，分别吃了栗子蒸南瓜和茶油焖白凉瓜"
       }
     ],
-    "region": "广州市"
+    "region": "广州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "荔湾区"
+    }
   },
   {
     "name": "三姐妹",
@@ -2027,7 +2669,13 @@
         "quote": "池州早餐以三姐妹最有名，今日了解到煎饺、生煎包等均可称作小粑"
       }
     ],
-    "region": "池州市"
+    "region": "池州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "安徽省",
+      "city": "池州市"
+    }
   },
   {
     "name": "石田まさよ",
@@ -2042,7 +2690,13 @@
         "quote": "在小城享用传奇餐厅石田まさよ的美好一餐，未提具体菜品"
       }
     ],
-    "region": "日本"
+    "region": "日本",
+    "location": {
+      "continent": "亚洲",
+      "country": "日本",
+      "province": "兵库县/兵庫縣",
+      "city": null
+    }
   },
   {
     "name": "盛夏",
@@ -2059,7 +2713,13 @@
         "quote": "在长春\"盛夏\"吃铁锅炖三道鳞鱼，体肥肉细鲜甜可口"
       }
     ],
-    "region": "长春市"
+    "region": "长春市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "吉林省",
+      "city": "南关区"
+    }
   },
   {
     "name": "文胸粉店",
@@ -2077,7 +2737,13 @@
         "quote": "早起去吃董克平老师最爱的文胸粉，烧鸭够香，地名来源于附近文胸厂"
       }
     ],
-    "region": "东莞市"
+    "region": "东莞市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "东莞市"
+    }
   },
   {
     "name": "Le Nord",
@@ -2094,7 +2760,13 @@
         "quote": "受邀到博古斯旗下餐厅Le Nord，吃到了著名的布雷斯鸡"
       }
     ],
-    "region": "Auvergne-Rhône-Alpes"
+    "region": "Auvergne-Rhône-Alpes",
+    "location": {
+      "continent": "欧洲",
+      "country": "法国",
+      "province": "Auvergne-Rhône-Alpes",
+      "city": "Métropole de Lyon"
+    }
   },
   {
     "name": "胖哥夜蹄花",
@@ -2114,7 +2786,13 @@
         "quote": "宵夜去胖哥夜蹄花，吃了清汤蹄花、凉拌猪拱嘴、杭椒煸肥肠和素椒宽面"
       }
     ],
-    "region": "成都市"
+    "region": "成都市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "四川省",
+      "city": "金牛区"
+    }
   },
   {
     "name": "无名鱼馆",
@@ -2134,7 +2812,13 @@
         "quote": "豪雨中驱车四十分钟到重庆郊野，只做四样菜的鱼馆，土鳝鱼令人泪湿双眼"
       }
     ],
-    "region": "重庆市"
+    "region": "重庆市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "重庆市",
+      "city": null
+    }
   },
   {
     "name": "无名面馆",
@@ -2160,7 +2844,13 @@
         "quote": "年三十独自去吃冷面，平时排大队的面馆当天空落落只有自己一人"
       }
     ],
-    "region": "宁波市"
+    "region": "宁波市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "浙江省",
+      "city": "鄞州区"
+    }
   },
   {
     "name": "惠食佳",
@@ -2178,7 +2868,13 @@
         "quote": "在惠食佳吃了恩平黄鳝饭和当年大排档风格的烧羊肉"
       }
     ],
-    "region": "广州市"
+    "region": "广州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "天河区"
+    }
   },
   {
     "name": "蔡澜港式点心店",
@@ -2193,7 +2889,13 @@
         "quote": "在蔡澜港式点心店北京第二家店参加试餐活动"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "拾久",
@@ -2217,7 +2919,13 @@
         "quote": "在拾久请扶霞和老高吃烤鸭，春饼忘摘衬纸引发趣事"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "无名小餐馆",
@@ -2235,7 +2943,13 @@
         "quote": "鹅厂附近德宏人开的小餐馆，获推隐藏菜单，吃到大理生皮蘸腌菜膏和苦撒"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "海淀区"
+    }
   },
   {
     "name": "潘师傅炸鸡",
@@ -2252,7 +2966,13 @@
         "quote": "以猫的口吻提及扬州小东门桥附近的潘师傅炸鸡摊"
       }
     ],
-    "region": "扬州市"
+    "region": "扬州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "江苏省",
+      "city": "邗江区"
+    }
   },
   {
     "name": "炳洪饭店",
@@ -2270,7 +2990,13 @@
         "quote": "怀念在新安江畔炳洪饭店吃到的鱼头汤和咸肉蒸江鳗"
       }
     ],
-    "region": "杭州市"
+    "region": "杭州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "浙江省",
+      "city": "桐庐县"
+    }
   },
   {
     "name": "BV粽子",
@@ -2287,7 +3013,13 @@
         "quote": "在虎门站BV粽子店吃了当地特色林旁粽，还观察了门口包粽子的非遗传承人陈大爷"
       }
     ],
-    "region": "东莞市"
+    "region": "东莞市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "东莞市"
+    }
   },
   {
     "name": "柴氏",
@@ -2305,7 +3037,13 @@
         "quote": "甘家口柴氏门口二伏天排长队，头伏饺子二伏面"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "西城区"
+    }
   },
   {
     "name": "荣园",
@@ -2324,7 +3062,13 @@
         "quote": "再次到访荣园，点了上次未吃到的辣鳜鱼、牛肉丝和丸子汤"
       }
     ],
-    "region": "成都市"
+    "region": "成都市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "四川省",
+      "city": "武侯区"
+    }
   },
   {
     "name": "闹忙",
@@ -2344,7 +3088,13 @@
         "quote": "深夜去闹忙吃夜草，隆冬北京吃到美味螺蛳感到惊喜"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "风味人间食堂",
@@ -2361,7 +3111,13 @@
         "quote": "在以《风味人间》命名的食堂花16元吃了一碗拉面，面不错但汤寡淡"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "海淀区"
+    }
   },
   {
     "name": "翠清老店",
@@ -2378,7 +3134,13 @@
         "quote": "路过翠清老店进门吃了两个镬气满满的小炒配白饭，店长记得已两年零五个月未来"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "西城区"
+    }
   },
   {
     "name": "有礼有面",
@@ -2396,7 +3158,13 @@
         "quote": "在有礼有面小铺点了二细牛肉面加肉蛋双飞，汤宽面弹油辣子甘香"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "海淀区"
+    }
   },
   {
     "name": "无(路边小店)",
@@ -2414,7 +3182,13 @@
         "quote": "涡阳东出口附近被称为\"干扣面蒋雯丽\"的路边小店，吃了干扣面和醋汤温泉蛋"
       }
     ],
-    "region": "亳州市"
+    "region": "亳州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "安徽省",
+      "city": "涡阳县"
+    }
   },
   {
     "name": "无(居酒屋)",
@@ -2432,7 +3206,13 @@
         "quote": "老领导附近一家夫妻居酒屋，意外吃到马刺、马肝等日式下酒菜"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "老黄粉店",
@@ -2452,7 +3232,13 @@
         "quote": "广西人老黄开的粉店，打卡吃了牛肉汤粉和猪杂拌粉，更喜欢后者"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "嘉里中心烧鸟(店名不明)",
@@ -2469,7 +3255,13 @@
         "quote": "经小宽胖推荐去嘉里中心某烧鸟店比较北京和上海烧鸟，具体店名未提及"
       }
     ],
-    "region": "上海市"
+    "region": "上海市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "上海市",
+      "city": "徐汇区"
+    }
   },
   {
     "name": "汪姐",
@@ -2487,7 +3279,13 @@
         "quote": "两年没来汪姐家，从上海冷面吃到油渣馄饨，发现饭量没减"
       }
     ],
-    "region": "上海市"
+    "region": "上海市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "上海市",
+      "city": "徐汇区"
+    }
   },
   {
     "name": "朱阿姨(猪排店)",
@@ -2504,7 +3302,13 @@
         "quote": "乐乐离沪前提出去朱阿姨那儿吃猪排，顺便见朱姐"
       }
     ],
-    "region": "上海市"
+    "region": "上海市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "上海市",
+      "city": "静安区"
+    }
   },
   {
     "name": "津市粉店",
@@ -2524,7 +3328,13 @@
         "quote": "几次路过今天终于进去尝了，粉够滑但不如习惯的紧致，牛肉浇头最好，配油条很常德"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "海淀区"
+    }
   },
   {
     "name": "李兰英",
@@ -2543,7 +3353,13 @@
         "quote": "在李兰英吃湖南面，又在隔壁店吃肠旺面加血旺鸡胗，隔壁店名不详"
       }
     ],
-    "region": "贵阳市"
+    "region": "贵阳市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "贵州省",
+      "city": "南明区"
+    }
   },
   {
     "name": "公交新村粉店",
@@ -2560,7 +3376,13 @@
         "quote": "回旅馆路上偶遇24小时营业的公交新村粉店，次日早晨前往打卡"
       }
     ],
-    "region": "湖南省"
+    "region": "湖南省",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "湖南省",
+      "city": "雨花区"
+    }
   },
   {
     "name": "岁集院子",
@@ -2577,7 +3399,13 @@
         "quote": "在广州岁集院子品尝黄景辉师傅的菜，印象深刻的是潮汕风味与东北元素结合的锅包肉"
       }
     ],
-    "region": "广州市"
+    "region": "广州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "番禺区"
+    }
   },
   {
     "name": "无(绍兴风味餐厅)",
@@ -2600,7 +3428,13 @@
         "quote": "在一家绍兴风味餐厅就餐，老板每天早六点从绍兴菜场采买食材"
       }
     ],
-    "region": "杭州市"
+    "region": "杭州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "浙江省",
+      "city": "拱墅区"
+    }
   },
   {
     "name": "羊大爷(望京店)",
@@ -2617,7 +3451,13 @@
         "quote": "同事提议以毒攻毒治中暑，赶到羊大爷望京店吃涮肉"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "新长福",
@@ -2635,7 +3475,13 @@
         "quote": "时隔多年再访新长福北京店，寒菌清汤鲜极令人印象深刻"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "西城区"
+    }
   },
   {
     "name": "羊大爷望京店",
@@ -2650,7 +3496,13 @@
         "quote": "《风味人间》摄制组在羊大爷望京店用羊排饺子和涮肉答谢顾问老师们"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "北京甬府尊鲜",
@@ -2668,7 +3520,13 @@
         "quote": "趁朋友回合肥，与朋友去甬府尊鲜尝了十八斩、臭冬瓜等菜"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "有礼有面四道口分店",
@@ -2685,7 +3543,13 @@
         "quote": "正月十五后去有礼有面四道口新店吃了二细肉蛋双飞，感觉不如老店烟火气"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "海淀区"
+    }
   },
   {
     "name": "故乡菜",
@@ -2705,7 +3569,13 @@
         "quote": "控制饮食两天后和同事去故乡菜大吃，点了包肉、泡菜煎饼、大酱汤和炸猪排"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "河东菜",
@@ -2720,7 +3590,13 @@
         "quote": "仅提及\"河东菜\"，无具体就餐描述"
       }
     ],
-    "region": "太原市"
+    "region": "太原市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "山西省",
+      "city": "太原市"
+    }
   },
   {
     "name": "高乐园;无名河南胡辣汤店",
@@ -2739,7 +3615,13 @@
         "quote": "常去高乐园吃胡辣汤，附近吕营大街无名河南店汤好且有水煎包，两碗汤六个包子"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "The taco bar,野风筝,小七",
@@ -2758,7 +3640,13 @@
         "quote": "在安定门花园胡同几家相熟的店混搭消费，周末美好时光"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "拉合尔",
@@ -2775,7 +3663,13 @@
         "quote": "工作室附近一家叫\"拉合尔\"的南亚小餐馆，初次体验，计划找内行再来"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "贝贝姐的粉店",
@@ -2794,7 +3688,13 @@
         "quote": "在湘潭贝贝姐的粉店吃米粉，猪肉原汤配肉臊和煎蛋"
       }
     ],
-    "region": "湖南省"
+    "region": "湖南省",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "湖南省",
+      "city": "岳塘区"
+    }
   },
   {
     "name": "鸡记",
@@ -2813,7 +3713,13 @@
         "quote": "来鸡记宵夜，鸡、鹅、牛肉丸味道口感上乘"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "不夜粥",
@@ -2830,7 +3736,13 @@
         "quote": "几次错过终于在汕头吃到不夜粥，由诏安双胞胎掌灶"
       }
     ],
-    "region": "汕头市"
+    "region": "汕头市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "汕头市"
+    }
   },
   {
     "name": "山野徽菜",
@@ -2845,7 +3757,13 @@
         "quote": "杭州南宋御街鼓楼附近的徽菜馆，店名山野徽菜，生意火爆但不算便宜"
       }
     ],
-    "region": "杭州市"
+    "region": "杭州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "浙江省",
+      "city": "上城区"
+    }
   },
   {
     "name": "来今雨轩",
@@ -2862,7 +3780,13 @@
         "quote": "在来今雨轩喝下午茶，吃了甜口冬菜包子，上次吃还是读书时"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "老钟叔",
@@ -2879,7 +3803,13 @@
         "quote": "在老钟叔品尝传统潮菜，猛火厚朥香腥汤令人称赞"
       }
     ],
-    "region": "汕头市"
+    "region": "汕头市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "汕头市"
+    }
   },
   {
     "name": "北京嘉里中心海天阁",
@@ -2896,7 +3826,13 @@
         "quote": "在北京嘉里中心海天阁品尝袁超英师傅的招牌烤鸭，果木烤制颇有年份"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "小店王",
@@ -2911,7 +3847,13 @@
         "quote": "仅提及店名，无具体就餐描述"
       }
     ],
-    "region": "杭州市"
+    "region": "杭州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "浙江省",
+      "city": "拱墅区"
+    }
   },
   {
     "name": "五十六朵花老店",
@@ -2930,7 +3872,13 @@
         "quote": "上午十点半去老店，赶上刚出炉的馕，配羊肝和缸子肉"
       }
     ],
-    "region": "新疆维吾尔自治区"
+    "region": "新疆维吾尔自治区",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "新疆维吾尔自治区",
+      "city": "喀什市"
+    }
   },
   {
     "name": "叶马茶楼",
@@ -2947,7 +3895,13 @@
         "quote": "六和塔下的叶马茶楼，食材和烹饪都很赞，游客聚集地难得有稳定出品"
       }
     ],
-    "region": "杭州市"
+    "region": "杭州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "浙江省",
+      "city": "西湖区"
+    }
   },
   {
     "name": "荣先森",
@@ -2964,7 +3918,13 @@
         "quote": "厦门朋友在北京开的闽南小馆荣先森，排大队，平价连锁店水准不错"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "华盛丰温州大排档",
@@ -2981,7 +3941,13 @@
         "quote": "新店开到工作室附近，连续两天在此解决午餐，与潘家园老店相比略少锅气但总体不错"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "杏花堂",
@@ -3002,7 +3968,13 @@
         "quote": "带老母亲去杏花堂吃到了节目中出镜的多道菜"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "西城区"
+    }
   },
   {
     "name": "同德兴",
@@ -3024,7 +3996,13 @@
         "quote": "时隔十年再访同德兴，点了各色浇头面食"
       }
     ],
-    "region": "苏州市"
+    "region": "苏州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "江苏省",
+      "city": "姑苏区"
+    }
   },
   {
     "name": "Darkhill",
@@ -3050,7 +4028,13 @@
         "quote": "开车到府右街吃冷面后，老陈请司机喝了Dark Hill的手冲咖啡"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "野风筝",
@@ -3067,7 +4051,13 @@
         "quote": "啤酒之夜在野风筝，人气很旺"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "老五",
@@ -3087,7 +4077,13 @@
         "quote": "来吃潮汕菜，老五的创意菜足够惊艳"
       }
     ],
-    "region": "深圳市"
+    "region": "深圳市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "深圳市"
+    }
   },
   {
     "name": "1218grill",
@@ -3102,7 +4098,13 @@
         "quote": "偏日系融合精致料理，做低温烤物，整体出品很不错"
       }
     ],
-    "region": "广州市"
+    "region": "广州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "海珠区"
+    }
   },
   {
     "name": "吴忠手抓",
@@ -3117,7 +4119,13 @@
         "quote": "来西安本有详细饮食规划，结果向导直接带去吴忠手抓"
       }
     ],
-    "region": "西安市"
+    "region": "西安市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "陕西省",
+      "city": "未央区"
+    }
   },
   {
     "name": "聚德楼",
@@ -3134,7 +4142,13 @@
         "quote": "多年未见的大侄女从新加坡回来，在聚德楼新店吃北京菜，把她吃感动了"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "宝都",
@@ -3149,7 +4163,13 @@
         "quote": "南京签售活动后，在宝都吃小龙虾，和山丘喝精酿"
       }
     ],
-    "region": "南京市"
+    "region": "南京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "江苏省",
+      "city": "建邺区"
+    }
   },
   {
     "name": "百味园",
@@ -3169,7 +4189,13 @@
         "quote": "团结湖百味园，皮薄馅大，凉菜不错，锅贴差点意思，价格实惠"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "趣园",
@@ -3187,7 +4213,13 @@
         "quote": "请朋友吃趣园扬州早茶，点了干丝和油端子等"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "欢喜tap room",
@@ -3212,7 +4244,13 @@
         "quote": "在欢喜taproom喝酒，因店里新来一只猫多喝了一瓶"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "云和面馆",
@@ -3229,7 +4267,13 @@
         "quote": "与沈宏非约饭，原以为吃面，实为吃江南菜，好吃到大脑缺氧"
       }
     ],
-    "region": "上海市"
+    "region": "上海市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "上海市",
+      "city": "静安区"
+    }
   },
   {
     "name": "白老虎屯",
@@ -3248,7 +4292,13 @@
         "quote": "朝阳区小酒馆bistro，平价自然酒配小菜烧烤，主厨云南人西餐出身"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "龙记",
@@ -3266,7 +4316,13 @@
         "quote": "在北人泽洋大厦龙记吃长沙米粉，推荐过桥臭豆腐，猪油渣是惊喜"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "京东晴缘",
@@ -3283,7 +4339,13 @@
         "quote": "朋友馋了作者后终于去常营京东晴缘解了卤煮之馋"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "肥佬椰子鸡",
@@ -3300,7 +4362,13 @@
         "quote": "介绍深圳首创椰子鸡餐厅肥佬椰子鸡及其创始人故事"
       }
     ],
-    "region": "深圳市"
+    "region": "深圳市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "深圳市"
+    }
   },
   {
     "name": "白钻美食",
@@ -3319,7 +4387,13 @@
         "quote": "吕营大街新疆馆子白钻美食，烤包子、拌面、抓饭都很赞"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "珐云小酒馆",
@@ -3339,7 +4413,13 @@
         "quote": "顺义天竺朋友开的台式风格小酒馆，菜品可口风格偏台湾"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "顺义区"
+    }
   },
   {
     "name": "羊大爷武涮堂",
@@ -3356,7 +4436,13 @@
         "quote": "在羊大爷武涮堂涮肉，最后被芝麻酱蘸白糖的炸馒头征服"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "毛秀才",
@@ -3376,7 +4462,13 @@
         "quote": "望京毛秀才是北京最像广西家常菜的选择，菜品下饭"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "大东边",
@@ -3396,7 +4488,13 @@
         "quote": "在大东边吃内江菜，水煮黄辣丁一流，多道菜各有特色"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "通州区"
+    }
   },
   {
     "name": "泓0871",
@@ -3424,7 +4522,13 @@
         "quote": "菌子季尾声与家人在泓0871品尝多种菌类菜肴"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "亮涛轩",
@@ -3442,7 +4546,13 @@
         "quote": "在河州牛肉面馆亮涛轩吃荞麦楞子配辣子牛肉，隔壁再来烤包子"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "高乐园",
@@ -3459,7 +4569,13 @@
         "quote": "带朋友去左安路高乐园吃胡辣汤，认为是北京胡辣汤天花板"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "鄱阳湖烧菜馆",
@@ -3476,7 +4592,13 @@
         "quote": "和同事在双桥吃鄱阳湖烧菜馆，老板感谢上次发微博送了炸小白鱼"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "大董金宝汇店",
@@ -3491,7 +4613,13 @@
         "quote": "大董金宝汇店重张试菜，与张新民等老友聚会"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "致璞",
@@ -3509,7 +4637,13 @@
         "quote": "在致璞新店喝了两款巴拿马瑰夏咖啡，碱水包也做得好"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "四叶",
@@ -3524,7 +4658,13 @@
         "quote": "朋友请客在四叶餐厅，感叹这家餐厅已开了二十年"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "肥福",
@@ -3564,7 +4704,13 @@
         "quote": "约友人去肥福尝新菜，广东农家乐风格，未明确列出推荐菜品"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "壮壮的酒馆",
@@ -3579,7 +4725,13 @@
         "quote": "在壮壮的酒馆净吃肉、喝了几小杯醋"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "俏东北",
@@ -3604,7 +4756,13 @@
         "quote": "俏东北副中心分店，吃了九宫格，菜品丰盛到撑得翻白眼"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "通州区"
+    }
   },
   {
     "name": "金谷园",
@@ -3622,7 +4780,13 @@
         "quote": "专程去金谷园吃薄皮大馅饺子，门口人山人海冬至当晚排了8200多号"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "太湖人家",
@@ -3643,7 +4807,13 @@
         "quote": "安庆风味安徽农家菜太湖人家，点了多道蒸菜，饭前先去考工咖啡店喝手冲瑰夏"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "京华楼",
@@ -3658,7 +4828,13 @@
         "quote": "带父母在甄建军老师主理的京华楼体验传统京菜，精致功底深厚"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "奉天小馆",
@@ -3677,7 +4853,13 @@
         "quote": "与同事在朝阳大悦城奉天小馆北京首店就餐，已需排号"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "听潮华宴",
@@ -3692,7 +4874,13 @@
         "quote": "侯新庆老师主理的淮扬风味餐厅，在天津江浙沪菜排名长期霸榜"
       }
     ],
-    "region": "天津市"
+    "region": "天津市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "天津市",
+      "city": "河西区"
+    }
   },
   {
     "name": "疯羊咖啡",
@@ -3707,7 +4895,13 @@
         "quote": "春节在天津民国老楼里的疯羊咖啡，偏日式风格，豆子烘焙咖啡师都不错"
       }
     ],
-    "region": "天津市"
+    "region": "天津市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "天津市",
+      "city": "河西区"
+    }
   },
   {
     "name": "王忠圈",
@@ -3722,7 +4916,13 @@
         "quote": "管庄路新开的漯河胡辣汤店，一个多月去了三次"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "无双",
@@ -3737,7 +4937,13 @@
         "quote": "夜里十一点后与朋友在厦门岛内精酿酒吧\"无双\"喝酒，有16个酒头"
       }
     ],
-    "region": "厦门市"
+    "region": "厦门市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "福建省",
+      "city": "厦门市"
+    }
   },
   {
     "name": "苏饭",
@@ -3752,7 +4958,13 @@
         "quote": "在3.3地下打卡苏饭，排队就餐，未明确提及推荐菜品"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "水墨徽",
@@ -3771,7 +4983,13 @@
         "quote": "杭州沈爷饭局，徽菜精致，印象最深是酿红椒、糟腐乳、迎客松糕"
       }
     ],
-    "region": "杭州市"
+    "region": "杭州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "浙江省",
+      "city": "上城区"
+    }
   },
   {
     "name": "崖",
@@ -3788,7 +5006,13 @@
         "quote": "东城胡同内的云南植物料理餐厅，十七道菜食材均来自云南"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "田小狗星沙店",
@@ -3813,7 +5037,13 @@
         "quote": "在田小狗星沙店体验了多道湘味菜肴，还收到了枧水粽"
       }
     ],
-    "region": "湖南省"
+    "region": "湖南省",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "湖南省",
+      "city": "芙蓉区"
+    }
   },
   {
     "name": "cloudy",
@@ -3830,7 +5060,13 @@
         "quote": "在长沙四方坪附近社区小店cloudy喝咖啡，店面简朴但客人不少"
       }
     ],
-    "region": "湖南省"
+    "region": "湖南省",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "湖南省",
+      "city": "雨花区"
+    }
   },
   {
     "name": "言西早",
@@ -3848,7 +5084,13 @@
         "quote": "司机推荐了本地早餐店言西早，介绍了当地土著早餐习惯"
       }
     ],
-    "region": "湖南省"
+    "region": "湖南省",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "湖南省",
+      "city": "芙蓉区"
+    }
   },
   {
     "name": "星冈",
@@ -3882,7 +5124,13 @@
         "quote": "在星冈吃午餐，韩国新厨师带来全新菜单"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "蒋家",
@@ -3899,7 +5147,13 @@
         "quote": "在贵阳蒋家吃肠旺面，曾有过口味下降的顾虑，但门口依然人山人海"
       }
     ],
-    "region": "贵阳市"
+    "region": "贵阳市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "贵州省",
+      "city": "南明区"
+    }
   },
   {
     "name": "山鬼",
@@ -3916,7 +5170,13 @@
         "quote": "贵阳必去的精酿酒吧，酒头多，选酒有品"
       }
     ],
-    "region": "贵阳市"
+    "region": "贵阳市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "贵州省",
+      "city": "观山湖区"
+    }
   },
   {
     "name": "吉好",
@@ -3933,7 +5193,13 @@
         "quote": "韩江路上的社区小店，拍过《我的美食向导》，吃粿条和猪肉相关菜品"
       }
     ],
-    "region": "汕头市"
+    "region": "汕头市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "汕头市"
+    }
   },
   {
     "name": "潮汕寀研究会",
@@ -3950,7 +5216,13 @@
         "quote": "在潮汕寀研究会吃饭，吃到罕见的乌酥杨梅"
       }
     ],
-    "region": "汕头市"
+    "region": "汕头市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "汕头市"
+    }
   },
   {
     "name": "拉木",
@@ -3969,7 +5241,13 @@
         "quote": "在拉木藏餐小院就餐，推荐酸萝卜牦牛肉、阿孜热、土豆包子"
       }
     ],
-    "region": "拉萨市"
+    "region": "拉萨市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "西藏自治区",
+      "city": "城关区"
+    }
   },
   {
     "name": "串小白",
@@ -3987,7 +5265,13 @@
         "quote": "长沙串小白烤串好吃，原料好，晚上10点还在排队"
       }
     ],
-    "region": "湖南省"
+    "region": "湖南省",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "湖南省",
+      "city": "长沙县"
+    }
   },
   {
     "name": "津鲁菜馆",
@@ -4002,7 +5286,13 @@
         "quote": "在天津津鲁菜馆午餐，遇到美食向导李硕老师"
       }
     ],
-    "region": "天津市"
+    "region": "天津市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "天津市",
+      "city": "红桥区"
+    }
   },
   {
     "name": "老长舅",
@@ -4023,7 +5313,13 @@
         "quote": "公司附近新开桂林米粉店老长舅，卤水出色，锅烧够脆，牛肉够香"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "蒋记大碗粉",
@@ -4041,7 +5337,13 @@
         "quote": "在茶亭路和广东路交叉口的蒋记大碗粉吃扁粉，四人花58元，连汤都没剩"
       }
     ],
-    "region": "广西壮族自治区"
+    "region": "广西壮族自治区",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广西壮族自治区",
+      "city": "海城区"
+    }
   },
   {
     "name": "银龙大酒店",
@@ -4059,7 +5361,13 @@
         "quote": "提及银龙大酒店是重合率最高的推荐餐厅之一，归侨开的粤菜+越菜融合"
       }
     ],
-    "region": "广西壮族自治区"
+    "region": "广西壮族自治区",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广西壮族自治区",
+      "city": "海城区"
+    }
   },
   {
     "name": "七仓",
@@ -4074,7 +5382,13 @@
         "quote": "在北海精酿吧七仓喝酒，推荐明日酿造两款和Dr.lab浑浊款"
       }
     ],
-    "region": "广西壮族自治区"
+    "region": "广西壮族自治区",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广西壮族自治区",
+      "city": "海城区"
+    }
   },
   {
     "name": "游家院子",
@@ -4091,7 +5405,13 @@
         "quote": "从成都去乐山途中专程去双流东升大件路的游家院子解馋，招牌菜是蜞蟆烧黄瓜"
       }
     ],
-    "region": "成都市"
+    "region": "成都市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "四川省",
+      "city": "双流区"
+    }
   },
   {
     "name": "1996川菜",
@@ -4108,7 +5428,13 @@
         "quote": "在北京1996川菜主厨餐厅吃过梁总季节隐藏菜单中的斗鸡菇"
       }
     ],
-    "region": "四川省"
+    "region": "四川省",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "四川省",
+      "city": "峨眉山市"
+    }
   },
   {
     "name": "24味",
@@ -4125,7 +5451,13 @@
         "quote": "在成都吃到许凡大师的24味\"如意宴\"，感受川菜的另一种可能"
       }
     ],
-    "region": "成都市"
+    "region": "成都市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "四川省",
+      "city": "武侯区"
+    }
   },
   {
     "name": "欢喜",
@@ -4140,7 +5472,13 @@
         "quote": "楼下精酿啤酒吧，提到烤串，主要在描述猫和鹦鹉的趣事"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "遇外滩",
@@ -4155,7 +5493,13 @@
         "quote": "第二次造访遇外滩，赞其菜单设计与闽菜功力，Best50 of Asia第14名"
       }
     ],
-    "region": "上海市"
+    "region": "上海市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "上海市",
+      "city": "虹口区"
+    }
   },
   {
     "name": "玉兰厢",
@@ -4173,7 +5517,13 @@
         "quote": "活动后去豫园玉兰厢找沈爷，之前拍过葱烤鲫鱼和葱油鸡"
       }
     ],
-    "region": "上海市"
+    "region": "上海市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "上海市",
+      "city": "静安区"
+    }
   },
   {
     "name": "兰语食记",
@@ -4188,7 +5538,13 @@
         "quote": "夏主任带着在杭州吃了兰溪风味餐厅\"兰语食记\""
       }
     ],
-    "region": "杭州市"
+    "region": "杭州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "浙江省",
+      "city": "拱墅区"
+    }
   },
   {
     "name": "广御轩",
@@ -4205,7 +5561,13 @@
         "quote": "辉哥推荐广州广御轩，主厨冯永彪兼具米其林和黑珍珠认证"
       }
     ],
-    "region": "广州市"
+    "region": "广州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "天河区"
+    }
   },
   {
     "name": "芝兰湖北菜",
@@ -4222,7 +5584,13 @@
         "quote": "原本想去麦特食堂吃恩施菜，因其休息改去旁边芝兰湖北菜点了香煎粉蒸肉"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "锦.nishiki",
@@ -4240,7 +5608,13 @@
         "quote": "上周末吃锦.nishiki秋季菜单，主厨Agustin的融合菜肴"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "潮1/2",
@@ -4257,7 +5631,13 @@
         "quote": "吃了潮上潮后厨小饭桌\"潮1/2\"，厨师阿水用潮汕食材做融合菜"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "甘家口柴氏牛肉面",
@@ -4275,7 +5655,13 @@
         "quote": "在甘家口柴氏牛肉面吃了超过三十年，店长记得常点大碗及喜欢的小菜和牛肉筋头巴脑"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "西城区"
+    }
   },
   {
     "name": "迎春面馆",
@@ -4304,7 +5690,13 @@
         "quote": "回国后直奔大红门迎春面馆，老板阿巧亲自安排，吃了猪头肉、大肠头和炒年糕"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "丰台区"
+    }
   },
   {
     "name": "鄱阳湖",
@@ -4322,7 +5714,13 @@
         "quote": "中午带同事去鄱阳湖吃江西菜，生意不错，菜也靠谱"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "TDB",
@@ -4340,7 +5738,13 @@
         "quote": "在麦子店的TDB吃贝果，菜单已换，原来的红菜根六月沙拉没了，各自点了反转贝果"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "小刘yolo",
@@ -4358,7 +5762,13 @@
         "quote": "华纺易城的小刘yolo是常去的日咖夜酒小馆，主打性价比，豆单上新增了一页"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "彭家呱嗒",
@@ -4373,7 +5783,13 @@
         "quote": "在聊城育新街跟着王老虎去吃早餐，走到门头写着彭家呱嗒的店"
       }
     ],
-    "region": "聊城市"
+    "region": "聊城市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "山东省",
+      "city": "东昌府区"
+    }
   },
   {
     "name": "辣老五餐馆",
@@ -4388,7 +5804,13 @@
         "quote": "提及2005年在羊坊店辣老五餐馆与老六第一次见面，是回忆性叙述非本次就餐"
       }
     ],
-    "region": "聊城市"
+    "region": "聊城市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "山东省",
+      "city": "茌平区"
+    }
   },
   {
     "name": "恭熹",
@@ -4405,7 +5827,13 @@
         "quote": "木偶剧院旁的烤鸭店恭熹，做北京菜和烤鸭，同乡聚会选在此处"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "荞麦楞",
@@ -4420,7 +5848,13 @@
         "quote": "仅提及餐厅名，无菜品及就餐描述"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "德记猪腰汤",
@@ -4440,7 +5874,13 @@
         "quote": "故地重游德记猪腰汤，猪腰味道还在，韭菜油捞面、沙姜猪手、炊鸡也不错"
       }
     ],
-    "region": "江门市"
+    "region": "江门市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "江门市"
+    }
   },
   {
     "name": "无名菜馆(台山风格大排档)",
@@ -4457,7 +5897,13 @@
         "quote": "江门朋友老伍带去的台山风格菜馆，吃了黄鳝饭，火候精准"
       }
     ],
-    "region": "江门市"
+    "region": "江门市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "江门市"
+    }
   },
   {
     "name": "乡味小厨",
@@ -4474,7 +5920,13 @@
         "quote": "在瑰丽酒店乡味小厨与张少刚主厨聚餐，推荐糖醋鳜鱼"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "无名板前寿司(常营天街四楼)",
@@ -4491,7 +5943,13 @@
         "quote": "常营天街四楼板前寿司，午餐时被陌生读者赠送海胆卷"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "二头乌研究所",
@@ -4506,7 +5964,13 @@
         "quote": "与老友聚餐于二头乌研究所，生意火爆"
       }
     ],
-    "region": "杭州市"
+    "region": "杭州市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "浙江省",
+      "city": "上城区"
+    }
   },
   {
     "name": "春台吃福见",
@@ -4523,7 +5987,13 @@
         "quote": "跟着刘春在春台吃福见体验闽南菜，餐厅由闽中闽和肥福联手打造"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "波谷川",
@@ -4540,7 +6010,13 @@
         "quote": "过年去门头沟，在檀谷园区的宠物友好川菜餐厅波谷川就餐"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "门头沟区"
+    }
   },
   {
     "name": "豹总望京新店",
@@ -4561,7 +6037,13 @@
         "quote": "恭熹北三环店全满，转去豹总在望京花家地西门子大厦旁的皖北土菜新店"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "一个黄萝卜",
@@ -4580,7 +6062,13 @@
         "quote": "大山子新疆菜新店，两位乌鲁木齐姑娘开的家庭料理"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "壹同",
@@ -4601,7 +6089,13 @@
         "quote": "路米仓胡同深处的湖南菜馆壹同，几个月间已来了三次"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "顽啤猴",
@@ -4618,7 +6112,13 @@
         "quote": "在顽啤猴十周年店庆点了杯塞拉多咖啡，还摸了边牧天天"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "荣豫",
@@ -4635,7 +6135,13 @@
         "quote": "全家去荣豫华茂新店尝鲜，全场最佳是肉丝带底"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "1996川菜主厨餐厅",
@@ -4654,7 +6160,13 @@
         "quote": "将苦笋和香椿送到1996川菜主厨餐厅，做了多道菜"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "黄家大院肠旺粉店",
@@ -4672,7 +6184,13 @@
         "quote": "清晨在黄家大院肠旺粉店点了抄手和肠旺米皮"
       }
     ],
-    "region": "遵义市"
+    "region": "遵义市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "贵州省",
+      "city": "遵义市"
+    }
   },
   {
     "name": "Bocata",
@@ -4689,7 +6207,13 @@
         "quote": "在三里屯西班牙小馆Bocata与朋友聚会，尤其推荐马德里牛肚"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "Workshop",
@@ -4707,7 +6231,13 @@
         "quote": "在西贡找到隐蔽的Workshop咖啡馆，体验了手冲冷萃和冰冲，店内主推越南本土豆子"
       }
     ],
-    "region": "胡志明市"
+    "region": "胡志明市",
+    "location": {
+      "continent": "亚洲",
+      "country": "越南",
+      "province": null,
+      "city": "守德市"
+    }
   },
   {
     "name": "Hoa Tuc",
@@ -4730,7 +6260,13 @@
         "quote": "米其林推荐餐厅Hoa Tuc，七道菜人均不到100元，印象最深是海鲜酸汤"
       }
     ],
-    "region": "胡志明市"
+    "region": "胡志明市",
+    "location": {
+      "continent": "亚洲",
+      "country": "越南",
+      "province": null,
+      "city": "守德市"
+    }
   },
   {
     "name": "La Corto",
@@ -4747,7 +6283,13 @@
         "quote": "歌剧院附近的La Corto，据说接待过法国总统，价格实惠，最难忘7天干腌鸭"
       }
     ],
-    "region": "胡志明市"
+    "region": "胡志明市",
+    "location": {
+      "continent": "亚洲",
+      "country": "越南",
+      "province": null,
+      "city": "順安市"
+    }
   },
   {
     "name": "七桥",
@@ -4764,7 +6306,13 @@
         "quote": "在胡志明市精酿酒吧七桥共喝了七款酒，尤其喜欢一款苦味IPA"
       }
     ],
-    "region": "胡志明市"
+    "region": "胡志明市",
+    "location": {
+      "continent": "亚洲",
+      "country": "越南",
+      "province": null,
+      "city": "守德市"
+    }
   },
   {
     "name": "果然居",
@@ -4784,7 +6332,13 @@
         "quote": "顺德菜馆果然居，为寻味顺德做调研，店长是旧相识，推荐多道顺德菜"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "石景山区"
+    }
   },
   {
     "name": "乜记",
@@ -4801,7 +6355,13 @@
         "quote": "西单乜记迁至红领巾桥，带从耶鲁归来的小宝去吃湛江菜，烟火气十足"
       }
     ],
-    "region": "北京市"
+    "region": "北京市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "田小狗",
@@ -4818,7 +6378,13 @@
         "quote": "周末在田小狗排长队，点了洋辣椒红豆角，豆豉辣椒爆香蒜子炒秋葵和豆角"
       }
     ],
-    "region": "湖南省"
+    "region": "湖南省",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "湖南省",
+      "city": "芙蓉区"
+    }
   },
   {
     "name": "老东西",
@@ -4837,7 +6403,13 @@
         "quote": "儿童节在老东西畅饮，邻座分享了生腌膏蟹、三眼蠘、皮皮虾"
       }
     ],
-    "region": "揭阳市"
+    "region": "揭阳市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "榕城区"
+    }
   },
   {
     "name": "BB",
@@ -4854,7 +6426,13 @@
         "quote": "在汕头精酿吧BB喝酒，并提及一家菜场里的猪肉火锅宵夜，但未明确就餐"
       }
     ],
-    "region": "汕头市"
+    "region": "汕头市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "汕头市"
+    }
   },
   {
     "name": "又益轩",
@@ -4871,6 +6449,12 @@
         "quote": "离开桂林前在又益轩吃了马肉米粉，这种传统米粉已经好多年没吃过了"
       }
     ],
-    "region": "桂林市"
+    "region": "桂林市",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广西壮族自治区",
+      "city": "秀峰区"
+    }
   }
 ]
