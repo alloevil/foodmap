@@ -21,27 +21,6 @@
     }
   },
   {
-    "name": "枣阁园",
-    "lat": 40.6071368,
-    "lng": 109.6762005,
-    "visits": [
-      {
-        "date": "Sat Jun 07 11:30:00 +0800 2025",
-        "postId": 5174863229616386,
-        "postUrl": "https://weibo.com/7994637634/Pvpx8ElF0",
-        "dishes": [],
-        "quote": "成都美食暴击，探访枣阁园，根本吃不完"
-      }
-    ],
-    "region": "北京",
-    "location": {
-      "continent": "亚洲",
-      "country": "中国",
-      "province": "内蒙古自治区",
-      "city": "九原区"
-    }
-  },
-  {
     "name": "小李",
     "lat": 31.621471,
     "lng": 117.4688777,
