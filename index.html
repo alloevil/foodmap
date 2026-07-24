@@ -61,6 +61,9 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
     margin-top: 6px; padding: 4px 6px; border-radius: var(--radius-small); border: 1px solid var(--hairline);
     background: var(--surface-2); color: var(--ink); font-size: 12px; outline: none; cursor: pointer; width: 100%;
 }
+.blogger-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.blogger-legend .item { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--ink-subtle); }
+.blogger-legend .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .poi-blogger-tag {
     display: inline-block; margin-left: 6px; padding: 1px 6px; border-radius: 5px;
     background: var(--primary-tint); color: var(--primary-hover); font-size: 11px; font-weight: 600; vertical-align: middle;
@@ -269,6 +272,7 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
     <div class="sub">来自微博个人主页动态的地理标记</div>
     <div class="stat" id="stat"></div>
     <select class="blogger-select" id="bloggerSelect"></select>
+    <div class="blogger-legend" id="bloggerLegend"></div>
 </div>
 <div class="empty-hint" id="emptyHint" style="display:none"></div>
 <button class="sidebar-toggle collapsed" id="sidebarToggle" title="餐厅列表">☰</button>
@@ -572,21 +576,27 @@ async function load() {
     isCombinedView = namesToLoad.length > 1;
 
     // 纯静态读取:GitHub Pages 没有后端,直接 fetch 仓库里的 JSON 文件。
-    // server.mjs 本地起服务时也是同一套相对路径,行为一致。合并模式下
-    // 逐个博主请求,给每条餐厅打上 _blogger 标签(内部字段,跟现有的
+    // server.mjs 本地起服务时也是同一套相对路径,行为一致。合并模式下并行
+    // 请求所有博主(Promise.all,不是依次 await——不然合并两个人就要等
+    // 两倍时间),给每条餐厅打上 _blogger 标签(内部字段,跟现有的
     // _marker/_years 一个风格);某个博主的文件缺失/格式不对只跳过并
     // 警告,不因为一个人的数据有问题就让整页什么都不显示。
     const restaurants = [];
-    for (const name of namesToLoad) {
+    const fetchResults = await Promise.all(namesToLoad.map(async (name) => {
         try {
             const resp = await fetch('data/' + encodeURIComponent(safeName(name)) + '/restaurants.json');
             if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
             const list = await resp.json();
             if (!Array.isArray(list)) throw new Error('数据格式错误');
-            for (const r of list) { r._blogger = name; restaurants.push(r); }
+            return { name, list };
         } catch (e) {
             console.warn(`加载"${name}"的数据失败,已跳过: ${e.message}`);
+            return { name, list: null };
         }
+    }));
+    for (const { name, list } of fetchResults) {
+        if (!list) continue;
+        for (const r of list) { r._blogger = name; restaurants.push(r); }
     }
 
     document.getElementById('bloggerName').textContent = `${namesToLoad.join(' + ')}的美食地图`;
@@ -600,13 +610,26 @@ async function load() {
     const totalVisits = restaurants.reduce((s, r) => s + r.visits.length, 0);
     document.getElementById('stat').textContent = `${restaurants.length} 家餐厅 · ${totalVisits} 次拜访`;
 
+    // 合并模式下按博主给标记加一圈外环颜色区分是谁探的,不用点开弹窗才知道。
+    // 用黄金角配色(跟 yearColor 同一个思路)保证博主数量不管多少都尽量
+    // 拉开色相;单博主模式没有这层环,视觉跟之前完全一样。
+    const bloggerColorOf = new Map(namesToLoad.map((n, i) => [n, `hsl(${(i * 137.508) % 360}, 65%, 45%)`]));
+    document.getElementById('bloggerLegend').innerHTML = isCombinedView
+        ? namesToLoad.map(n => `<span class="item"><span class="dot" style="background:${bloggerColorOf.get(n)}"></span>${escapeHtml(n)}</span>`).join('')
+        : '';
+
     // 拜访 ≥2 次的用金色高亮("回头客"信号),半径随拜访次数增大,一眼看出常去的地方
     function makeFoodIcon(r, delayMs) {
         const repeat = r.visits.length >= 2;
         const size = Math.min(26 + r.visits.length * 3, 44);
+        // inline style 会整个覆盖掉 CSS 里 .food-pin/.food-pin.repeat 原有的
+        // box-shadow(不是叠加),所以合并模式下要把原阴影也一起拼进来,
+        // 不然点上的阴影会凭空消失,只剩博主色环
+        const baseShadow = repeat ? '0 0 10px rgba(163,105,15,.4)' : '0 2px 8px rgba(43,33,24,.25)';
+        const ringStyle = isCombinedView ? `box-shadow:0 0 0 3px ${bloggerColorOf.get(r._blogger) || '#888'}, ${baseShadow};` : '';
         return L.divIcon({
             className: '',
-            html: `<div class="food-pin${repeat ? ' repeat' : ''}" style="width:${size}px;height:${size}px;font-size:${size * 0.55}px;animation-delay:${delayMs}ms">${pickEmoji(r.name)}</div>`,
+            html: `<div class="food-pin${repeat ? ' repeat' : ''}" style="width:${size}px;height:${size}px;font-size:${size * 0.55}px;animation-delay:${delayMs}ms;${ringStyle}">${pickEmoji(r.name)}</div>`,
             iconSize: [size, size],
             iconAnchor: [size / 2, size / 2],
         });
@@ -645,9 +668,12 @@ async function load() {
     setupLocate(restaurants, sidebar);
     setupJourney(restaurants, clusterGroup);
     // 稍等一下再弹,避免和地图初次加载的动画抢注意力;两个提示错开时间,
-    // 不会在同一瞬间一起弹出来显得很吵
+    // 不会在同一瞬间一起弹出来显得很吵。合并模式下点回放按钮只会弹出"请先
+    // 选一位博主"的提醒,这个箭头提示指向一个当下点了也没用的按钮,不弹。
     setTimeout(() => showPointerHint({ targetSelector: '.locate-btn', text: '👉 点这里看看附近好吃的' }), 1200);
-    setTimeout(() => showPointerHint({ targetSelector: '.journey-btn', text: '👉 点这里回放旅行轨迹' }), 1600);
+    if (!isCombinedView) {
+        setTimeout(() => showPointerHint({ targetSelector: '.journey-btn', text: '👉 点这里回放旅行轨迹' }), 1600);
+    }
     setTimeout(() => showPointerHint({ targetSelector: '#sidebarToggle', text: '👉 点这里看餐厅列表', arrowLeft: true }), 2000);
 }
 
@@ -946,7 +972,16 @@ function setupJourney(restaurants, clusterGroup) {
         map.fitBounds(clusterGroup.getBounds(), { padding: [40, 40] });
     }
 
-    onToggleJourney = () => { active ? exit() : enter(); };
+    // 合并模式下把两个人的拜访时间线揉在一起按时间顺序播放,会在城市之间
+    // 没有意义地来回跳(两人是各自独立的行程,不是同一段旅程)——不如让
+    // 用户用顶部已有的下拉框先选定一位博主,回放才是在讲一个人的故事
+    onToggleJourney = () => {
+        if (isCombinedView && !active) {
+            alert('轨迹回放是按一个人的时间顺序播放的,"全部"模式下两人的行程会混在一起、来回跳,没有意义。请先用顶部下拉框选择一位博主,再点这个按钮。');
+            return;
+        }
+        active ? exit() : enter();
+    };
     playBtn.addEventListener('click', () => { playing ? pause() : play(); });
     progressEl.addEventListener('input', () => { pause(); renderStep(Number(progressEl.value), { pan: false }); });
     document.getElementById('journeyExit').addEventListener('click', exit);
