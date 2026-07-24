@@ -57,6 +57,14 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 .topbar h1 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
 .topbar .sub { font-size: 12px; color: var(--ink-subtle); }
 .topbar .stat { font-size: 12px; color: var(--ink-muted); margin-top: 6px; }
+.blogger-select {
+    margin-top: 6px; padding: 4px 6px; border-radius: var(--radius-small); border: 1px solid var(--hairline);
+    background: var(--surface-2); color: var(--ink); font-size: 12px; outline: none; cursor: pointer; width: 100%;
+}
+.poi-blogger-tag {
+    display: inline-block; margin-left: 6px; padding: 1px 6px; border-radius: 5px;
+    background: var(--primary-tint); color: var(--primary-hover); font-size: 11px; font-weight: 600; vertical-align: middle;
+}
 .leaflet-popup-content-wrapper { background: var(--surface-1); color: var(--ink); border-radius: var(--radius-panel); border: 1px solid var(--hairline); }
 .leaflet-popup-tip { background: var(--surface-1); }
 .leaflet-popup-content { margin: 12px 14px; }
@@ -126,6 +134,7 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 .sidebar-item .name { flex: 1; font-size: 13px; color: var(--ink-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sidebar-item .count { font-size: 11px; color: var(--ink-subtle); flex-shrink: 0; }
 .sidebar-item .count.repeat { color: var(--gold); }
+.sidebar-item .blogger-tag { font-size: 10px; color: var(--ink-subtle); flex-shrink: 0; padding: 1px 5px; background: var(--surface-2); border-radius: 4px; }
 .sidebar-empty { padding: 16px; font-size: 12px; color: var(--ink-subtle); text-align: center; }
 .timebar {
     position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 1000;
@@ -259,6 +268,7 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
     <h1 id="bloggerName">美食地图</h1>
     <div class="sub">来自微博个人主页动态的地理标记</div>
     <div class="stat" id="stat"></div>
+    <select class="blogger-select" id="bloggerSelect"></select>
 </div>
 <div class="empty-hint" id="emptyHint" style="display:none"></div>
 <button class="sidebar-toggle collapsed" id="sidebarToggle" title="餐厅列表">☰</button>
@@ -303,14 +313,37 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 <script>
 const params = new URLSearchParams(location.search);
 // 未指定 ?name= 时默认展示随仓库附带的示例数据(陈晓卿);其他博主的数据
-// 需要你本地跑过 fetch-posts.mjs/extract-restaurants.mjs 后用 ?name=<博主名> 查看
+// 需要你本地跑过 fetch-posts.mjs/extract-restaurants.mjs 后用 ?name=<博主名> 查看。
+// ?name=all 是特殊值,表示合并 bloggers.json 里列出的所有博主一起看。
 const DEFAULT_BLOGGER = '陈晓卿';
 const bloggerName = params.get('name') || DEFAULT_BLOGGER;
-document.getElementById('bloggerName').textContent = `${bloggerName}的美食地图`;
 
 // 与 extract-restaurants.mjs 的 dataDir() 保持一致的目录名清洗规则
 function safeName(name) {
     return String(name).replace(/[^a-zA-Z0-9一-鿿]/g, '_');
+}
+
+// 纯静态站点没法"列目录"看有哪些博主的数据,只能维护一份清单文件——
+// 加载失败(比如 fork 了仓库但还没建这个文件)就退化成只有当前博主一个
+// 选项,不报错,下拉框本身也就没什么用但不影响地图正常显示。
+async function loadBloggerList() {
+    try {
+        const resp = await fetch('data/bloggers.json');
+        const list = await resp.json();
+        return Array.isArray(list) && list.length ? list : [bloggerName];
+    } catch {
+        return [bloggerName];
+    }
+}
+
+function setupBloggerSelect(allBloggers) {
+    const sel = document.getElementById('bloggerSelect');
+    sel.innerHTML = allBloggers.map(n => `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('')
+        + '<option value="all">全部</option>';
+    sel.value = bloggerName; // bloggerName 是 'all' 或某个具体名字,跟 option 的 value 对应
+    sel.addEventListener('change', () => {
+        location.search = '?name=' + encodeURIComponent(sel.value);
+    });
 }
 
 // 暖色底图(CartoDB Voyager,免 API key;比纯灰的 Positron 更暖,契合美食主题)
@@ -514,7 +547,8 @@ function pickEmoji(name) {
 }
 
 function renderPopup(r) {
-    let html = `<div class="poi-name">${pickEmoji(r.name)} ${escapeHtml(r.name)}</div>`;
+    const bloggerTag = isCombinedView && r._blogger ? `<span class="poi-blogger-tag">${escapeHtml(r._blogger)}</span>` : '';
+    let html = `<div class="poi-name">${pickEmoji(r.name)} ${escapeHtml(r.name)}${bloggerTag}</div>`;
     for (const v of r.visits) {
         const dishes = (v.dishes || []).map(d => `<span>${escapeHtml(d)}</span>`).join('');
         html += `<div class="visit">
@@ -527,24 +561,39 @@ function renderPopup(r) {
     return html;
 }
 
+// 合并模式(?name=all 或以后支持的多选)下,弹窗/侧栏要多显示一个博主
+// 标签才分得清"这家店是谁探的";单博主模式维持原样,不多显示这个标签。
+let isCombinedView = false;
+
 async function load() {
+    const bloggerList = await loadBloggerList();
+    setupBloggerSelect(bloggerList);
+    const namesToLoad = bloggerName === 'all' ? bloggerList : [bloggerName];
+    isCombinedView = namesToLoad.length > 1;
+
     // 纯静态读取:GitHub Pages 没有后端,直接 fetch 仓库里的 JSON 文件。
-    // server.mjs 本地起服务时也是同一套相对路径,行为一致。
-    const resp = await fetch('data/' + encodeURIComponent(safeName(bloggerName)) + '/restaurants.json');
-    if (!resp.ok) {
-        document.getElementById('emptyHint').style.display = '';
-        document.getElementById('emptyHint').textContent = `未找到"${bloggerName}"的数据。请先在本地运行 fetch-posts.mjs + extract-restaurants.mjs,或换用 ?name=陈晓卿 查看示例`;
-        return;
+    // server.mjs 本地起服务时也是同一套相对路径,行为一致。合并模式下
+    // 逐个博主请求,给每条餐厅打上 _blogger 标签(内部字段,跟现有的
+    // _marker/_years 一个风格);某个博主的文件缺失/格式不对只跳过并
+    // 警告,不因为一个人的数据有问题就让整页什么都不显示。
+    const restaurants = [];
+    for (const name of namesToLoad) {
+        try {
+            const resp = await fetch('data/' + encodeURIComponent(safeName(name)) + '/restaurants.json');
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+            const list = await resp.json();
+            if (!Array.isArray(list)) throw new Error('数据格式错误');
+            for (const r of list) { r._blogger = name; restaurants.push(r); }
+        } catch (e) {
+            console.warn(`加载"${name}"的数据失败,已跳过: ${e.message}`);
+        }
     }
-    const restaurants = await resp.json();
-    if (!Array.isArray(restaurants)) {
-        document.getElementById('emptyHint').style.display = '';
-        document.getElementById('emptyHint').textContent = '数据格式错误';
-        return;
-    }
+
+    document.getElementById('bloggerName').textContent = `${namesToLoad.join(' + ')}的美食地图`;
+
     if (restaurants.length === 0) {
         document.getElementById('emptyHint').style.display = '';
-        document.getElementById('emptyHint').textContent = '暂无数据';
+        document.getElementById('emptyHint').textContent = `未找到"${namesToLoad.join('/')}"的数据。请先在本地运行 fetch-posts.mjs + extract-restaurants.mjs,或换用 ?name=陈晓卿 查看示例`;
         return;
     }
 
@@ -939,6 +988,7 @@ function setupSidebar(restaurants, clusterGroup) {
             return `<div class="sidebar-item" data-idx="${idx}">
                 <span class="emoji">${pickEmoji(r.name)}</span>
                 <span class="name">${escapeHtml(r.name)}</span>
+                ${isCombinedView && r._blogger ? `<span class="blogger-tag">${escapeHtml(r._blogger)}</span>` : ''}
                 ${rightSpan}
             </div>`;
         }).join('');

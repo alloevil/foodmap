@@ -34,10 +34,11 @@
 
 **👉 [alloevil.github.io/foodmap](https://alloevil.github.io/foodmap/)**
 
-纯静态托管在 GitHub Pages(`index.html` 直接 fetch `data/<name>/restaurants.json`,本地和线上是同一套代码,没有独立的后端 API)。默认展示随仓库附带的陈晓卿示例数据;换 `?name=<博主名>` 可切换到你自己本地跑出来的数据(需要该数据也被部署到同一站点)。
+纯静态托管在 GitHub Pages(`index.html` 直接 fetch `data/<name>/restaurants.json`,本地和线上是同一套代码,没有独立的后端 API)。仓库自带陈晓卿、隋坡两位博主的示例数据,页面顶部下拉框可以切换,也可以选"全部"合并看;换 `?name=<博主名>` 也能直接跳到某一位,或用 `?name=all` 直达合并视图。
 
 ## 功能
 
+- **多博主切换**:顶部下拉框在已收录的博主之间切换,也可以选"全部"合并查看
 - **聚类地图**:密集区域自动收成数字气泡,按拜访次数分级配色;标记大小随拜访次数增大,一眼看出常去的地方
 - **侧栏列表**:可搜索,按洲/国/省/市级联筛选(坐标反查得到,比发帖 IP 更准),默认收起,首次进入有箭头提示怎么展开
 - **拜访年份滑块**:双手柄区间选择,只看某段时间去过的餐厅
@@ -72,9 +73,13 @@ node extract-restaurants.mjs --name <博主名>
 #    免费 Nominatim 接口,限速 1 请求/秒,数据量大时会跑一会儿
 node geocode-regions.mjs --name <博主名>
 
-# 7. 起地图页(纯静态文件 server,与 GitHub Pages 行为一致)
+# 7. 把博主名加进 data/bloggers.json(一个 JSON 字符串数组),这样地图页顶部
+#    的博主切换下拉框才会列出这个人,以及能在"全部"里合并看到他的数据
+
+# 8. 起地图页(纯静态文件 server,与 GitHub Pages 行为一致)
 node server.mjs
-# 打开 http://localhost:3457/?name=<博主名>(不带 ?name= 默认看陈晓卿示例数据)
+# 打开 http://localhost:3457/?name=<博主名>(不带 ?name= 默认看陈晓卿示例数据,
+# ?name=all 合并展示 bloggers.json 里列出的所有博主)
 ```
 
 ## 原理
@@ -110,6 +115,7 @@ node server.mjs
 | `verify-render.js` | Puppeteer 冒烟测试,截图确认标记正常渲染 |
 | `data/<博主名>/posts_raw.json` | 归一化后的原始动态(增量合并,默认 gitignore) |
 | `data/<博主名>/restaurants.json` | 最终结构化餐厅数据,地图页直接读取,可提交公开 |
+| `data/bloggers.json` | 已收录博主名单,驱动地图页顶部的切换下拉框和"全部"合并视图 |
 
 ## 测试
 
