@@ -1,6 +1,6 @@
 {
   "name": "foodmap",
-  "version": "1.17.0",
+  "version": "1.18.0",
   "description": "抓取美食博主的微博主页动态，识别带地理位置标记的餐馆，用 AI 抽取推荐菜品，生成可视化地图",
   "type": "commonjs",
   "scripts": {
