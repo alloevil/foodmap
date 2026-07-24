@@ -864,16 +864,22 @@ function setupJourney(restaurants, clusterGroup) {
     // 飞机图标之前只在瞬间跳到新位置时露一下脸,900ms 一晃就过去,根本看不清
     // 是什么图标。远距离的这一步改成让图标沿直线平滑"飞"过去(而不是瞬移),
     // 配合下面 play() 里给远距离步骤单独留出更长的停留时间,才看得出"飞机在飞"。
+    // 返回一个 promise,在图标真正滑到终点时 resolve——播放调度(见下面的
+    // tick())要靠这个知道"这一步到底什么时候才算真正落地",不能只靠猜
+    // 一个数字当延时。
     function animateMarkerTo(from, to, duration) {
         const ctrl = arcControlPoint(from, to, bendFor(true)); // 跟 rebuildSegments 画的弧线用同一个控制点(飞机段的弯曲度)
-        const start = performance.now();
-        function step(now) {
-            const t = Math.min(1, (now - start) / duration);
-            const p = quadraticPoint(from, ctrl, to, t);
-            marker.setLatLng([p.lat, p.lng]);
-            if (t < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
+        return new Promise(resolve => {
+            const start = performance.now();
+            function step(now) {
+                const t = Math.min(1, (now - start) / duration);
+                const p = quadraticPoint(from, ctrl, to, t);
+                marker.setLatLng([p.lat, p.lng]);
+                if (t < 1) requestAnimationFrame(step);
+                else resolve();
+            }
+            requestAnimationFrame(step);
+        });
     }
 
     // 镜头飞到新区域时,目标位置的瓦片往往还在下载——如果车/飞机图标不等
@@ -890,6 +896,15 @@ function setupJourney(restaurants, clusterGroup) {
         });
     }
 
+    // flyTo/flyToBounds 调用完的那一刻,Leaflet 还没真的开始为目标视野请求
+    // 新瓦片(要等动画推进几帧才会触发)——如果紧接着就去检查 tilesReady,
+    // 拿到的还是"上一个视野"的旧状态(当时可能刚好是 true),等于没等。
+    // 必须先等镜头动画本身跑完(moveend),这时候 Leaflet 才会把新视野需要
+    // 的瓦片请求都发出去,tilesReady 也才会被正确地标记成"在加载"。
+    function waitForMoveEnd() {
+        return new Promise(resolve => map.once('moveend', resolve));
+    }
+
     function renderStep(i, { pan = false, animateMarker = false } = {}) {
         index = i;
         progressEl.value = i;
@@ -901,12 +916,13 @@ function setupJourney(restaurants, clusterGroup) {
         const mode = distKm > FAR_THRESHOLD_KM ? 'far' : 'near';
         lastMode = mode;
         marker.setIcon(journeyIcon(mode));
+        // 返回一个 promise,统一给 moveMarker 本身不返回值(直接瞬移)的
+        // 情况包一层 resolve——调用方(tick())不用关心"这一步到底要不要
+        // 动画"，只要等这个 promise 完成就代表图标已经真正落到位。
         function moveMarker() {
-            if (animateMarker && mode === 'far' && prev) {
-                animateMarkerTo(prev, pt, 1600);
-            } else {
-                marker.setLatLng([pt.lat, pt.lng]);
-            }
+            if (animateMarker && mode === 'far' && prev) return animateMarkerTo(prev, pt, 1600);
+            marker.setLatLng([pt.lat, pt.lng]);
+            return Promise.resolve();
         }
         const dishText = pt.dishes.length ? ` · ${pt.dishes.slice(0, 3).join('、')}` : '';
         labelEl.textContent = `${formatDate(pt.date)} ${pt.name}${dishText}`;
@@ -921,26 +937,27 @@ function setupJourney(restaurants, clusterGroup) {
         // 目标缩放很接近"时才认为"不需要再挪镜头",飞机步骤(缩放目标依
         // 每一步的两点距离而变)则维持原来每次都飞的行为,不做跳过判断。
         // 镜头真的要移动时,先等目标区域的瓦片加载完才让图标动,不然图标
-        // 会先"到位"、瓦片才慢慢补上,看起来很突兀。动画本身也不能太快——
-        // 之前 1.4s/0.5s 对瓦片下载来说太紧,经常动画都放完了瓦片还是空的,
-        // 拉长一些给瓦片留出真正加载完的时间。
+        // 会先"到位"、瓦片才慢慢补上,看起来很突兀。renderStep 把这一串
+        // "等镜头动画→等瓦片→挪图标"的 promise 链原样返回给调用方——
+        // play() 的调度靠它知道这一步到底什么时候才算真正结束,不用再靠
+        // 猜一个"应该够长"的固定延时(之前就是这么栽的:实际耗时经常比
+        // 猜的延时长,下一步提前开始,新的镜头动画/瓦片请求跟上一步的还
+        // 没结束就叠在一起,看起来永远都"没加载完就动")。
         if (pan) {
             if (mode === 'far' && prev) {
                 map.flyToBounds([[prev.lat, prev.lng], [pt.lat, pt.lng]], { padding: [80, 80], maxZoom: 8, duration: 2.2 });
-                waitForTiles().then(moveMarker);
+                return waitForMoveEnd().then(waitForTiles).then(moveMarker);
             } else {
                 const zoomCloseEnough = Math.abs(map.getZoom() - 12) < 0.6;
                 const alreadyVisible = zoomCloseEnough && map.getBounds().pad(-0.15).contains([pt.lat, pt.lng]);
                 if (!alreadyVisible) {
                     map.flyTo([pt.lat, pt.lng], 12, { animate: true, duration: 0.9 });
-                    waitForTiles().then(moveMarker);
-                } else {
-                    moveMarker();
+                    return waitForMoveEnd().then(waitForTiles).then(moveMarker);
                 }
+                return moveMarker();
             }
-        } else {
-            moveMarker();
         }
+        return moveMarker();
     }
 
     function pause() {
@@ -952,15 +969,20 @@ function setupJourney(restaurants, clusterGroup) {
         if (index >= journey.length - 1) index = 0; // 播放完了再点,从头再来一遍
         playing = true;
         playBtn.textContent = '⏸';
-        // setInterval 的固定间隔没法区分"这一步是开车还是坐飞机"——改成
-        // setTimeout 自己排下一次,每步结束后按刚渲染的这一步是远是近决定
-        // 停留多久:飞机步骤停留够长(2.2s)让人看清图标和缩放动画,开车步骤
-        // 维持原来的节奏(900ms)不拖慢整体播放
+        // 之前用固定延时预估"这一步应该多久能播完",猜的数字一旦比实际
+        // 耗时(镜头动画+等瓦片+图标滑动全部串联起来)短,下一步就会在上
+        // 一步真正落地之前提前开始——新的镜头动画/瓦片请求跟旧的没结束
+        // 的叠在一起,表现出来就是"图层还没加载完图标就已经在动"。改成
+        // renderStep 返回一个"这一步真正完成"的 promise,等它 resolve
+        // 之后才排下一步,不再靠猜时长兜底,只在落地后留一小段停留时间
+        // 让人看清图标和标签。
         function tick() {
             if (!playing) return;
             if (index >= journey.length - 1) { pause(); return; }
-            renderStep(index + 1, { pan: true, animateMarker: true });
-            timer = setTimeout(tick, lastMode === 'far' ? 3200 : 1000);
+            Promise.resolve(renderStep(index + 1, { pan: true, animateMarker: true })).then(() => {
+                if (!playing) return; // 等待落地的过程中可能被暂停了,不要再排下一步
+                timer = setTimeout(tick, lastMode === 'far' ? 900 : 450);
+            });
         }
         tick();
     }
