@@ -93,13 +93,13 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
    基础版本,依然比完全没有动画生硬地贴上去要好。 */
 @keyframes pin-pop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .food-pin, .cluster-pin { animation: pin-pop .3s cubic-bezier(.34,1.56,.64,1) backwards; }
-.food-pin { display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--surface-1); border: 2px solid var(--primary); box-shadow: 0 2px 8px rgba(43,33,24,.25); }
-.food-pin.repeat { border-color: var(--gold); box-shadow: 0 0 10px rgba(163,105,15,.4); }
-.cluster-pin { display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: 600; box-shadow: 0 2px 10px rgba(43,33,24,.3); }
-.cluster-pin.tier-1 { background: #f0c9a0; border: 2px solid #e0ab74; color: #5c3a1e; }
-.cluster-pin.tier-2 { background: #d98a4f; border: 2px solid #c1642a; color: #fff; }
-.cluster-pin.tier-3 { background: #b8491f; border: 2px solid #963a17; color: #fff; }
-.cluster-pin.tier-4 { background: #7a2015; border: 2px solid #5c160f; color: #fff; }
+.food-pin { display: flex; align-items: center; justify-content: center; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #fffdf8, var(--surface-1) 60%, #e9dcc4 100%); border: 2px solid var(--primary); box-shadow: inset 0 1px 2px rgba(255,255,255,.9), inset 0 -3px 4px rgba(43,33,24,.18), 0 2px 8px rgba(43,33,24,.25); }
+.food-pin.repeat { border-color: var(--gold); box-shadow: inset 0 1px 2px rgba(255,255,255,.9), inset 0 -3px 4px rgba(43,33,24,.18), 0 0 10px rgba(163,105,15,.4); }
+.cluster-pin { display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: 600; box-shadow: inset 0 1px 2px rgba(255,255,255,.5), inset 0 -3px 4px rgba(0,0,0,.2), 0 2px 10px rgba(43,33,24,.3); }
+.cluster-pin.tier-1 { background: radial-gradient(circle at 32% 28%, #fbe8d0, #f0c9a0 60%, #dba876 100%); border: 2px solid #e0ab74; color: #5c3a1e; }
+.cluster-pin.tier-2 { background: radial-gradient(circle at 32% 28%, #f0b37f, #d98a4f 60%, #b56a35 100%); border: 2px solid #c1642a; color: #fff; }
+.cluster-pin.tier-3 { background: radial-gradient(circle at 32% 28%, #d97545, #b8491f 60%, #8f3512 100%); border: 2px solid #963a17; color: #fff; }
+.cluster-pin.tier-4 { background: radial-gradient(circle at 32% 28%, #a34530, #7a2015 60%, #5c130a 100%); border: 2px solid #5c160f; color: #fff; }
 .sidebar-toggle {
     position: absolute; top: 16px; left: 252px; z-index: 1000;
     width: 36px; height: 36px; border-radius: var(--radius-control); border: 1px solid var(--hairline);
@@ -182,7 +182,7 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 }
 .locate-btn:hover { background: var(--primary-hover); }
 .locate-btn.loading { opacity: .6; cursor: wait; }
-.user-dot { position: relative; width: 16px; height: 16px; border-radius: 50%; background: #4da6ff; border: 3px solid #fff; box-shadow: 0 0 0 4px rgba(77,166,255,.35); }
+.user-dot { position: relative; width: 16px; height: 16px; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #a8d4ff, #4da6ff 60%, #2a7fd4 100%); border: 3px solid #fff; box-shadow: inset 0 1px 1px rgba(255,255,255,.7), 0 0 0 4px rgba(77,166,255,.35); }
 .user-dot::after { content: ''; position: absolute; inset: -8px; border-radius: 50%; border: 2px solid #4da6ff; animation: pulse 1.6s ease-out infinite; }
 /* 首次进入时指向"定位"按钮的引导气泡,点一次/等几秒/点气泡本身都会消失,
    localStorage 记住看过了,不会每次刷新都弹 */
@@ -239,12 +239,12 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 .journey-legend .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 /* 两段之间距离远用飞机、距离近用汽车(见 setupJourney 的 journeyIcon),
    图标本身放大到能装下一个 emoji,不再是纯色小圆点 */
-.journey-marker { position: relative; width: 26px; height: 26px; border-radius: 50%; background: #2f6f4f; border: 3px solid #fff; box-shadow: 0 0 0 4px rgba(47,111,79,.35); display: flex; align-items: center; justify-content: center; font-size: 13px; }
+.journey-marker { position: relative; width: 26px; height: 26px; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #6fae8a, #2f6f4f 60%, #1f4d35 100%); border: 3px solid #fff; box-shadow: inset 0 1px 2px rgba(255,255,255,.6), inset 0 -2px 3px rgba(0,0,0,.2), 0 0 0 4px rgba(47,111,79,.35); display: flex; align-items: center; justify-content: center; font-size: 13px; }
 .journey-marker::after { content: ''; position: absolute; inset: -7px; border-radius: 50%; border: 2px solid #2f6f4f; animation: pulse 1.6s ease-out infinite; }
 /* 轨迹回放路过的每个地点留一个小图标(见 setupJourney 的 rebuildStopMarkers)
    ——比地图默认的 food-pin 小一圈,不会跟正在移动的车/飞机图标抢视觉重心,
    纯粹是"走过的路"的留痕 */
-.journey-stop { display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--surface-1); border: 2px solid var(--primary); font-size: 11px; box-shadow: 0 1px 4px rgba(43,33,24,.3); animation: pin-pop .25s cubic-bezier(.34,1.56,.64,1) backwards; }
+.journey-stop { display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #fffdf8, var(--surface-1) 60%, #e9dcc4 100%); border: 2px solid var(--primary); font-size: 11px; box-shadow: inset 0 1px 1px rgba(255,255,255,.9), 0 1px 4px rgba(43,33,24,.3); animation: pin-pop .25s cubic-bezier(.34,1.56,.64,1) backwards; }
 /* 手机窄屏:这些面板的宽度都是按桌面尺寸一个个手动定的(236px 侧栏、
    170px 滑块……),窄屏上要么整体超出屏幕右边被裁掉,要么互相挤在一起。
    核心思路是把"宽度由内容撑开"改成"宽度受屏幕限制、内部元素让路"。 */
@@ -625,7 +625,9 @@ async function load() {
         // inline style 会整个覆盖掉 CSS 里 .food-pin/.food-pin.repeat 原有的
         // box-shadow(不是叠加),所以合并模式下要把原阴影也一起拼进来,
         // 不然点上的阴影会凭空消失,只剩博主色环
-        const baseShadow = repeat ? '0 0 10px rgba(163,105,15,.4)' : '0 2px 8px rgba(43,33,24,.25)';
+        const baseShadow = repeat
+            ? 'inset 0 1px 2px rgba(255,255,255,.9), inset 0 -3px 4px rgba(43,33,24,.18), 0 0 10px rgba(163,105,15,.4)'
+            : 'inset 0 1px 2px rgba(255,255,255,.9), inset 0 -3px 4px rgba(43,33,24,.18), 0 2px 8px rgba(43,33,24,.25)';
         const ringStyle = isCombinedView ? `box-shadow:0 0 0 3px ${bloggerColorOf.get(r._blogger) || '#888'}, ${baseShadow};` : '';
         return L.divIcon({
             className: '',
