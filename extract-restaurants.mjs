@@ -11,7 +11,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { hasLocationSignal } from './normalize.mjs';
 import { buildCandidateText, buildExtractionPrompt, parseExtractionResponse, aggregateRestaurants } from './extract.mjs';
-import { forwardGeocodeByName, reverseGeocodeLocation, cityMatches } from './geocode-regions.mjs';
+import { forwardGeocodeByName, reverseGeocodeDisplayName, cityMatches } from './geocode-regions.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
@@ -108,10 +108,10 @@ async function main() {
         // 的话这类错误会悄悄进最终数据,只有用户自己发现"这家店明明在成都
         // 却显示在包头"才会暴露。
         if (expectedHint) {
-          const loc = await reverseGeocodeLocation(hit.lat, hit.lng);
+          const displayName = await reverseGeocodeDisplayName(hit.lat, hit.lng);
           await delay(NOMINATIM_DELAY_MS);
-          if (!cityMatches(expectedHint, loc)) {
-            console.warn(`按名搜到的坐标跟预期城市不符,当作未命中: ${r.name}(期望"${expectedHint}",反查到"${loc.province}/${loc.city}")`);
+          if (!cityMatches(expectedHint, displayName)) {
+            console.warn(`按名搜到的坐标跟预期城市不符,当作未命中: ${r.name}(期望"${expectedHint}",反查到"${displayName}")`);
             geocodeRejected++;
             continue;
           }

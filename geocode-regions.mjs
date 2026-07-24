@@ -98,6 +98,22 @@ export async function forwardGeocodeByName(name, regionHint, countryCode = 'cn')
   return hit ? { lat: Number(hit.lat), lng: Number(hit.lon) } : null;
 }
 
+/**
+ * 反查坐标的完整地址拼接字符串(比如"东城区, 北京市, 100010, 中国")——
+ * 专门给 cityMatches 校验用,不是 reverseGeocodeLocation 那套结构化字段。
+ * 直辖市(北京/上海/天津/重庆)在结构化的 address 字段里往往没有独立的
+ * "省"这一层,city 字段给的是区(比如"东城区"),市名本身只会出现在
+ * display_name 这个拼接字符串里——只查结构化字段校验不到"东城区"其实
+ * 就在"北京",会把正确结果误判成不匹配。
+ */
+export async function reverseGeocodeDisplayName(lat, lng) {
+  const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=8&accept-language=zh`;
+  const resp = await fetch(url, { headers: { 'User-Agent': 'foodmap-demo/1.0 (personal project, see github.com/alloevil/foodmap)' } });
+  if (!resp.ok) throw new Error(`Nominatim ${resp.status}`);
+  const data = await resp.json();
+  return data.display_name || '';
+}
+
 // 省/市/自治区之类的行政区后缀去掉,只留核心地名——"成都" vs "成都市"、
 // "内蒙古自治区" vs "内蒙古"这种同一地名的不同写法,去掉后缀才能对上。
 function normalizeCityName(s) {
@@ -110,12 +126,14 @@ function normalizeCityName(s) {
  * OSM 里根本没这家店、匹配到别的东西),不做这一步校验的话这类错误会
  * 悄悄进最终数据,除非用户自己发现"这家店明明在成都却显示在包头"才会
  * 暴露。expectedHint 为空(没有任何城市线索可比对)时不拒绝,退回旧行为。
+ * displayName 是 reverseGeocodeDisplayName 拿到的完整地址字符串,直接用
+ * 子串包含判断,不用逐级比对结构化字段(直辖市那一级结构化字段里常常
+ * 没有,只在拼接字符串里出现)。
  */
-export function cityMatches(expectedHint, location) {
+export function cityMatches(expectedHint, displayName) {
   const expected = normalizeCityName(expectedHint);
   if (!expected) return true;
-  const candidates = [location?.city, location?.province].filter(Boolean).map(normalizeCityName).filter(Boolean);
-  return candidates.some(c => c.includes(expected) || expected.includes(c));
+  return String(displayName || '').includes(expected);
 }
 
 async function main() {

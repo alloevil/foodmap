@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
-import { reverseGeocodeLocation, forwardGeocodeByName, cityMatches } from '../geocode-regions.mjs';
+import { reverseGeocodeLocation, forwardGeocodeByName, reverseGeocodeDisplayName, cityMatches } from '../geocode-regions.mjs';
 
 function mockFetchOnce(addressObj) {
   globalThis.fetch = async () => ({ ok: true, json: async () => ({ address: addressObj }) });
@@ -86,20 +86,38 @@ test('forwardGeocodeByName: HTTP 非 200 时抛错', async () => {
   await assert.rejects(() => forwardGeocodeByName('随便什么店', '北京'), /Nominatim 503/);
 });
 
-test('cityMatches: 城市/省任一匹配(去掉市/省/自治区等后缀)即算通过', () => {
-  assert.strictEqual(cityMatches('成都', { city: '成都市', province: '四川省' }), true);
-  assert.strictEqual(cityMatches('内蒙古', { city: '九原区', province: '内蒙古自治区' }), true);
+test('reverseGeocodeDisplayName: 返回完整地址拼接字符串', async () => {
+  globalThis.fetch = async () => ({ ok: true, json: async () => ({ display_name: '东城区, 北京市, 100010, 中国' }) });
+  assert.strictEqual(await reverseGeocodeDisplayName(39.9, 116.4), '东城区, 北京市, 100010, 中国');
 });
 
-test('cityMatches: 期望城市跟反查结果都不沾边时判定不匹配', () => {
-  assert.strictEqual(cityMatches('成都', { city: '九原区', province: '内蒙古自治区' }), false);
+test('reverseGeocodeDisplayName: 缺失 display_name 时返回空字符串,不抛错', async () => {
+  globalThis.fetch = async () => ({ ok: true, json: async () => ({}) });
+  assert.strictEqual(await reverseGeocodeDisplayName(0, 0), '');
+});
+
+test('reverseGeocodeDisplayName: HTTP 非 200 时抛错', async () => {
+  globalThis.fetch = async () => ({ ok: false, status: 429 });
+  await assert.rejects(() => reverseGeocodeDisplayName(1, 1), /Nominatim 429/);
+});
+
+test('cityMatches: 期望城市作为子串出现在完整地址拼接字符串里即算通过', () => {
+  assert.strictEqual(cityMatches('成都', '锦江区, 成都市, 四川省, 中国'), true);
+  // 直辖市结构化字段里往往没有独立的"省"这一层,只有拼接字符串里能看到——
+  // 这正是改用 displayName 而不是结构化 city/province 字段校验的原因
+  assert.strictEqual(cityMatches('北京', '东城区, 北京市, 100010, 中国'), true);
+});
+
+test('cityMatches: 期望城市完全不在拼接字符串里时判定不匹配', () => {
+  assert.strictEqual(cityMatches('成都', '九原区, 包头市, 内蒙古自治区, 中国'), false);
 });
 
 test('cityMatches: 没有城市线索(expectedHint 为空)时不拒绝,退回旧行为', () => {
-  assert.strictEqual(cityMatches(null, { city: '任意', province: '任意' }), true);
-  assert.strictEqual(cityMatches('', { city: null, province: null }), true);
+  assert.strictEqual(cityMatches(null, '随便什么地址'), true);
+  assert.strictEqual(cityMatches('', ''), true);
 });
 
-test('cityMatches: 反查结果为空对象(city/province 都缺失)时判定不匹配', () => {
-  assert.strictEqual(cityMatches('成都', {}), false);
+test('cityMatches: displayName 为空/缺失时判定不匹配(有城市线索但反查啥也没查到)', () => {
+  assert.strictEqual(cityMatches('成都', ''), false);
+  assert.strictEqual(cityMatches('成都', undefined), false);
 });
