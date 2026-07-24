@@ -11,7 +11,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { hasLocationSignal } from './normalize.mjs';
 import { buildCandidateText, buildExtractionPrompt, parseExtractionResponse, aggregateRestaurants } from './extract.mjs';
-import { forwardGeocodeByName } from './geocode-regions.mjs';
+import { forwardGeocodeByName, reverseGeocodeLocation, cityMatches } from './geocode-regions.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
@@ -92,19 +92,36 @@ async function main() {
 
   const aggregated = aggregateRestaurants(extracted);
 
-  let geocoded = 0, geocodeFailed = 0;
+  let geocoded = 0, geocodeFailed = 0, geocodeRejected = 0;
   if (byName) {
     const noCoord = aggregated.filter(r => r.lat == null);
     console.log(`\n${noCoord.length} 家没有自带坐标,按店名+城市正向搜索(限速 1 请求/秒,优先用文字里提到的城市,没提到才退回发帖 IP 归属地;同名连锁店只会取搜索结果第一条,可能对不上博主实际去的分店)...`);
     for (const r of noCoord) {
+      const expectedHint = r.cityHint || r.region;
       try {
-        const hit = await forwardGeocodeByName(r.name, r.cityHint || r.region);
-        if (hit) { r.lat = hit.lat; r.lng = hit.lng; geocoded++; } else { geocodeFailed++; }
+        const hit = await forwardGeocodeByName(r.name, expectedHint);
+        await delay(NOMINATIM_DELAY_MS);
+        if (!hit) { geocodeFailed++; continue; }
+        // 搜到坐标之后反查一下是不是真的落在预期城市附近——店名在 OSM 里
+        // 匹配到完全不相关地方的情况比"选错分店"更容易发生(比如根本没有
+        // 这家店,搜索引擎退化去匹配了地址文本里沾点边的别的地方),不校验
+        // 的话这类错误会悄悄进最终数据,只有用户自己发现"这家店明明在成都
+        // 却显示在包头"才会暴露。
+        if (expectedHint) {
+          const loc = await reverseGeocodeLocation(hit.lat, hit.lng);
+          await delay(NOMINATIM_DELAY_MS);
+          if (!cityMatches(expectedHint, loc)) {
+            console.warn(`按名搜到的坐标跟预期城市不符,当作未命中: ${r.name}(期望"${expectedHint}",反查到"${loc.province}/${loc.city}")`);
+            geocodeRejected++;
+            continue;
+          }
+        }
+        r.lat = hit.lat; r.lng = hit.lng; geocoded++;
       } catch (e) {
         console.warn(`按名搜索失败,跳过: ${r.name} - ${e.message}`);
         geocodeFailed++;
+        await delay(NOMINATIM_DELAY_MS);
       }
-      await delay(NOMINATIM_DELAY_MS);
     }
     for (const r of aggregated) delete r.cityHint; // 只是内部搜索线索,不进最终的 restaurants.json
   }
@@ -114,7 +131,7 @@ async function main() {
 
   fs.writeFileSync(path.join(dir, 'restaurants.json'), JSON.stringify(restaurants, null, 2));
   console.log(`\n完成: LLM 调用 ${llmCalls} 次,非餐馆/跳过 ${skipped} 条,解析失败 ${parseFailed} 条`);
-  if (byName) console.log(`按名搜索: 命中 ${geocoded} 家,未命中 ${geocodeFailed} 家`);
+  if (byName) console.log(`按名搜索: 命中 ${geocoded} 家,未命中 ${geocodeFailed} 家,反查后发现城市不符被拒绝 ${geocodeRejected} 家`);
   console.log(`识别出 ${restaurants.length} 家有坐标的餐厅(另有 ${noGeoCount} 家因无坐标未上图),已存 ${path.join(dir, 'restaurants.json')}`);
 }
 

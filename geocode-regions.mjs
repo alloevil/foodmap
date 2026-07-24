@@ -98,6 +98,26 @@ export async function forwardGeocodeByName(name, regionHint, countryCode = 'cn')
   return hit ? { lat: Number(hit.lat), lng: Number(hit.lon) } : null;
 }
 
+// 省/市/自治区之类的行政区后缀去掉,只留核心地名——"成都" vs "成都市"、
+// "内蒙古自治区" vs "内蒙古"这种同一地名的不同写法,去掉后缀才能对上。
+function normalizeCityName(s) {
+  return String(s || '').replace(/(市|省|自治区|特别行政区|地区|区|盟)$/, '').trim();
+}
+
+/**
+ * 按名称搜到的坐标,反查一下是不是真的在预期城市附近——forwardGeocodeByName
+ * 偶尔会匹配到跟店名沾点边但完全不相关的地方(比如同名不同城市,或者
+ * OSM 里根本没这家店、匹配到别的东西),不做这一步校验的话这类错误会
+ * 悄悄进最终数据,除非用户自己发现"这家店明明在成都却显示在包头"才会
+ * 暴露。expectedHint 为空(没有任何城市线索可比对)时不拒绝,退回旧行为。
+ */
+export function cityMatches(expectedHint, location) {
+  const expected = normalizeCityName(expectedHint);
+  if (!expected) return true;
+  const candidates = [location?.city, location?.province].filter(Boolean).map(normalizeCityName).filter(Boolean);
+  return candidates.some(c => c.includes(expected) || expected.includes(c));
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const opt = (name, def) => {
