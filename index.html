@@ -94,6 +94,7 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 @keyframes pin-pop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .food-pin, .cluster-pin { animation: pin-pop .3s cubic-bezier(.34,1.56,.64,1) backwards; }
 .food-pin { display: flex; align-items: center; justify-content: center; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #fffdf8, var(--surface-1) 60%, #e9dcc4 100%); border: 2px solid var(--primary); box-shadow: inset 0 1px 2px rgba(255,255,255,.9), inset 0 -3px 4px rgba(43,33,24,.18), 0 2px 8px rgba(43,33,24,.25); }
+.food-icon-img { display: block; } /* img 默认是 inline,基线对齐会留一点缝,block 才能真正居中 */
 .food-pin.repeat { border-color: var(--gold); box-shadow: inset 0 1px 2px rgba(255,255,255,.9), inset 0 -3px 4px rgba(43,33,24,.18), 0 0 10px rgba(163,105,15,.4); }
 .cluster-pin { display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: 600; box-shadow: inset 0 1px 2px rgba(255,255,255,.5), inset 0 -3px 4px rgba(0,0,0,.2), 0 2px 10px rgba(43,33,24,.3); }
 .cluster-pin.tier-1 { background: radial-gradient(circle at 32% 28%, #fbe8d0, #f0c9a0 60%, #dba876 100%); border: 2px solid #e0ab74; color: #5c3a1e; }
@@ -546,17 +547,23 @@ function formatDate(raw) {
 
 // 按名称哈希挑一个食物 emoji,同一家餐厅在标记/侧栏/弹窗里始终显示同一个
 // 图标——纯函数、不依赖任何状态,提到顶层后弹窗和侧栏可以直接调用,不用
-// 再作为参数一路传下去
-const FOOD_EMOJI = ['🍜', '🍲', '🍛', '🥘', '🍚', '🍢', '🥟', '🍤', '🍗', '🍣'];
-function pickEmoji(name) {
+// 再作为参数一路传下去。
+// 图标本体是微软 Fluent Emoji 的 3D 渲染图(MIT 协议,存在 assets/food-icons/
+// 下),不再是纯 emoji 文字——立体渲染质感跟之前给标记加的玻璃高光是同一个
+// "让图标更有质感"的思路,只是这次换成真正的立体插画而不是 CSS 模拟。
+const FOOD_ICONS = ['dumpling', 'oden', 'fried_shrimp', 'curry_rice', 'cooked_rice', 'bento_box', 'cut_of_meat', 'pancakes', 'fish', 'dango', 'cookie', 'fortune_cookie'];
+function pickFoodIcon(name) {
     let h = 0;
-    for (const ch of name) h = (h * 31 + ch.codePointAt(0)) % FOOD_EMOJI.length;
-    return FOOD_EMOJI[h];
+    for (const ch of name) h = (h * 31 + ch.codePointAt(0)) % FOOD_ICONS.length;
+    return FOOD_ICONS[h];
+}
+function foodIconImg(name, size) {
+    return `<img class="food-icon-img" src="assets/food-icons/${pickFoodIcon(name)}.png" width="${size}" height="${size}" alt="">`;
 }
 
 function renderPopup(r) {
     const bloggerTag = isCombinedView && r._blogger ? `<span class="poi-blogger-tag">${escapeHtml(r._blogger)}</span>` : '';
-    let html = `<div class="poi-name">${pickEmoji(r.name)} ${escapeHtml(r.name)}${bloggerTag}</div>`;
+    let html = `<div class="poi-name">${foodIconImg(r.name, 20)} ${escapeHtml(r.name)}${bloggerTag}</div>`;
     for (const v of r.visits) {
         const dishes = (v.dishes || []).map(d => `<span>${escapeHtml(d)}</span>`).join('');
         html += `<div class="visit">
@@ -635,7 +642,7 @@ async function load() {
         const ringStyle = isCombinedView ? `box-shadow:0 0 0 3px ${bloggerColorOf.get(r._blogger) || '#888'}, ${baseShadow};` : '';
         return L.divIcon({
             className: '',
-            html: `<div class="food-pin${repeat ? ' repeat' : ''}" style="width:${size}px;height:${size}px;font-size:${size * 0.55}px;animation-delay:${delayMs}ms;${ringStyle}">${pickEmoji(r.name)}</div>`,
+            html: `<div class="food-pin${repeat ? ' repeat' : ''}" style="width:${size}px;height:${size}px;animation-delay:${delayMs}ms;${ringStyle}">${foodIconImg(r.name, Math.round(size * 0.68))}</div>`,
             iconSize: [size, size],
             iconAnchor: [size / 2, size / 2],
         });
@@ -812,7 +819,7 @@ function setupJourney(restaurants, clusterGroup) {
         }
     }
 
-    // 路过的每个地点留一个小食物图标(用跟主地图一致的 pickEmoji,一眼认出
+    // 路过的每个地点留一个小食物图标(用跟主地图一致的 foodIconImg,一眼认出
     // 是同一家餐厅),随播放进度逐个"冒出来"而不是一开始就铺满——呼应
     // rebuildSegments 只画到当前进度为止的线段,两者进度保持一致
     let stopMarkers = [];
@@ -822,7 +829,7 @@ function setupJourney(restaurants, clusterGroup) {
         for (let j = 0; j <= uptoIndex; j++) {
             const pt = journey[j];
             const m = L.marker([pt.lat, pt.lng], {
-                icon: L.divIcon({ className: '', html: `<div class="journey-stop">${pickEmoji(pt.name)}</div>`, iconSize: [20, 20], iconAnchor: [10, 10] }),
+                icon: L.divIcon({ className: '', html: `<div class="journey-stop">${foodIconImg(pt.name, 14)}</div>`, iconSize: [20, 20], iconAnchor: [10, 10] }),
                 zIndexOffset: 500,
             }).addTo(map);
             stopMarkers.push(m);
@@ -1027,7 +1034,7 @@ function setupSidebar(restaurants, clusterGroup) {
                 ? `<span class="dist">${formatDistance(distanceKm(nearbyOrigin.lat, nearbyOrigin.lng, r.lat, r.lng))}</span>`
                 : `<span class="count${r.visits.length >= 2 ? ' repeat' : ''}">${r.visits.length}次</span>`;
             return `<div class="sidebar-item" data-idx="${idx}">
-                <span class="emoji">${pickEmoji(r.name)}</span>
+                <span class="emoji">${foodIconImg(r.name, 18)}</span>
                 <span class="name">${escapeHtml(r.name)}</span>
                 ${isCombinedView && r._blogger ? `<span class="blogger-tag">${escapeHtml(r._blogger)}</span>` : ''}
                 ${rightSpan}
