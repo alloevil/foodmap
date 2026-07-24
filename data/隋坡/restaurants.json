@@ -12,7 +12,13 @@
         "quote": "新人博主第一次探店全聚德，有点紧张"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "海淀区"
+    }
   },
   {
     "name": "芙蓉凰",
@@ -27,7 +33,13 @@
         "quote": "|建号以来第一个全好评餐厅"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "四川省",
+      "city": "青羊区"
+    }
   },
   {
     "name": "食贵",
@@ -42,7 +54,13 @@
         "quote": "|在上海主动要差评的餐厅探店"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "上海市",
+      "city": "黄浦区"
+    }
   },
   {
     "name": "绿波廊",
@@ -57,7 +75,13 @@
         "quote": "|探访上海名店绿波廊"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "上海市",
+      "city": "黄浦区"
+    }
   },
   {
     "name": "泽秀",
@@ -72,7 +96,13 @@
         "quote": "众多网红推荐的炖菜小馆"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "丰台区"
+    }
   },
   {
     "name": "好再来",
@@ -87,7 +117,13 @@
         "quote": "探店一家餐厅"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "怀柔区"
+    }
   },
   {
     "name": "西安饭庄",
@@ -102,7 +138,13 @@
         "quote": "西安最有名的饭店探店"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "陕西省",
+      "city": "雁塔区"
+    }
   },
   {
     "name": "益发顺",
@@ -117,7 +159,13 @@
         "quote": "评论里提到最多的天津饭店探店"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "天津市",
+      "city": "河东区"
+    }
   },
   {
     "name": "老厨家",
@@ -132,7 +180,13 @@
         "quote": "锅包肉是他们家发明的探店"
       }
     ],
-    "region": "西藏"
+    "region": "西藏",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "西藏自治区",
+      "city": "定结县"
+    }
   },
   {
     "name": "金山小馆",
@@ -147,7 +201,13 @@
         "quote": "特级厨师探店金山小馆，讲述如何教徒弟"
       }
     ],
-    "region": "浙江"
+    "region": "浙江",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "浙江省",
+      "city": "江北区"
+    }
   },
   {
     "name": "遇外滩",
@@ -162,7 +222,13 @@
         "quote": "探店\"大陆第一餐厅\"遇外滩"
       }
     ],
-    "region": "上海"
+    "region": "上海",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "上海市",
+      "city": "虹口区"
+    }
   },
   {
     "name": "数福",
@@ -177,7 +243,13 @@
         "quote": "探店数福，称来河南的餐厅都得加量"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "河南省",
+      "city": "中原区"
+    }
   },
   {
     "name": "驼子饭店",
@@ -192,7 +264,13 @@
         "quote": "高德扫街榜上藏在巷子里被本地人当食堂的小店"
       }
     ],
-    "region": "四川"
+    "region": "四川",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "四川省",
+      "city": "都江堰市"
+    }
   },
   {
     "name": "轩轩小院",
@@ -207,7 +285,13 @@
         "quote": "景区店探店，水平出乎意料"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "四川省",
+      "city": "青羊区"
+    }
   },
   {
     "name": "喜鼎",
@@ -224,7 +308,13 @@
         "quote": "探访十几块一个饺子的店"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "怀柔区"
+    }
   },
   {
     "name": "小饭店大厨师",
@@ -239,7 +329,13 @@
         "quote": "探店一家名字颇有深意的小饭店"
       }
     ],
-    "region": "广东"
+    "region": "广东",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "番禺区"
+    }
   },
   {
     "name": "利苑",
@@ -256,7 +352,13 @@
         "quote": "探访售价128元干炒牛河的餐厅"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "广州市"
+    }
   },
   {
     "name": "向群饭店",
@@ -271,7 +373,13 @@
         "quote": "拖着行李箱来吃，还吃开心了"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "荔湾区"
+    }
   },
   {
     "name": "白天鹅宾馆",
@@ -286,7 +394,13 @@
         "quote": "探访粤菜天花板白天鹅宾馆"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "荔湾区"
+    }
   },
   {
     "name": "炳胜",
@@ -301,7 +415,13 @@
         "quote": "探访粤菜另一座高山炳胜"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广东省",
+      "city": "海珠区"
+    }
   },
   {
     "name": "老三篇",
@@ -316,7 +436,13 @@
         "quote": "南宁本地人全推荐的饭店老三篇"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "广西壮族自治区",
+      "city": "南宁市"
+    }
   },
   {
     "name": "于塗",
@@ -331,7 +457,13 @@
         "quote": "重庆唯一连续8年上榜餐厅于塗，探访其真实味道"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "重庆市",
+      "city": "沙坪坝区"
+    }
   },
   {
     "name": "浩南家家常菜",
@@ -346,7 +478,13 @@
         "quote": "探店网上没信息靠熟人推荐的浩南家家常菜，出品不错"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "顺义区"
+    }
   },
   {
     "name": "华商",
@@ -361,7 +499,13 @@
         "quote": "在华商被请吃饭，一日三餐按时吃"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "四川省",
+      "city": "武侯区"
+    }
   },
   {
     "name": "纪家小馆",
@@ -376,7 +520,13 @@
         "quote": "探店纪家小馆，称赞店内用餐体验舒适"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "朝阳区"
+    }
   },
   {
     "name": "山西饭店",
@@ -391,7 +541,13 @@
         "quote": "探店山西饭店，称其为山西菜天花板"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "山西省",
+      "city": "太原市"
+    }
   },
   {
     "name": "鹿园餐厅",
@@ -406,7 +562,13 @@
         "quote": "探店上海鹿园餐厅，评测其连续8年米其林的真实水平"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "上海市",
+      "city": "浦东新区"
+    }
   },
   {
     "name": "叶家大院",
@@ -421,7 +583,13 @@
         "quote": "探店叶家大院，吃过后剪视频又看馋了"
       }
     ],
-    "region": "江苏"
+    "region": "江苏",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "江苏省",
+      "city": "宿城区"
+    }
   },
   {
     "name": "旧款宁波饭店",
@@ -436,7 +604,13 @@
         "quote": "探店旧款宁波饭店，四张桌子的小店一顿吃几千"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "上海市",
+      "city": "长宁区"
+    }
   },
   {
     "name": "151",
@@ -451,7 +625,13 @@
         "quote": "探店151餐厅，强调不管有没有菜谱，好吃就是好菜"
       }
     ],
-    "region": "北京"
+    "region": "北京",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": null,
+      "city": "东城区"
+    }
   },
   {
     "name": "毛毛饭店",
@@ -466,6 +646,12 @@
         "quote": "探店毛毛饭店，本地人推荐的几代人传承小饭店"
       }
     ],
-    "region": "江西"
+    "region": "江西",
+    "location": {
+      "continent": "亚洲",
+      "country": "中国",
+      "province": "江西省",
+      "city": "浔阳区"
+    }
   }
 ]
