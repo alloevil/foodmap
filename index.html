@@ -57,6 +57,7 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 .topbar h1 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
 .topbar .sub { font-size: 12px; color: var(--ink-subtle); }
 .topbar .stat { font-size: 12px; color: var(--ink-muted); margin-top: 6px; }
+.topbar .data-freshness { font-size: 11px; color: var(--ink-subtle); margin-top: 2px; }
 .blogger-select {
     margin-top: 6px; padding: 4px 6px; border-radius: var(--radius-small); border: 1px solid var(--hairline);
     background: var(--surface-2); color: var(--ink); font-size: 12px; outline: none; cursor: pointer; width: 100%;
@@ -75,6 +76,14 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 .poi-name { font-size: 15px; font-weight: 600; margin-bottom: 6px; color: var(--ink); }
 .visit { padding: 8px 0; border-top: 1px solid var(--hairline); }
 .visit:first-child { border-top: none; padding-top: 0; }
+/* 收起状态下更早的拜访记录(.visit-extra)不显示,这时"第一条可见记录"
+   紧跟在最后一条 .visit-extra 后面,不是真正的 :first-child——单独补一条
+   规则去掉它头顶的分隔线,不然会跟"展开全部"按钮之间露出一条多余的线 */
+.visit-list:not(.expanded) .visit-extra + .visit { border-top: none; padding-top: 0; }
+.visit-list .visit-extra { display: none; }
+.visit-list.expanded .visit-extra { display: block; }
+.visit-toggle { font-size: 12px; color: var(--primary-hover); cursor: pointer; padding: 4px 0 8px; text-align: center; }
+.visit-toggle:hover { text-decoration: underline; }
 .visit-date { font-size: 12px; color: var(--ink-subtle); margin-bottom: 3px; }
 .visit-dishes span { display: inline-block; padding: 1px 7px; margin: 2px 3px 0 0; background: var(--primary-tint); border-radius: 5px; color: var(--primary-hover); font-size: 11px; }
 .visit-quote { font-size: 13px; color: var(--ink-muted); line-height: 1.5; margin-top: 4px; }
@@ -87,6 +96,20 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
     color: var(--ink-subtle); font-size: 13px; text-align: center; line-height: 1.6;
 }
 .empty-hint::before { content: '🍽️'; display: block; font-size: 28px; margin-bottom: 8px; }
+/* 首次拉取 restaurants.json 期间(网络慢时能有明显的几秒空白)显示的加载
+   提示——数据到手后 load() 里直接把它隐藏掉,失败路径(走 emptyHint)也会
+   隐藏,不会两个提示叠在一起 */
+.loading-hint {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 998;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    color: var(--ink-subtle); font-size: 13px;
+}
+.loading-spinner {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 3px solid var(--hairline-strong); border-top-color: var(--primary);
+    animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 /* 标记/聚类气泡加载时错落地"弹"出来,而不是一次性全部瞬间出现——
    animation-delay 由 JS 按索引算出(见 makeFoodIcon),cluster-pin 因为是
    Leaflet.markercluster 内部动态生成、拿不到稳定索引,只播放不带延迟的
@@ -138,6 +161,7 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 .sidebar-item .name { flex: 1; font-size: 13px; color: var(--ink-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sidebar-item .dishes { font-size: 10px; color: var(--ink-subtle); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
 .sidebar-item .dishes .dish-tag { display: inline-block; padding: 0 4px; margin-right: 3px; background: var(--primary-tint); border-radius: 3px; color: var(--primary-hover); font-size: 10px; }
+.sidebar-item .dish-hit { color: var(--primary-hover); font-weight: 600; } /* 按菜品搜到时标出命中的那道菜,跟店名区分开 */
 .sidebar-item .count { font-size: 11px; color: var(--ink-subtle); flex-shrink: 0; }
 .sidebar-item .count.repeat { color: var(--gold); }
 .sidebar-item .blogger-tag { font-size: 10px; color: var(--ink-subtle); flex-shrink: 0; padding: 1px 5px; background: var(--surface-2); border-radius: 4px; }
@@ -274,13 +298,15 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
     <h1 id="bloggerName">美食地图</h1>
     <div class="sub">来自微博个人主页动态的地理标记</div>
     <div class="stat" id="stat"></div>
+    <div class="data-freshness" id="dataFreshness"></div>
     <select class="blogger-select" id="bloggerSelect"></select>
     <div class="blogger-legend" id="bloggerLegend"></div>
 </div>
 <div class="empty-hint" id="emptyHint" style="display:none"></div>
+<div class="loading-hint" id="loadingHint"><div class="loading-spinner"></div>正在加载餐厅数据…</div>
 <button class="sidebar-toggle collapsed" id="sidebarToggle" title="餐厅列表">☰</button>
 <div class="sidebar collapsed" id="sidebar">
-    <input class="sidebar-search" id="sidebarSearch" placeholder="搜索餐厅…">
+    <input class="sidebar-search" id="sidebarSearch" placeholder="搜索餐厅或菜品…">
     <div class="region-filters" id="regionFilters" style="display:none">
         <select id="continentSelect"><option value="">全部洲</option></select>
         <select id="countrySelect"><option value="">全部国家</option></select>
@@ -547,7 +573,11 @@ function formatDistance(km) {
 }
 
 function formatDate(raw) {
-    const t = Date.parse(raw);
+    // Date.parse 只认字符串——数字类型的时间戳传进来会先被强制转成字符串
+    // (比如 "1784273990000"),不是合法的日期格式,直接判定 NaN 走进原样
+    // 返回的兜底分支。数据新鲜度提示传的就是 Math.max(...timestamps) 算出
+    // 来的数字,不特殊处理这里会直接把时间戳数字显示给用户看。
+    const t = typeof raw === 'number' ? raw : Date.parse(raw);
     if (isNaN(t)) return raw || '';
     const d = new Date(t);
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -569,18 +599,33 @@ function foodIconImg(name, size) {
     return `<img class="food-icon-img" src="assets/food-icons/${pickFoodIcon(name)}.png" width="${size}" height="${size}" alt="">`;
 }
 
+// 常去的店(拜访 ≥2 次)弹窗一次性铺开全部历史会拖得很长,划半天才能看完。
+// 默认只展示最近几次(visits 本来就按时间升序排好,取末尾几条就是最近的),
+// 更早的收在一个可展开的区域里,点一下"展开全部"再看。
+const POPUP_VISIT_COLLAPSE_THRESHOLD = 3;
+
 function renderPopup(r) {
     const bloggerTag = isCombinedView && r._blogger ? `<span class="poi-blogger-tag">${escapeHtml(r._blogger)}</span>` : '';
     let html = `<div class="poi-name">${foodIconImg(r.name, 20)} ${escapeHtml(r.name)}${bloggerTag}</div>`;
-    for (const v of r.visits) {
+    const hiddenCount = Math.max(0, r.visits.length - POPUP_VISIT_COLLAPSE_THRESHOLD);
+    if (hiddenCount > 0) {
+        // 用行内 onclick 而不是事件委托——弹窗内容是 Leaflet bindPopup 存好
+        // 的静态 HTML 字符串,不经过任何框架渲染,直接操作 DOM 最省事,不用
+        // 另外找地方挂事件监听、还要处理弹窗关闭后监听器要不要清理的问题
+        html += `<div class="visit-toggle" onclick="const el=this.nextElementSibling; const open=el.classList.toggle('expanded'); this.textContent = open ? '收起' : '展开全部 ${r.visits.length} 次拜访 ▾';">展开全部 ${r.visits.length} 次拜访 ▾</div>`;
+    }
+    html += `<div class="visit-list">`;
+    r.visits.forEach((v, i) => {
         const dishes = (v.dishes || []).map(d => `<span>${escapeHtml(d)}</span>`).join('');
-        html += `<div class="visit">
+        const isOlder = i < hiddenCount;
+        html += `<div class="visit${isOlder ? ' visit-extra' : ''}">
             <div class="visit-date">${formatDate(v.date)}</div>
             ${dishes ? `<div class="visit-dishes">${dishes}</div>` : ''}
             ${v.quote ? `<div class="visit-quote">${escapeHtml(v.quote)}</div>` : ''}
             ${v.postUrl ? `<a class="visit-link" href="${v.postUrl}" target="_blank" rel="noopener">查看原微博 →</a>` : ''}
         </div>`;
-    }
+    });
+    html += `</div>`;
     return html;
 }
 
@@ -619,6 +664,7 @@ async function load() {
     }
 
     document.getElementById('bloggerName').textContent = `${namesToLoad.join(' + ')}的美食地图`;
+    document.getElementById('loadingHint').style.display = 'none';
 
     if (restaurants.length === 0) {
         document.getElementById('emptyHint').style.display = '';
@@ -628,6 +674,16 @@ async function load() {
 
     const totalVisits = restaurants.reduce((s, r) => s + r.visits.length, 0);
     document.getElementById('stat').textContent = `${restaurants.length} 家餐厅 · ${totalVisits} 次拜访`;
+
+    // 数据新鲜度对用户是不透明的——没有任何地方说明这份数据是什么时候的、
+    // 会不会更新。restaurants.json 本身没存"抓取时间"这个字段(加这个字段
+    // 要改抽取脚本,对现有数据没意义),退而求其次用"最近一次拜访记录的
+    // 日期"当替代指标——至少能让用户知道数据大概新到什么程度,好于完全
+    // 不提。
+    const allDates = restaurants.flatMap(r => r.visits.map(v => Date.parse(v.date))).filter(t => !isNaN(t));
+    if (allDates.length) {
+        document.getElementById('dataFreshness').textContent = `数据含最近拜访:${formatDate(Math.max(...allDates))}`;
+    }
 
     // 合并模式下按博主给标记加一圈外环颜色区分是谁探的,不用点开弹窗才知道。
     // 用黄金角配色(跟 yearColor 同一个思路)保证博主数量不管多少都尽量
@@ -1050,9 +1106,36 @@ function setupSidebar(restaurants, clusterGroup) {
         return list;
     }
 
+    // 去空格再转小写——之前的搜索只做了小写转换,店名/查询词里偶尔有的
+    // 空格(全角/半角)会让本该命中的结果搜不到,比如"陈 记"搜"陈记"落空
+    function normalizeSearchText(s) {
+        return String(s || '').toLowerCase().replace(/\s+/g, '');
+    }
+    // 店名搜不到时,再看看是不是搜的是某道推荐菜——数据里每次拜访都存了
+    // 菜品,搜"牛河"应该能翻出"利苑"这种店名完全不沾边的结果,不只是
+    // 名字搜索的补充,是从"找店"到"找吃的"的另一条路。命中就返回那道菜
+    // 的原文,用于在列表里标注"因为这道菜被搜到"。
+    function matchedDishOf(r, q) {
+        for (const v of r.visits) {
+            for (const d of (v.dishes || [])) {
+                if (normalizeSearchText(d).includes(q)) return d;
+            }
+        }
+        return null;
+    }
+
     function renderList() {
-        const q = searchEl.value.trim().toLowerCase();
-        let filtered = q ? baseList().filter(r => r.name.toLowerCase().includes(q)) : baseList();
+        const q = normalizeSearchText(searchEl.value);
+        const dishHits = new Map(); // 命中菜品(而非店名)的 r → 具体菜名,渲染时标注
+        let filtered = baseList();
+        if (q) {
+            filtered = filtered.filter(r => {
+                if (normalizeSearchText(r.name).includes(q)) return true;
+                const dish = matchedDishOf(r, q);
+                if (dish) { dishHits.set(r, dish); return true; }
+                return false;
+            });
+        }
         if (nearbyOrigin && !q) filtered = filtered.slice(0, 20); // 不限定搜索时只列最近 20 家,避免刷到天荒地老
         if (filtered.length === 0) {
             listEl.innerHTML = '<div class="sidebar-empty">没有匹配的餐厅</div>';
@@ -1063,15 +1146,19 @@ function setupSidebar(restaurants, clusterGroup) {
             const rightSpan = nearbyOrigin
                 ? `<span class="dist">${formatDistance(distanceKm(nearbyOrigin.lat, nearbyOrigin.lng, r.lat, r.lng))}</span>`
                 : `<span class="count${r.visits.length >= 2 ? ' repeat' : ''}">${r.visits.length}次</span>`;
-            // 收集所有拜访中提到的菜品,去重后取前 5 个
+            // 收集所有拜访中提到的菜品,去重后取前 5 个,当作店铺的"菜品预览"——
+            // 跟下面的 dish(按搜索词命中的具体那道菜)是两件事:dishesHtml
+            // 不管有没有搜索都显示,dish 只在搜索词命中了某道菜时才出现,
+            // 用来说明"这家店为什么会被搜出来"。
             const allDishes = [...new Set(r.visits.flatMap(v => v.dishes || []))];
             const dishesHtml = allDishes.length
                 ? `<div class="dishes">${allDishes.slice(0, 5).map(d => `<span class="dish-tag">${escapeHtml(d)}</span>`).join('')}${allDishes.length > 5 ? '…' : ''}</div>`
                 : '';
+            const dish = dishHits.get(r);
             return `<div class="sidebar-item" data-idx="${idx}">
                 <span class="emoji">${foodIconImg(r.name, 18)}</span>
                 <div style="flex:1;min-width:0;overflow:hidden">
-                    <span class="name">${escapeHtml(r.name)}</span>
+                    <span class="name">${escapeHtml(r.name)}${dish ? ` <span class="dish-hit">· ${escapeHtml(dish)}</span>` : ''}</span>
                     ${dishesHtml}
                 </div>
                 ${isCombinedView && r._blogger ? `<span class="blogger-tag">${escapeHtml(r._blogger)}</span>` : ''}
