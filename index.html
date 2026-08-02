@@ -74,6 +74,7 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 .leaflet-popup-content { margin: 12px 14px; }
 .leaflet-popup-close-button { color: var(--ink-subtle) !important; }
 .poi-name { font-size: 15px; font-weight: 600; margin-bottom: 6px; color: var(--ink); }
+.poi-location { font-size: 11px; color: var(--ink-subtle); margin: -3px 0 6px; }
 .visit { padding: 8px 0; border-top: 1px solid var(--hairline); }
 .visit:first-child { border-top: none; padding-top: 0; }
 /* 收起状态下更早的拜访记录(.visit-extra)不显示,这时"第一条可见记录"
@@ -87,8 +88,11 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 .visit-date { font-size: 12px; color: var(--ink-subtle); margin-bottom: 3px; }
 .visit-dishes span { display: inline-block; padding: 1px 7px; margin: 2px 3px 0 0; background: var(--primary-tint); border-radius: 5px; color: var(--primary-hover); font-size: 11px; }
 .visit-quote { font-size: 13px; color: var(--ink-muted); line-height: 1.5; margin-top: 4px; }
-.visit-link { display: inline-block; margin-top: 6px; font-size: 12px; color: var(--primary-hover); text-decoration: none; }
-.visit-link:hover { text-decoration: underline; }
+/* 选择器带上 .leaflet-container 不是多余的:Leaflet 自带 `.leaflet-container a`
+   (特异性 0-1-1)把链接染成默认蓝,单写 .visit-link(0-1-0)压不过它,
+   之前弹窗里的"查看原微博"一直是跟暖色系打架的蓝色就是这么来的 */
+.leaflet-container .visit-link { display: inline-block; margin-top: 6px; font-size: 12px; color: var(--primary-hover); text-decoration: none; font-weight: 600; }
+.leaflet-container .visit-link:hover { text-decoration: underline; }
 .empty-hint {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 999;
     background: var(--surface-1); border: 1px solid var(--hairline); border-radius: var(--radius-panel);
@@ -120,7 +124,9 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 .food-icon-img { display: block; } /* img 默认是 inline,基线对齐会留一点缝,block 才能真正居中 */
 .food-pin.repeat { border-color: var(--gold); box-shadow: inset 0 1px 2px rgba(255,255,255,.9), inset 0 -3px 4px rgba(43,33,24,.18), 0 0 10px rgba(163,105,15,.4); }
 .cluster-pin { display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: 600; box-shadow: inset 0 1px 2px rgba(255,255,255,.5), inset 0 -3px 4px rgba(0,0,0,.2), 0 2px 10px rgba(43,33,24,.3); }
-.cluster-pin.tier-1 { background: radial-gradient(circle at 32% 28%, #fbe8d0, #f0c9a0 60%, #dba876 100%); border: 2px solid #e0ab74; color: #5c3a1e; }
+/* 浅色档的边框不能同样浅:米色大陆背景上"3/7"这种小气泡整个融进底图里,
+   数字几乎看不见——边框和文字都往深一档拉,填色保持浅(分级语义不变) */
+.cluster-pin.tier-1 { background: radial-gradient(circle at 32% 28%, #fbe8d0, #f0c9a0 60%, #dba876 100%); border: 2px solid #b9743a; color: #4a2d14; }
 .cluster-pin.tier-2 { background: radial-gradient(circle at 32% 28%, #f0b37f, #d98a4f 60%, #b56a35 100%); border: 2px solid #c1642a; color: #fff; }
 .cluster-pin.tier-3 { background: radial-gradient(circle at 32% 28%, #d97545, #b8491f 60%, #8f3512 100%); border: 2px solid #963a17; color: #fff; }
 .cluster-pin.tier-4 { background: radial-gradient(circle at 32% 28%, #a34530, #7a2015 60%, #5c130a 100%); border: 2px solid #5c160f; color: #fff; }
@@ -158,7 +164,9 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 }
 .sidebar-item:hover { background: var(--surface-2); }
 .sidebar-item .emoji { font-size: 16px; flex-shrink: 0; }
-.sidebar-item .name { flex: 1; font-size: 13px; color: var(--ink-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* span 默认 inline,text-overflow 对 inline 元素不生效——菜品命中的长文本
+   之前是在容器边缘被硬切掉的,连省略号都不出现,block 才有截断语义 */
+.sidebar-item .name { display: block; flex: 1; font-size: 13px; color: var(--ink-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sidebar-item .dishes { font-size: 10px; color: var(--ink-subtle); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
 .sidebar-item .dishes .dish-tag { display: inline-block; padding: 0 4px; margin-right: 3px; background: var(--primary-tint); border-radius: 3px; color: var(--primary-hover); font-size: 10px; }
 .sidebar-item .dish-hit { color: var(--primary-hover); font-weight: 600; } /* 按菜品搜到时标出命中的那道菜,跟店名区分开 */
@@ -166,16 +174,23 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 .sidebar-item .count.repeat { color: var(--gold); }
 .sidebar-item .blogger-tag { font-size: 10px; color: var(--ink-subtle); flex-shrink: 0; padding: 1px 5px; background: var(--surface-2); border-radius: 4px; }
 .sidebar-empty { padding: 16px; font-size: 12px; color: var(--ink-subtle); text-align: center; }
+.sidebar-empty .clear-filters { display: block; margin-top: 6px; color: var(--primary-hover); cursor: pointer; font-weight: 600; }
+.sidebar-empty .clear-filters:hover { text-decoration: underline; }
 .timebar {
     position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 1000;
     background: var(--surface-1); border: 1px solid var(--hairline); border-radius: var(--radius-panel);
     padding: var(--space-panel); box-shadow: var(--shadow-panel);
     display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--ink-muted);
 }
-.timebar input[type=range] { width: 160px; accent-color: var(--primary-hover); }
+/* 不在这里定宽:年份滑块的两个 input 必须始终撑满 .range-slider 容器
+   (.range-input 的 width:100%),这条规则曾写死 160px 且特异性更高,
+   桌面端(容器 170px)只表现为"手柄到不了最右端",移动端(容器 100px)
+   则让右手柄直接飘出容器、盖在"重置"按钮上 */
+.timebar input[type=range] { accent-color: var(--primary-hover); }
 .timebar .year-label { min-width: 30px; text-align: center; color: var(--ink); font-weight: 600; }
 .timebar .timebar-label { font-weight: 600; color: var(--ink); padding-right: 6px; border-right: 1px solid var(--hairline); margin-right: 4px; }
-.timebar .reset-btn { color: var(--primary-hover); cursor: pointer; font-size: 11px; padding: 2px 6px; }
+/* nowrap + 不参与压缩:窄屏上 timebar 空间挤,"重置"两个字曾被压成竖排 */
+.timebar .reset-btn { color: var(--primary-hover); cursor: pointer; font-size: 11px; padding: 2px 6px; white-space: nowrap; flex-shrink: 0; }
 .timebar .reset-btn:hover { text-decoration: underline; }
 /* 单轴双手柄区间滑块:两个原生 range 输入完全重叠,轨道透明只露出手柄,
    中间垫一条可见的轨道 + 高亮条(range-fill)表示当前选中区间。手柄靠
@@ -211,8 +226,8 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 .locate-btn.loading { opacity: .6; cursor: wait; }
 .user-dot { position: relative; width: 16px; height: 16px; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #a8d4ff, #4da6ff 60%, #2a7fd4 100%); border: 3px solid #fff; box-shadow: inset 0 1px 1px rgba(255,255,255,.7), 0 0 0 4px rgba(77,166,255,.35); }
 .user-dot::after { content: ''; position: absolute; inset: -8px; border-radius: 50%; border: 2px solid #4da6ff; animation: pulse 1.6s ease-out infinite; }
-/* 首次进入时指向"定位"按钮的引导气泡,点一次/等几秒/点气泡本身都会消失,
-   localStorage 记住看过了,不会每次刷新都弹 */
+/* 指向按钮的引导气泡:每次打开都弹(用户明确要求,不做 localStorage 记忆),
+   一次只弹一个,点目标按钮/点气泡本身消失后才轮到下一个(见 queuePointerHints) */
 .pointer-hint {
     position: fixed; z-index: 1001; background: var(--primary); color: var(--on-primary);
     padding: 8px 14px; border-radius: var(--radius-control); font-size: 12px; font-weight: 600; white-space: nowrap;
@@ -234,6 +249,13 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 .pointer-hint.arrow-left { animation: hint-nudge-left 1.4s ease-in-out infinite; }
 @keyframes hint-nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-4px); } }
 @keyframes hint-nudge-left { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
+/* 窄屏上气泡放不进按钮左侧(会压住标题卡),改挂在按钮下方、箭头朝上 */
+.pointer-hint.arrow-up::after {
+    right: 14px; left: auto; top: -12px; transform: none;
+    border-width: 0 6px 6px 6px; border-color: transparent transparent var(--primary) transparent;
+}
+.pointer-hint.arrow-up { animation: hint-nudge-up 1.4s ease-in-out infinite; }
+@keyframes hint-nudge-up { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
 @keyframes pulse { 0% { transform: scale(.4); opacity: 1; } 100% { transform: scale(1.8); opacity: 0; } }
 .nearby-banner { display: flex; justify-content: space-between; align-items: center; margin: 0 10px 8px; font-size: 12px; color: var(--ink-subtle); }
 .nearby-banner .back { color: var(--primary-hover); cursor: pointer; }
@@ -289,6 +311,8 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
     .journey-bar { padding: 8px 10px; }
     .journey-controls { gap: 6px; }
     .journey-progress input[type=range] { width: 90px; }
+    /* 16 个年份点叠三行会把进度条挤没,窄屏改单行横向滑动 */
+    .journey-legend { flex-wrap: nowrap; overflow-x: auto; max-width: calc(100vw - 44px); padding-bottom: 2px; }
 }
 </style>
 </head>
@@ -304,14 +328,14 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 </div>
 <div class="empty-hint" id="emptyHint" style="display:none"></div>
 <div class="loading-hint" id="loadingHint"><div class="loading-spinner"></div>正在加载餐厅数据…</div>
-<button class="sidebar-toggle collapsed" id="sidebarToggle" title="餐厅列表">☰</button>
+<button class="sidebar-toggle collapsed" id="sidebarToggle" title="餐厅列表" aria-label="展开或收起餐厅列表">☰</button>
 <div class="sidebar collapsed" id="sidebar">
-    <input class="sidebar-search" id="sidebarSearch" placeholder="搜索餐厅或菜品…">
+    <input class="sidebar-search" id="sidebarSearch" placeholder="搜索餐厅或菜品…" aria-label="搜索餐厅或菜品">
     <div class="region-filters" id="regionFilters" style="display:none">
-        <select id="continentSelect"><option value="">全部洲</option></select>
-        <select id="countrySelect"><option value="">全部国家</option></select>
-        <select id="provinceSelect"><option value="">全部省</option></select>
-        <select id="citySelect"><option value="">全部市</option></select>
+        <select id="continentSelect" aria-label="按洲筛选"><option value="">全部洲</option></select>
+        <select id="countrySelect" aria-label="按国家筛选"><option value="">全部国家</option></select>
+        <select id="provinceSelect" aria-label="按省筛选"><option value="">全部省</option></select>
+        <select id="citySelect" aria-label="按市筛选"><option value="">全部市</option></select>
     </div>
     <div class="nearby-banner" id="nearbyBanner" style="display:none">
         <span id="nearbyBannerText">离你最近</span>
@@ -325,16 +349,16 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
     <div class="range-slider" id="yearRangeSlider">
         <div class="range-track"></div>
         <div class="range-fill" id="yearRangeFill"></div>
-        <input type="range" class="range-input" id="yearFrom">
-        <input type="range" class="range-input" id="yearTo">
+        <input type="range" class="range-input" id="yearFrom" aria-label="起始年份">
+        <input type="range" class="range-input" id="yearTo" aria-label="结束年份">
     </div>
     <span class="year-label" id="yearToLabel"></span>
     <span class="reset-btn" id="yearReset">重置</span>
 </div>
 <div class="journey-bar" id="journeyBar">
     <div class="journey-controls">
-        <button class="journey-play" id="journeyPlay" title="播放/暂停">▶</button>
-        <div class="journey-progress"><input type="range" id="journeyProgress" min="0" value="0"></div>
+        <button class="journey-play" id="journeyPlay" title="播放/暂停" aria-label="播放或暂停轨迹回放">▶</button>
+        <div class="journey-progress"><input type="range" id="journeyProgress" min="0" value="0" aria-label="回放进度"></div>
         <span class="journey-label" id="journeyLabel"></span>
         <span class="journey-exit" id="journeyExit">退出轨迹 ✕</span>
     </div>
@@ -501,6 +525,7 @@ const LocateControl = L.Control.extend({
         const btn = L.DomUtil.create('button', 'locate-btn');
         btn.innerHTML = '📍';
         btn.title = '获取你的位置,按距离排序看附近有什么好吃的';
+        btn.setAttribute('aria-label', btn.title);
         L.DomEvent.disableClickPropagation(btn);
         L.DomEvent.on(btn, 'click', () => onLocate && onLocate(btn));
         return btn;
@@ -516,6 +541,7 @@ const JourneyControl = L.Control.extend({
         const btn = L.DomUtil.create('button', 'journey-btn');
         btn.innerHTML = '🧭';
         btn.title = '按时间顺序回放拜访路线';
+        btn.setAttribute('aria-label', btn.title);
         L.DomEvent.disableClickPropagation(btn);
         L.DomEvent.on(btn, 'click', () => onToggleJourney && onToggleJourney(btn));
         return btn;
@@ -523,21 +549,59 @@ const JourneyControl = L.Control.extend({
 });
 map.addControl(new JourneyControl());
 
-// 每次进入都用一个指向目标按钮的气泡提一下作用,避免光靠图标/文字被忽略。
+// 每次进入都用指向目标按钮的气泡提一下作用,避免光靠图标/文字被忽略。
 // 之前用 localStorage 记住"看过了"只弹一次,但用户明确要求每次打开都弹,
 // 所以去掉了那层记忆——气泡还是会在点击按钮或点气泡本身之后消失,只是
 // 不再持久记住,下次刷新页面会重新出现。
-function showPointerHint({ targetSelector, text, arrowLeft = false }) {
-    const btn = document.querySelector(targetSelector);
-    if (!btn) return;
+//
+// 一次只弹一个,不再三个同时挂在屏幕上:三个气泡一起弹视觉上互相抢,
+// 移动端还会叠着压住标题卡。点掉当前这个才轮到下一个(queuePointerHints);
+// 进入轨迹回放等"用户已经开始正经用了"的时刻直接清空整个队列
+// (dismissAllHints)——都动手操作了还追着上课很烦人。
+let activeHintDismiss = null;
+let pendingHints = [];
 
+function dismissAllHints() {
+    pendingHints = [];
+    if (activeHintDismiss) activeHintDismiss();
+}
+
+function queuePointerHints(hints, initialDelayMs = 1200) {
+    pendingHints = hints.slice();
+    const next = () => {
+        const h = pendingHints.shift();
+        if (h) showPointerHint(h, () => setTimeout(next, 350));
+    };
+    setTimeout(next, initialDelayMs);
+}
+
+function showPointerHint({ targetSelector, text, arrowLeft = false }, onDismissed) {
+    const btn = document.querySelector(targetSelector);
+    if (!btn) { if (onDismissed) onDismissed(); return; }
+
+    // 窄屏上按钮左侧/右侧都放不下 190px 的气泡(会压住标题卡,见移动端
+    // 截图复盘),改挂在按钮正下方、箭头朝上
+    const below = window.innerWidth <= 640;
     const hint = document.createElement('div');
-    hint.className = 'pointer-hint' + (arrowLeft ? ' arrow-left' : '');
+    hint.className = 'pointer-hint' + (below ? ' arrow-up' : arrowLeft ? ' arrow-left' : '');
     hint.textContent = text;
     document.body.appendChild(hint);
 
     function position() {
         const rect = btn.getBoundingClientRect();
+        if (below) {
+            // 不高于标题卡下沿:定位/回放按钮在窄屏上跟标题卡几乎平行,
+            // 只按按钮下沿摆会让气泡左端压住标题卡的右下角
+            const topbar = document.querySelector('.topbar');
+            const minTop = topbar ? topbar.getBoundingClientRect().bottom + 8 : 0;
+            hint.style.top = Math.max(rect.bottom + 10, minTop) + 'px';
+            // 箭头在气泡右端往里 14px 的位置(见 .arrow-up::after),让它
+            // 对准按钮中心;整体再夹回视口内,不越出左右边缘
+            const left = Math.max(8, Math.min(rect.left + rect.width / 2 - (hint.offsetWidth - 20), window.innerWidth - hint.offsetWidth - 8));
+            hint.style.left = left + 'px';
+            hint.style.right = 'auto';
+            return;
+        }
         if (arrowLeft) {
             hint.style.left = (rect.right + 10) + 'px';
             hint.style.right = 'auto';
@@ -552,10 +616,13 @@ function showPointerHint({ targetSelector, text, arrowLeft = false }) {
     window.addEventListener('resize', position);
 
     const dismiss = () => {
+        if (activeHintDismiss === dismiss) activeHintDismiss = null;
         window.removeEventListener('resize', position);
         hint.classList.remove('show');
         setTimeout(() => hint.remove(), 300);
+        if (onDismissed) onDismissed();
     };
+    activeHintDismiss = dismiss;
     // 只在点了按钮(或气泡本身)之后才消失,不设自动超时——用户可能没
     // 第一时间注意到,给够时间看清楚提示在说什么
     btn.addEventListener('click', dismiss, { once: true });
@@ -576,6 +643,45 @@ function distanceKm(lat1, lng1, lat2, lng2) {
 }
 function formatDistance(km) {
     return km < 1 ? `${Math.round(km * 1000)}m` : `${km.toFixed(km < 10 ? 1 : 0)}km`;
+}
+
+// 去空格再转小写——之前的搜索只做了小写转换,店名/查询词里偶尔有的
+// 空格(全角/半角)会让本该命中的结果搜不到,比如"陈 记"搜"陈记"落空。
+// 提到顶层是因为搜索现在同时驱动侧栏列表和地图图层(见 setupFilters 的
+// apply()),两边必须用同一套匹配逻辑,不然会出现"列表里有、地图上没有"。
+function normalizeSearchText(s) {
+    return String(s || '').toLowerCase().replace(/\s+/g, '');
+}
+// 店名搜不到时,再看看是不是搜的是某道推荐菜——数据里每次拜访都存了
+// 菜品,搜"牛河"应该能翻出"利苑"这种店名完全不沾边的结果。命中就返回
+// 那道菜的原文,用于在列表里标注"因为这道菜被搜到"。
+function matchedDishOf(r, q) {
+    for (const v of r.visits) {
+        for (const d of (v.dishes || [])) {
+            if (normalizeSearchText(d).includes(q)) return d;
+        }
+    }
+    return null;
+}
+function matchesSearch(r, q) {
+    if (!q) return true;
+    return normalizeSearchText(r.name).includes(q) || !!matchedDishOf(r, q);
+}
+
+// 把镜头对到一组餐厅上。fitBounds 对"分布横跨三大洲"的数据在窄屏上会
+// 缩到 zoom 1 的世界条——390px 宽的屏幕上地图只剩中间一细条,上下全是
+// 空白画布(移动端截图复盘的主要观感问题)。缩得太远时改用数据的平均
+// 中心 + 固定缩放:平均值天然偏向点最密的地方(两百多个点在中国),
+// 落点就是"大多数餐厅在哪",边缘的欧美点让用户自己缩小去看。
+function frameRestaurants(list) {
+    const pts = list.filter(r => r.lat != null).map(r => [r.lat, r.lng]);
+    if (!pts.length) return;
+    map.fitBounds(L.latLngBounds(pts), { padding: [40, 40], maxZoom: 13 });
+    if (window.innerWidth <= 640 && map.getZoom() < 2.5) {
+        const lat = pts.reduce((s, p) => s + p[0], 0) / pts.length;
+        const lng = pts.reduce((s, p) => s + p[1], 0) / pts.length;
+        map.setView([lat, lng], 3);
+    }
 }
 
 function formatDate(raw) {
@@ -613,6 +719,13 @@ const POPUP_VISIT_COLLAPSE_THRESHOLD = 3;
 function renderPopup(r) {
     const bloggerTag = isCombinedView && r._blogger ? `<span class="poi-blogger-tag">${escapeHtml(r._blogger)}</span>` : '';
     let html = `<div class="poi-name">${foodIconImg(r.name, 20)} ${escapeHtml(r.name)}${bloggerTag}</div>`;
+    // 店在哪个城市:之前只有店名+拜访记录,位置要靠盯地图猜。国内显示
+    // 省·市,国外显示国家·城市;没跑过地区反查的老数据退回 region
+    // (发帖 IP 归属地,粗但聊胜于无)。
+    const loc = r.location || {};
+    const whereParts = loc.country === '中国' ? [loc.province, loc.city] : [loc.country, loc.city];
+    const where = [...new Set(whereParts.filter(Boolean))].join(' · ') || r.region;
+    if (where) html += `<div class="poi-location">📍 ${escapeHtml(where)}</div>`;
     const hiddenCount = Math.max(0, r.visits.length - POPUP_VISIT_COLLAPSE_THRESHOLD);
     if (hiddenCount > 0) {
         // 用行内 onclick 而不是事件委托——弹窗内容是 Leaflet bindPopup 存好
@@ -743,21 +856,21 @@ async function load() {
         r._years = r.visits.map(v => { const t = Date.parse(v.date); return isNaN(t) ? null : new Date(t).getFullYear(); }).filter(y => y != null);
     });
     map.addLayer(clusterGroup);
-    map.fitBounds(clusterGroup.getBounds(), { padding: [40, 40] });
+    frameRestaurants(restaurants); // 世界级 fitBounds 在窄屏会缩成一细条,见 frameRestaurants 的处理
 
     const journey = setupJourney(clusterGroup);
     const sidebar = setupSidebar(restaurants, clusterGroup, journey);
     const choropleth = setupChoropleth(restaurants);
     setupFilters(restaurants, clusterGroup, sidebar, choropleth, journey);
     setupLocate(restaurants, sidebar);
-    // 稍等一下再弹,避免和地图初次加载的动画抢注意力;两个提示错开时间,
-    // 不会在同一瞬间一起弹出来显得很吵。合并模式下点回放按钮只会弹出"请先
-    // 选一位博主"的提醒,这个箭头提示指向一个当下点了也没用的按钮,不弹。
-    setTimeout(() => showPointerHint({ targetSelector: '.locate-btn', text: '👉 点这里看看附近好吃的' }), 1200);
-    if (!isCombinedView) {
-        setTimeout(() => showPointerHint({ targetSelector: '.journey-btn', text: '👉 点这里回放旅行轨迹' }), 1600);
-    }
-    setTimeout(() => showPointerHint({ targetSelector: '#sidebarToggle', text: '👉 点这里看餐厅列表', arrowLeft: true }), 2000);
+    // 稍等一下再弹,而且一次只弹一个:三个气泡同时挂在屏幕上互相抢注意力,
+    // 移动端还会叠着压住标题卡。点掉当前的才轮到下一个。合并模式下点回放
+    // 按钮只会弹出"请先选一位博主"的提醒,这个指向它的气泡不排进队列。
+    queuePointerHints([
+        { targetSelector: '.locate-btn', text: '👉 点这里看看附近好吃的' },
+        ...(isCombinedView ? [] : [{ targetSelector: '.journey-btn', text: '👉 点这里回放旅行轨迹' }]),
+        { targetSelector: '#sidebarToggle', text: '👉 点这里看餐厅列表', arrowLeft: true },
+    ]);
 }
 
 // "定位我"按钮的实现:拿到浏览器地理位置后,在地图上标出"你在这"并把侧栏
@@ -1055,6 +1168,7 @@ function setupJourney(clusterGroup) {
     }
 
     function enter() {
+        dismissAllHints(); // 用户已经动手用起来了,引导气泡(含还没轮到的)全部撤掉
         active = true;
         journeyBtn.classList.add('active');
         map.removeLayer(clusterGroup);
@@ -1148,23 +1262,6 @@ function setupSidebar(restaurants, clusterGroup, journey) {
         return list;
     }
 
-    // 去空格再转小写——之前的搜索只做了小写转换,店名/查询词里偶尔有的
-    // 空格(全角/半角)会让本该命中的结果搜不到,比如"陈 记"搜"陈记"落空
-    function normalizeSearchText(s) {
-        return String(s || '').toLowerCase().replace(/\s+/g, '');
-    }
-    // 店名搜不到时,再看看是不是搜的是某道推荐菜——数据里每次拜访都存了
-    // 菜品,搜"牛河"应该能翻出"利苑"这种店名完全不沾边的结果,不只是
-    // 名字搜索的补充,是从"找店"到"找吃的"的另一条路。命中就返回那道菜
-    // 的原文,用于在列表里标注"因为这道菜被搜到"。
-    function matchedDishOf(r, q) {
-        for (const v of r.visits) {
-            for (const d of (v.dishes || [])) {
-                if (normalizeSearchText(d).includes(q)) return d;
-            }
-        }
-        return null;
-    }
 
     function renderList() {
         const q = normalizeSearchText(searchEl.value);
@@ -1180,7 +1277,9 @@ function setupSidebar(restaurants, clusterGroup, journey) {
         }
         if (nearbyOrigin && !q) filtered = filtered.slice(0, 20); // 不限定搜索时只列最近 20 家,避免刷到天荒地老
         if (filtered.length === 0) {
-            listEl.innerHTML = '<div class="sidebar-empty">没有匹配的餐厅</div>';
+            // 空态给一条一键出路:走到这里的用户往往是搜索词+年份+地区叠出了
+            // 一个空集,挨个撤销比一键清除麻烦得多(点击处理在 listEl 的委托里)
+            listEl.innerHTML = '<div class="sidebar-empty">没有匹配的餐厅<span class="clear-filters">清除筛选</span></div>';
             return;
         }
         listEl.innerHTML = filtered.map((r) => {
@@ -1209,9 +1308,13 @@ function setupSidebar(restaurants, clusterGroup, journey) {
         }).join('');
     }
     renderList();
-    searchEl.addEventListener('input', renderList);
+    // 搜索框的 input 监听在 setupFilters 里:搜索现在跟年份/地区一样驱动
+    // 全局可见集(地图图层+侧栏+回放点集),不再只是侧栏内部的列表过滤
 
+    const toggleBtn = document.getElementById('sidebarToggle');
+    const sidebarEl = document.getElementById('sidebar');
     listEl.addEventListener('click', (e) => {
+        if (e.target.closest('.clear-filters')) { if (onClearFilters) onClearFilters(); return; }
         const item = e.target.closest('.sidebar-item');
         if (!item) return;
         const r = sorted[Number(item.dataset.idx)];
@@ -1221,12 +1324,16 @@ function setupSidebar(restaurants, clusterGroup, journey) {
         // 表现出来就是"侧栏点了没反应"。用户点某家店就是想看它的详情,
         // 那就先退出回放再聚焦,而不是让这一整块 UI 变成哑的。
         if (journey.isActive()) journey.exit();
+        // 窄屏上侧栏近乎全宽,不收起的话弹窗会整个开在它底下,看起来还是
+        // "点了没反应"——点了某家店就是要看它,侧栏先让路
+        if (window.innerWidth <= 640) {
+            sidebarEl.classList.add('collapsed');
+            toggleBtn.classList.add('collapsed');
+        }
         // 标记可能仍被聚合在数字气泡里,zoomToShowLayer 会自动放大到它单独显示为止
         clusterGroup.zoomToShowLayer(r._marker, () => r._marker.openPopup());
     });
 
-    const toggleBtn = document.getElementById('sidebarToggle');
-    const sidebarEl = document.getElementById('sidebar');
     toggleBtn.addEventListener('click', () => {
         sidebarEl.classList.toggle('collapsed');
         toggleBtn.classList.toggle('collapsed');
@@ -1249,16 +1356,16 @@ function setupSidebar(restaurants, clusterGroup, journey) {
             sidebarEl.classList.remove('collapsed');
             toggleBtn.classList.remove('collapsed');
             searchEl.value = '';
+            searchEl.dispatchEvent(new Event('input')); // 搜索驱动全局可见集,清空后要让 apply() 把地图图层也还原
             renderList();
         },
     };
 }
 
-// 年份滑块 + 洲/国/省/市四级联动下拉的组合筛选器。所有层级共享同一套
-// "重算可见集合"逻辑(取交集),这样"2020年在中国广东省吃过的地方"这种
-// 组合筛选是自然成立的,不需要分别维护几套状态。重建 clusterGroup 的图层
-// 而非仅调透明度——否则聚合气泡上的数字会继续把范围外的点计进去,失去
-// "筛选"的意义。
+// 搜索框 + 年份滑块 + 洲/国/省/市四级联动下拉的组合筛选器。三者共享同一套
+// "重算可见集合"逻辑(取交集),这样"搜牛肉、2020年、在广东"这种组合筛选
+// 是自然成立的,不需要分别维护几套状态。重建 clusterGroup 的图层而非仅调
+// 透明度——否则聚合气泡上的数字会继续把范围外的点计进去,失去"筛选"的意义。
 const REGION_LEVELS = [
     { key: 'continent', id: 'continentSelect', placeholder: '全部洲' },
     { key: 'country', id: 'countrySelect', placeholder: '全部国家' },
@@ -1278,6 +1385,10 @@ function regionOf(r) {
     };
 }
 
+// "清除筛选"一键复位(侧栏空态里的快捷出路),由 setupFilters 装配——
+// 搜索、年份、地区三套状态都归它管,别处只负责触发
+let onClearFilters = null;
+
 function setupFilters(restaurants, clusterGroup, sidebar, choropleth, journey) {
     const allYears = restaurants.flatMap(r => r._years);
     const hasYearFilter = allYears.length > 0 && Math.min(...allYears) !== Math.max(...allYears);
@@ -1289,6 +1400,7 @@ function setupFilters(restaurants, clusterGroup, sidebar, choropleth, journey) {
     const fromLabel = document.getElementById('yearFromLabel');
     const toLabel = document.getElementById('yearToLabel');
     const fillEl = document.getElementById('yearRangeFill');
+    const searchEl = document.getElementById('sidebarSearch');
     if (hasYearFilter) {
         document.getElementById('timebar').style.display = 'flex';
         for (const el of [fromEl, toEl]) { el.min = minYear; el.max = maxYear; }
@@ -1358,7 +1470,7 @@ function setupFilters(restaurants, clusterGroup, sidebar, choropleth, journey) {
     if (hasAnyRegion) {
         populateLevel(0);
         REGION_LEVELS.forEach((level, idx) => {
-            selects[level.key].addEventListener('change', () => { cascadeFrom(idx); apply(); });
+            selects[level.key].addEventListener('change', () => { cascadeFrom(idx); frameRestaurants(apply()); });
         });
         // 初始就把下面几级的选项铺好(此时都是"全部",候选是全量数据)
         for (let i = 1; i < REGION_LEVELS.length; i++) populateLevel(i);
@@ -1366,6 +1478,7 @@ function setupFilters(restaurants, clusterGroup, sidebar, choropleth, journey) {
 
     const totalVisitsAll = restaurants.reduce((s, r) => s + r.visits.length, 0);
 
+    let lastVisible = restaurants;
     function apply() {
         let from = minYear, to = maxYear;
         if (hasYearFilter) {
@@ -1374,8 +1487,10 @@ function setupFilters(restaurants, clusterGroup, sidebar, choropleth, journey) {
             toLabel.textContent = to;
             updateFill();
         }
+        const q = normalizeSearchText(searchEl.value);
 
         const visible = restaurants.filter(r => {
+            if (!matchesSearch(r, q)) return false;
             if (hasYearFilter && !r._years.some(y => y >= from && y <= to)) return false;
             if (!hasAnyRegion) return true;
             const reg = regionOf(r);
@@ -1387,6 +1502,7 @@ function setupFilters(restaurants, clusterGroup, sidebar, choropleth, journey) {
         const isFiltered = visible.length !== restaurants.length;
         const visitCount = visible.reduce((s, r) => s + r.visits.length, 0);
         const parts = [];
+        if (q) parts.push(`搜索"${searchEl.value.trim()}"`);
         if (hasYearFilter && (from !== minYear || to !== maxYear)) parts.push(`${from}–${to} 年`);
         if (hasAnyRegion) {
             const picked = REGION_LEVELS.map(({ key }) => selects[key].value).filter(Boolean);
@@ -1400,14 +1516,32 @@ function setupFilters(restaurants, clusterGroup, sidebar, choropleth, journey) {
         choropleth.update(visible);
         // 回放的点集跟着筛选走,否则筛完再点回放播的还是全量数据
         journey.setSource(visible);
+        lastVisible = visible;
+        return visible;
     }
+    // 搜索驱动可见集但不挪镜头:正在打字时镜头跳来跳去很晕。年份/地区是
+    // 明确的"我要看某个范围"的动作,选完把镜头对过去(见 frameRestaurants);
+    // 滑块用 change(松手)而不是 input 触发取景,拖动过程中只刷数据不动镜头。
+    searchEl.addEventListener('input', apply);
     if (hasYearFilter) {
         fromEl.addEventListener('input', () => { clampHandles(fromEl); apply(); });
         toEl.addEventListener('input', () => { clampHandles(toEl); apply(); });
+        fromEl.addEventListener('change', () => frameRestaurants(lastVisible));
+        toEl.addEventListener('change', () => frameRestaurants(lastVisible));
         document.getElementById('yearReset').addEventListener('click', () => {
-            fromEl.value = minYear; toEl.value = maxYear; apply();
+            fromEl.value = minYear; toEl.value = maxYear; frameRestaurants(apply());
         });
     }
+    onClearFilters = () => {
+        searchEl.value = '';
+        if (hasYearFilter) { fromEl.value = minYear; toEl.value = maxYear; }
+        if (hasAnyRegion) {
+            for (const { key } of REGION_LEVELS) selects[key].value = '';
+            // 下级下拉的选项计数是在旧的上级选择下算出来的,一并重铺
+            for (let i = 1; i < REGION_LEVELS.length; i++) populateLevel(i);
+        }
+        frameRestaurants(apply());
+    };
     apply();
 }
 
