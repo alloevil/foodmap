@@ -95,7 +95,7 @@ node server.mjs
 
 - 只收录官方"位置(geo)"或"签到卡片"标记过的动态,纯文字提到餐馆但没打位置标签的不会被收录。实测陈晓卿账号命中率约 18%(1131/6129 条原创动态带位置信号)。
 - 转发(retweet)动态一律跳过,位置信息属于被转发者,不代表博主本人的拜访。
-- 餐厅去重按"名称完全一致"聚合,同一家店的不同写法(如"海天总部" vs "佛山海天总部食堂")不会自动合并。
+- 餐厅去重先按"名称完全一致"聚合,再把"名字一个是另一个的子串、坐标又在 500m 内"的合并成一条(如"柴氏" / "甘家口柴氏"),这样同一家店的不同写法不会在地图上留两个点。反过来,同品牌的不同分店(如"大董" vs "大董金宝汇店",坐标差十几公里)会保持独立——只按名称合并会把地图上两个真实存在的点吞成一个。跨市的不同写法(如"海天总部" vs "佛山海天总部食堂")仍然合不上。
 - 微博对个人主页接口的访问需要 weibo.com 主站的登录会话,与其他微博工具/项目的登录状态互不相通,请用 `login.mjs` 单独登录。
 - 地区反查(`geocode-regions.mjs`)是可选步骤,没跑过的话侧栏的地区筛选和洲背景色都不会显示,不影响其他功能。
 
@@ -110,7 +110,7 @@ node server.mjs
 | `extract.mjs` | 位置识别 + LLM 抽取 + 按餐厅聚合(纯函数) |
 | `extract-restaurants.mjs` | 调用 extract.mjs 的 CLI |
 | `geocode-regions.mjs` | 坐标反查洲/国/省/市(纯函数 + CLI,可选步骤) |
-| `index.html` / `server.mjs` | 地图展示页 + 纯静态文件 server(本地/GitHub Pages 通用) |
+| `index.html` / `server.mjs` | 地图展示页 + 纯静态文件 server(本地/GitHub Pages 通用;server 默认只监听 127.0.0.1,要对外暴露传 `--host`) |
 | `assets/continents.geojson` | 洲背景色图层用的世界国家边界数据(裁剪自 Natural Earth 110m,只留 continent 属性) |
 | `verify-render.js` | Puppeteer 冒烟测试,截图确认标记正常渲染 |
 | `data/<博主名>/posts_raw.json` | 归一化后的原始动态(增量合并,默认 gitignore) |
