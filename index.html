@@ -371,7 +371,13 @@ async function loadBloggerList() {
 
 function setupBloggerSelect(allBloggers) {
     const sel = document.getElementById('bloggerSelect');
-    sel.innerHTML = allBloggers.map(n => `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('')
+    // ?name= 传了一个还没进 bloggers.json 的名字时,原本没有对应的 option,
+    // 下面那行 sel.value 赋值会落空、selectedIndex 变成 -1,下拉框整个显示成
+    // 空白,看不出当前在看谁。把它当成一个临时选项补进去。
+    const names = bloggerName === 'all' || allBloggers.includes(bloggerName)
+        ? allBloggers
+        : [bloggerName, ...allBloggers];
+    sel.innerHTML = names.map(n => `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('')
         + '<option value="all">全部</option>';
     sel.value = bloggerName; // bloggerName 是 'all' 或某个具体名字,跟 option 的 value 对应
     sel.addEventListener('change', () => {
@@ -622,7 +628,7 @@ function renderPopup(r) {
             <div class="visit-date">${formatDate(v.date)}</div>
             ${dishes ? `<div class="visit-dishes">${dishes}</div>` : ''}
             ${v.quote ? `<div class="visit-quote">${escapeHtml(v.quote)}</div>` : ''}
-            ${v.postUrl ? `<a class="visit-link" href="${v.postUrl}" target="_blank" rel="noopener">查看原微博 →</a>` : ''}
+            ${v.postUrl ? `<a class="visit-link" href="${escapeHtml(v.postUrl)}" target="_blank" rel="noopener">查看原微博 →</a>` : ''}
         </div>`;
     });
     html += `</div>`;
@@ -739,11 +745,11 @@ async function load() {
     map.addLayer(clusterGroup);
     map.fitBounds(clusterGroup.getBounds(), { padding: [40, 40] });
 
-    const sidebar = setupSidebar(restaurants, clusterGroup);
+    const journey = setupJourney(clusterGroup);
+    const sidebar = setupSidebar(restaurants, clusterGroup, journey);
     const choropleth = setupChoropleth(restaurants);
-    setupFilters(restaurants, clusterGroup, sidebar, choropleth);
+    setupFilters(restaurants, clusterGroup, sidebar, choropleth, journey);
     setupLocate(restaurants, sidebar);
-    setupJourney(restaurants, clusterGroup);
     // 稍等一下再弹,避免和地图初次加载的动画抢注意力;两个提示错开时间,
     // 不会在同一瞬间一起弹出来显得很吵。合并模式下点回放按钮只会弹出"请先
     // 选一位博主"的提醒,这个箭头提示指向一个当下点了也没用的按钮,不弹。
@@ -800,37 +806,34 @@ function setupLocate(restaurants, sidebar) {
     };
 }
 
-// 侧栏餐厅列表:按拜访次数排序,支持按名称搜索;点击项目让地图聚焦该标记并弹出详情。
-// 返回 { refresh(visibleSet), showNearby(lat,lng) } 供时间滑块/定位按钮联动。
-// 旅行轨迹回放:把所有拜访按时间排成一条路线,可以像看时间胶片一样逐点
-// 播放。进入轨迹模式后隐藏聚类图层(否则一堆气泡和一条线互相打架,看不清
-// 路线),退出后恢复原来的聚类视图和年份滑块(两者互斥,轨迹模式下年份
-// 滑块没有意义——轨迹本身就是按时间在动)。
-function setupJourney(restaurants, clusterGroup) {
-    const journey = [];
-    for (const r of restaurants) {
-        if (r.lat == null) continue;
-        for (const v of r.visits) {
-            const t = Date.parse(v.date);
-            if (!isNaN(t)) journey.push({ t, date: v.date, lat: r.lat, lng: r.lng, name: r.name, dishes: v.dishes || [] });
-        }
-    }
-    journey.sort((a, b) => a.t - b.t);
-    if (journey.length < 2) return; // 数据不够连成一条有意义的路线,不启用这个功能
-
-    // 按年份分配颜色:用黄金角(137.508°)在色环上取点,不管有多少年都能让
-    // 相邻年份的颜色尽量拉开,不会挤成一片分不清——比按顺序等分色环更均匀
-    const years = [...new Set(journey.map(p => new Date(p.t).getFullYear()))].sort((a, b) => a - b);
-    const yearColor = (year) => `hsl(${(years.indexOf(year) * 137.508) % 360}, 62%, 42%)`;
-
+// 旅行轨迹回放:把拜访按时间排成一条路线,可以像看时间胶片一样逐点播放。
+// 进入轨迹模式后隐藏聚类图层(否则一堆气泡和一条线互相打架,看不清路线),
+// 退出后恢复原来的聚类视图和年份滑块(两者互斥,轨迹模式下年份滑块没有
+// 意义——轨迹本身就是按时间在动)。
+//
+// 点集不是一次性固定下来的,而是跟着筛选器走(见 setSource,由 setupFilters
+// 的 apply() 调用):之前 journey 在初始化时就把全量数据算好了,筛到
+// "2011 年的欧洲"再点回放,播的还是全部 285 个点,筛选等于没生效。
+// 返回 { setSource, isActive, exit } 供筛选器和侧栏联动。
+function setupJourney(clusterGroup) {
     const journeyBtn = document.querySelector('.journey-btn');
     const barEl = document.getElementById('journeyBar');
     const playBtn = document.getElementById('journeyPlay');
     const progressEl = document.getElementById('journeyProgress');
     const labelEl = document.getElementById('journeyLabel');
     const legendEl = document.getElementById('journeyLegend');
-    progressEl.max = journey.length - 1;
-    legendEl.innerHTML = years.map(y => `<span class="item"><span class="dot" style="background:${yearColor(y)}"></span>${y}</span>`).join('');
+    const timebarEl = document.getElementById('timebar');
+
+    let journey = [];
+    // 按年份分配颜色:用黄金角(137.508°)在色环上取点,不管有多少年都能让
+    // 相邻年份的颜色尽量拉开,不会挤成一片分不清——比按顺序等分色环更均匀
+    let yearColor = () => 'hsl(0, 62%, 42%)';
+
+    let active = false, playing = false, timer = null, index = 0, lastMode = 'near';
+    // 飞机滑动动画的 rAF 句柄和等瓦片的兜底定时器:退出回放时必须停掉,
+    // 否则退出之后最多还会有 1.6 秒在往已经从地图上移除的 marker 写坐标
+    let rafId = null, tileWaitTimer = null;
+    let timebarPrevDisplay = '';
 
     // 路径不是一条整体折线,而是"点i→点i+1"一段段的小折线,每段按终点所在
     // 年份上色——这样跨年移动时颜色会在年份边界处切换,同一年内的移动始终
@@ -910,14 +913,10 @@ function setupJourney(restaurants, clusterGroup) {
             iconSize: [26, 26], iconAnchor: [13, 13],
         });
     }
-    const marker = L.marker(journey[0], {
+    const marker = L.marker([0, 0], {
         icon: journeyIcon('near'),
         zIndexOffset: 1000,
     });
-
-    let active = false, playing = false, timer = null, index = 0, lastMode = 'near';
-    const timebarEl = document.getElementById('timebar');
-    let timebarPrevDisplay = '';
 
     // 飞机图标之前只在瞬间跳到新位置时露一下脸,900ms 一晃就过去,根本看不清
     // 是什么图标。远距离的这一步改成让图标沿直线平滑"飞"过去(而不是瞬移),
@@ -930,13 +929,16 @@ function setupJourney(restaurants, clusterGroup) {
         return new Promise(resolve => {
             const start = performance.now();
             function step(now) {
+                // 退出回放后立刻收手:marker 已经从地图上移走了,继续按帧往上
+                // 写坐标没有意义,而且这一段动画长达 1.6 秒
+                if (!active) { rafId = null; resolve(); return; }
                 const t = Math.min(1, (now - start) / duration);
                 const p = quadraticPoint(from, ctrl, to, t);
                 marker.setLatLng([p.lat, p.lng]);
-                if (t < 1) requestAnimationFrame(step);
-                else resolve();
+                if (t < 1) rafId = requestAnimationFrame(step);
+                else { rafId = null; resolve(); }
             }
-            requestAnimationFrame(step);
+            rafId = requestAnimationFrame(step);
         });
     }
 
@@ -948,9 +950,15 @@ function setupJourney(restaurants, clusterGroup) {
         if (tilesReady) return Promise.resolve();
         return new Promise(resolve => {
             let done = false;
-            const finish = () => { if (done) return; done = true; baseLayer.off('load', finish); resolve(); };
+            const finish = () => {
+                if (done) return;
+                done = true;
+                baseLayer.off('load', finish);
+                if (tileWaitTimer != null) { clearTimeout(tileWaitTimer); tileWaitTimer = null; }
+                resolve();
+            };
             baseLayer.on('load', finish);
-            setTimeout(finish, maxWaitMs);
+            tileWaitTimer = setTimeout(finish, maxWaitMs);
         });
     }
 
@@ -978,6 +986,7 @@ function setupJourney(restaurants, clusterGroup) {
         // 情况包一层 resolve——调用方(tick())不用关心"这一步到底要不要
         // 动画"，只要等这个 promise 完成就代表图标已经真正落到位。
         function moveMarker() {
+            if (!active) return Promise.resolve(); // 等镜头/瓦片的过程中退出了回放
             if (animateMarker && mode === 'far' && prev) return animateMarkerTo(prev, pt, 1600);
             marker.setLatLng([pt.lat, pt.lng]);
             return Promise.resolve();
@@ -1057,8 +1066,10 @@ function setupJourney(restaurants, clusterGroup) {
         map.fitBounds(L.latLngBounds(journey.map(p => [p.lat, p.lng])), { padding: [60, 60] });
     }
     function exit() {
-        active = false;
+        active = false; // 先置位:正在跑的 animateMarkerTo 会在下一帧看到它并停手
         pause();
+        if (rafId != null) { cancelAnimationFrame(rafId); rafId = null; }
+        if (tileWaitTimer != null) { clearTimeout(tileWaitTimer); tileWaitTimer = null; }
         journeyBtn.classList.remove('active');
         for (const seg of segments) map.removeLayer(seg);
         segments = [];
@@ -1068,27 +1079,58 @@ function setupJourney(restaurants, clusterGroup) {
         barEl.classList.remove('show');
         timebarEl.style.display = timebarPrevDisplay;
         map.addLayer(clusterGroup);
-        map.fitBounds(clusterGroup.getBounds(), { padding: [40, 40] });
+        // 筛选条件把可见餐厅筛成 0 家时 clusterGroup 是空的,getBounds() 返回
+        // 一个非法 bounds,fitBounds 会抛 "Bounds are not valid." ——退出回放
+        // 这个动作本身没有失败的理由,没有点可看就别动镜头
+        if (clusterGroup.getLayers().length) map.fitBounds(clusterGroup.getBounds(), { padding: [40, 40] });
+    }
+
+    // 筛选器每次重算可见集合都会调到这里。回放中途换点集会让进度条/线段
+    // 跟正在播的内容错位,所以先退出回放再换。
+    function setSource(visibleRestaurants) {
+        if (active) exit();
+        journey = [];
+        for (const r of visibleRestaurants) {
+            if (r.lat == null) continue;
+            for (const v of r.visits) {
+                const t = Date.parse(v.date);
+                if (!isNaN(t)) journey.push({ t, date: v.date, lat: r.lat, lng: r.lng, name: r.name, dishes: v.dishes || [] });
+            }
+        }
+        journey.sort((a, b) => a.t - b.t);
+        const years = [...new Set(journey.map(p => new Date(p.t).getFullYear()))].sort((a, b) => a - b);
+        yearColor = (year) => `hsl(${(years.indexOf(year) * 137.508) % 360}, 62%, 42%)`;
+        legendEl.innerHTML = years.map(y => `<span class="item"><span class="dot" style="background:${yearColor(y)}"></span>${y}</span>`).join('');
+        progressEl.max = Math.max(1, journey.length - 1);
+        index = 0;
     }
 
     // 合并模式下把两个人的拜访时间线揉在一起按时间顺序播放,会在城市之间
     // 没有意义地来回跳(两人是各自独立的行程,不是同一段旅程)——不如让
     // 用户用顶部已有的下拉框先选定一位博主,回放才是在讲一个人的故事
     onToggleJourney = () => {
-        if (isCombinedView && !active) {
+        if (active) { exit(); return; }
+        if (isCombinedView) {
             alert('轨迹回放是按一个人的时间顺序播放的,"全部"模式下两人的行程会混在一起、来回跳,没有意义。请先用顶部下拉框选择一位博主,再点这个按钮。');
             return;
         }
-        active ? exit() : enter();
+        // 筛选之后剩下的拜访记录不足两条,连不成一条有意义的路线
+        if (journey.length < 2) {
+            alert('当前筛选条件下不足两次拜访,连不成一条轨迹。放宽年份或地区筛选后再试。');
+            return;
+        }
+        enter();
     };
     playBtn.addEventListener('click', () => { playing ? pause() : play(); });
     progressEl.addEventListener('input', () => { pause(); renderStep(Number(progressEl.value), { pan: false }); });
     document.getElementById('journeyExit').addEventListener('click', exit);
+
+    return { setSource, isActive: () => active, exit };
 }
 
 // 侧栏餐厅列表:按拜访次数排序,支持按名称搜索;点击项目让地图聚焦该标记并弹出详情。
 // 返回 { refresh(visibleSet), showNearby(lat,lng) } 供时间滑块/定位按钮联动。
-function setupSidebar(restaurants, clusterGroup) {
+function setupSidebar(restaurants, clusterGroup, journey) {
 
     const sorted = [...restaurants].sort((a, b) => b.visits.length - a.visits.length);
     const listEl = document.getElementById('sidebarList');
@@ -1174,6 +1216,11 @@ function setupSidebar(restaurants, clusterGroup) {
         if (!item) return;
         const r = sorted[Number(item.dataset.idx)];
         if (!r || !r._marker) return;
+        // 回放模式下 clusterGroup 已经从地图上移除(见 setupJourney 的 enter),
+        // 直接 zoomToShowLayer 会在 markercluster 内部抛错、弹窗也打不开,
+        // 表现出来就是"侧栏点了没反应"。用户点某家店就是想看它的详情,
+        // 那就先退出回放再聚焦,而不是让这一整块 UI 变成哑的。
+        if (journey.isActive()) journey.exit();
         // 标记可能仍被聚合在数字气泡里,zoomToShowLayer 会自动放大到它单独显示为止
         clusterGroup.zoomToShowLayer(r._marker, () => r._marker.openPopup());
     });
@@ -1231,7 +1278,7 @@ function regionOf(r) {
     };
 }
 
-function setupFilters(restaurants, clusterGroup, sidebar, choropleth) {
+function setupFilters(restaurants, clusterGroup, sidebar, choropleth, journey) {
     const allYears = restaurants.flatMap(r => r._years);
     const hasYearFilter = allYears.length > 0 && Math.min(...allYears) !== Math.max(...allYears);
     const minYear = hasYearFilter ? Math.min(...allYears) : null;
@@ -1351,6 +1398,8 @@ function setupFilters(restaurants, clusterGroup, sidebar, choropleth) {
 
         sidebar.refresh(isFiltered ? new Set(visible) : null);
         choropleth.update(visible);
+        // 回放的点集跟着筛选走,否则筛完再点回放播的还是全量数据
+        journey.setSource(visible);
     }
     if (hasYearFilter) {
         fromEl.addEventListener('input', () => { clampHandles(fromEl); apply(); });
