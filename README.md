@@ -120,8 +120,13 @@ node server.mjs
 ## 测试
 
 ```bash
-npm test
+npm test              # 单元测试(node:test,零框架依赖):纯函数管线 + server 路径解析 + map-core 前端纯逻辑
+npm run test:coverage # 同上,附覆盖率表(CI 里跑的是这个)
+npm run test:e2e      # 端到端交互测试:起真实 server + Chrome,钉住曾出过 bug 的交互
+                      # (筛选/搜索联动地图、空集回放守卫、移动端侧栏让位等);需要本机装有 Chrome,不进 CI
 ```
+
+前端拆成两层测:不碰 DOM/Leaflet 的纯逻辑(格式化、搜索匹配、弧线数学)在 `map-core.mjs`,浏览器和 `node:test` 共用同一份代码直接单测;DOM/地图交互靠 `e2e.mjs` 全流程验。`verify-render.js` 是更快的一眼冒烟(数标记+截图),开发时顺手跑。
 
 ## License
 

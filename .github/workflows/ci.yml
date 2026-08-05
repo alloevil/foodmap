@@ -21,4 +21,6 @@ jobs:
       - run: npm ci
       - run: npx eslint .
       - run: npx prettier --check .
-      - run: npm test
+      # 用 coverage 版跑测试:同样的用例,顺带把覆盖率表打进 CI 日志,
+      # "哪些文件没被测到"持续可见而不是本地算完就忘
+      - run: npm run test:coverage
