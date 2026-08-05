@@ -1,0 +1,9 @@
+node_modules/
+package-lock.json
+data/
+assets/
+docs/
+# CSS 刻意写成一行一条规则的紧凑风格(307 行),prettier 会把每条属性
+# 展开成一行,行数翻五倍、diff 不可读,得不偿失——html 里只剩结构和样式,
+# 交互逻辑已抽到 app.js(prettier 正常管辖)
+index.html

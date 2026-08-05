@@ -47,7 +47,10 @@ export function isNotRestaurantName(name) {
  * 更好办法的代价。
  */
 export function splitRestaurantNames(name) {
-  return String(name || '').split(/[,，;；]/).map(s => s.trim()).filter(Boolean);
+  return String(name || '')
+    .split(/[,，;；]/)
+    .map(s => s.trim())
+    .filter(Boolean);
 }
 
 /** 去掉菜品里的占位写法("无"之类),顺带去空白/去重。 */
@@ -127,9 +130,13 @@ function mode(values) {
     if (!v) continue;
     counts.set(v, (counts.get(v) || 0) + 1);
   }
-  let best = null, bestCount = 0;
+  let best = null,
+    bestCount = 0;
   for (const [v, c] of counts) {
-    if (c > bestCount) { best = v; bestCount = c; }
+    if (c > bestCount) {
+      best = v;
+      bestCount = c;
+    }
   }
   return best;
 }
@@ -138,10 +145,11 @@ function mode(values) {
 function distanceKm(a, b) {
   if (a.lat == null || a.lng == null || b.lat == null || b.lng == null) return null;
   const R = 6371;
-  const dLat = (b.lat - a.lat) * Math.PI / 180;
-  const dLng = (b.lng - a.lng) * Math.PI / 180;
-  const h = Math.sin(dLat / 2) ** 2
-    + Math.cos(a.lat * Math.PI / 180) * Math.cos(b.lat * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+  const dLat = ((b.lat - a.lat) * Math.PI) / 180;
+  const dLng = ((b.lng - a.lng) * Math.PI) / 180;
+  const h =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos((a.lat * Math.PI) / 180) * Math.cos((b.lat * Math.PI) / 180) * Math.sin(dLng / 2) ** 2;
   return R * 2 * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
 }
 
@@ -160,7 +168,13 @@ function distanceKm(a, b) {
  */
 export function mergeNearbyAliases(entries) {
   const parent = entries.map((_, i) => i);
-  const find = (i) => { while (parent[i] !== i) { parent[i] = parent[parent[i]]; i = parent[i]; } return i; };
+  const find = i => {
+    while (parent[i] !== i) {
+      parent[i] = parent[parent[i]];
+      i = parent[i];
+    }
+    return i;
+  };
   const keys = entries.map(e => normalizeName(e.name));
 
   for (let i = 0; i < entries.length; i++) {
@@ -169,7 +183,8 @@ export function mergeNearbyAliases(entries) {
       if (short.length < 2 || !long.includes(short)) continue;
       const d = distanceKm(entries[i], entries[j]);
       if (d == null || d > ALIAS_MAX_DISTANCE_KM) continue;
-      const ri = find(i), rj = find(j);
+      const ri = find(i),
+        rj = find(j);
       if (ri !== rj) parent[rj] = ri;
     }
   }
@@ -183,9 +198,14 @@ export function mergeNearbyAliases(entries) {
 
   const out = [];
   for (const group of groups.values()) {
-    if (group.length === 1) { out.push(group[0]); continue; }
-    const rep = group.reduce((best, e) =>
-      normalizeName(e.name).length > normalizeName(best.name).length ? e : best, group[0]);
+    if (group.length === 1) {
+      out.push(group[0]);
+      continue;
+    }
+    const rep = group.reduce(
+      (best, e) => (normalizeName(e.name).length > normalizeName(best.name).length ? e : best),
+      group[0]
+    );
     const visits = [];
     const seenPosts = new Set();
     for (const e of group) {
@@ -213,7 +233,10 @@ function expandItems(extracted) {
     if (isNotRestaurantName(item.name)) continue;
     const names = splitRestaurantNames(item.name);
     if (names.length === 0) continue;
-    if (names.length === 1) { out.push({ ...item, name: names[0], dishes: cleanDishes(item.dishes) }); continue; }
+    if (names.length === 1) {
+      out.push({ ...item, name: names[0], dishes: cleanDishes(item.dishes) });
+      continue;
+    }
     for (const name of names) out.push({ ...item, name, dishes: [] });
   }
   return out;
@@ -239,7 +262,10 @@ export function aggregateRestaurants(extracted) {
       });
     }
     const entry = byKey.get(key);
-    if (entry.lat == null && item.geo) { entry.lat = item.geo.lat; entry.lng = item.geo.lng; }
+    if (entry.lat == null && item.geo) {
+      entry.lat = item.geo.lat;
+      entry.lng = item.geo.lng;
+    }
     entry._regions.push(item.regionName || null);
     entry._cityHints.push(item.city || null);
     entry.visits.push({

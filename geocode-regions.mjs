@@ -18,21 +18,101 @@ const NOMINATIM_DELAY_MS = 1100; // Nominatim 使用条款:不超过 1 请求/�
 // 常见国家都能对上;查不到的返回 null(前端会归到"其他"分组),不影响
 // 国家/省/市三级筛选,只是没有洲这一层。
 const COUNTRY_TO_CONTINENT = {
-  cn: '亚洲', hk: '亚洲', mo: '亚洲', tw: '亚洲', jp: '亚洲', kr: '亚洲', kp: '亚洲',
-  sg: '亚洲', my: '亚洲', th: '亚洲', vn: '亚洲', ph: '亚洲', id: '亚洲', mm: '亚洲',
-  kh: '亚洲', la: '亚洲', bn: '亚洲', in: '亚洲', pk: '亚洲', bd: '亚洲', lk: '亚洲',
-  np: '亚洲', mn: '亚洲', kz: '亚洲', uz: '亚洲', ae: '亚洲', sa: '亚洲', qa: '亚洲',
-  il: '亚洲', tr: '亚洲', ir: '亚洲', iq: '亚洲', jo: '亚洲', kw: '亚洲', lb: '亚洲',
-  gb: '欧洲', fr: '欧洲', de: '欧洲', it: '欧洲', es: '欧洲', pt: '欧洲', nl: '欧洲',
-  be: '欧洲', ch: '欧洲', at: '欧洲', se: '欧洲', no: '欧洲', dk: '欧洲', fi: '欧洲',
-  ie: '欧洲', pl: '欧洲', cz: '欧洲', gr: '欧洲', hu: '欧洲', ro: '欧洲', ru: '欧洲',
-  ua: '欧洲', is: '欧洲', lu: '欧洲', hr: '欧洲', rs: '欧洲', bg: '欧洲', sk: '欧洲',
-  us: '北美洲', ca: '北美洲', mx: '北美洲', cu: '北美洲', jm: '北美洲', pa: '北美洲',
-  br: '南美洲', ar: '南美洲', cl: '南美洲', pe: '南美洲', co: '南美洲', ve: '南美洲',
-  ec: '南美洲', uy: '南美洲', py: '南美洲', bo: '南美洲',
-  za: '非洲', eg: '非洲', ma: '非洲', ng: '非洲', ke: '非洲', et: '非洲', gh: '非洲',
-  tz: '非洲', dz: '非洲', tn: '非洲',
-  au: '大洋洲', nz: '大洋洲', fj: '大洋洲', pg: '大洋洲', mp: '大洋洲', gu: '大洋洲',
+  cn: '亚洲',
+  hk: '亚洲',
+  mo: '亚洲',
+  tw: '亚洲',
+  jp: '亚洲',
+  kr: '亚洲',
+  kp: '亚洲',
+  sg: '亚洲',
+  my: '亚洲',
+  th: '亚洲',
+  vn: '亚洲',
+  ph: '亚洲',
+  id: '亚洲',
+  mm: '亚洲',
+  kh: '亚洲',
+  la: '亚洲',
+  bn: '亚洲',
+  in: '亚洲',
+  pk: '亚洲',
+  bd: '亚洲',
+  lk: '亚洲',
+  np: '亚洲',
+  mn: '亚洲',
+  kz: '亚洲',
+  uz: '亚洲',
+  ae: '亚洲',
+  sa: '亚洲',
+  qa: '亚洲',
+  il: '亚洲',
+  tr: '亚洲',
+  ir: '亚洲',
+  iq: '亚洲',
+  jo: '亚洲',
+  kw: '亚洲',
+  lb: '亚洲',
+  gb: '欧洲',
+  fr: '欧洲',
+  de: '欧洲',
+  it: '欧洲',
+  es: '欧洲',
+  pt: '欧洲',
+  nl: '欧洲',
+  be: '欧洲',
+  ch: '欧洲',
+  at: '欧洲',
+  se: '欧洲',
+  no: '欧洲',
+  dk: '欧洲',
+  fi: '欧洲',
+  ie: '欧洲',
+  pl: '欧洲',
+  cz: '欧洲',
+  gr: '欧洲',
+  hu: '欧洲',
+  ro: '欧洲',
+  ru: '欧洲',
+  ua: '欧洲',
+  is: '欧洲',
+  lu: '欧洲',
+  hr: '欧洲',
+  rs: '欧洲',
+  bg: '欧洲',
+  sk: '欧洲',
+  us: '北美洲',
+  ca: '北美洲',
+  mx: '北美洲',
+  cu: '北美洲',
+  jm: '北美洲',
+  pa: '北美洲',
+  br: '南美洲',
+  ar: '南美洲',
+  cl: '南美洲',
+  pe: '南美洲',
+  co: '南美洲',
+  ve: '南美洲',
+  ec: '南美洲',
+  uy: '南美洲',
+  py: '南美洲',
+  bo: '南美洲',
+  za: '非洲',
+  eg: '非洲',
+  ma: '非洲',
+  ng: '非洲',
+  ke: '非洲',
+  et: '非洲',
+  gh: '非洲',
+  tz: '非洲',
+  dz: '非洲',
+  tn: '非洲',
+  au: '大洋洲',
+  nz: '大洋洲',
+  fj: '大洋洲',
+  pg: '大洋洲',
+  mp: '大洋洲',
+  gu: '大洋洲',
 };
 
 function dataDir(name) {
@@ -56,7 +136,9 @@ function firstName(raw) {
  */
 export async function reverseGeocodeLocation(lat, lng) {
   const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=8&accept-language=zh`;
-  const resp = await fetch(url, { headers: { 'User-Agent': 'foodmap-demo/1.0 (personal project, see github.com/alloevil/foodmap)' } });
+  const resp = await fetch(url, {
+    headers: { 'User-Agent': 'foodmap-demo/1.0 (personal project, see github.com/alloevil/foodmap)' },
+  });
   if (!resp.ok) throw new Error(`Nominatim ${resp.status}`);
   const data = await resp.json();
   const addr = data.address || {};
@@ -91,7 +173,9 @@ export async function forwardGeocodeByName(name, regionHint, countryCode = 'cn')
   const q = [name, regionHint].filter(Boolean).join(' ');
   const cc = countryCode ? `&countrycodes=${countryCode}` : '';
   const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=jsonv2&limit=1&accept-language=zh${cc}`;
-  const resp = await fetch(url, { headers: { 'User-Agent': 'foodmap-demo/1.0 (personal project, see github.com/alloevil/foodmap)' } });
+  const resp = await fetch(url, {
+    headers: { 'User-Agent': 'foodmap-demo/1.0 (personal project, see github.com/alloevil/foodmap)' },
+  });
   if (!resp.ok) throw new Error(`Nominatim ${resp.status}`);
   const results = await resp.json();
   const hit = results[0];
@@ -108,7 +192,9 @@ export async function forwardGeocodeByName(name, regionHint, countryCode = 'cn')
  */
 export async function reverseGeocodeDisplayName(lat, lng) {
   const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=8&accept-language=zh`;
-  const resp = await fetch(url, { headers: { 'User-Agent': 'foodmap-demo/1.0 (personal project, see github.com/alloevil/foodmap)' } });
+  const resp = await fetch(url, {
+    headers: { 'User-Agent': 'foodmap-demo/1.0 (personal project, see github.com/alloevil/foodmap)' },
+  });
   if (!resp.ok) throw new Error(`Nominatim ${resp.status}`);
   const data = await resp.json();
   return data.display_name || '';
@@ -117,7 +203,9 @@ export async function reverseGeocodeDisplayName(lat, lng) {
 // 省/市/自治区之类的行政区后缀去掉,只留核心地名——"成都" vs "成都市"、
 // "内蒙古自治区" vs "内蒙古"这种同一地名的不同写法,去掉后缀才能对上。
 function normalizeCityName(s) {
-  return String(s || '').replace(/(市|省|自治区|特别行政区|地区|区|盟)$/, '').trim();
+  return String(s || '')
+    .replace(/(市|省|自治区|特别行政区|地区|区|盟)$/, '')
+    .trim();
 }
 
 /**
@@ -143,7 +231,10 @@ async function main() {
     return i !== -1 ? args[i + 1] : def;
   };
   const name = opt('name');
-  if (!name) { console.error('缺少 --name'); process.exit(1); }
+  if (!name) {
+    console.error('缺少 --name');
+    process.exit(1);
+  }
 
   const file = path.join(dataDir(name), 'restaurants.json');
   const restaurants = JSON.parse(fs.readFileSync(file, 'utf-8'));
@@ -153,7 +244,9 @@ async function main() {
   const cache = new Map();
   const cacheKey = (lat, lng) => `${lat.toFixed(1)},${lng.toFixed(1)}`;
 
-  let queried = 0, failed = 0, reused = 0;
+  let queried = 0,
+    failed = 0,
+    reused = 0;
   for (const r of restaurants) {
     if (r.lat == null || r.lng == null) continue;
     const key = cacheKey(r.lat, r.lng);
@@ -181,5 +274,8 @@ async function main() {
 }
 
 if (process.argv[1] && import.meta.url === `file://${process.argv[1]}`) {
-  main().catch(e => { console.error(e); process.exit(1); });
+  main().catch(e => {
+    console.error(e);
+    process.exit(1);
+  });
 }

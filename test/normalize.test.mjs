@@ -1,6 +1,13 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
-import { parseGeo, parseRegionName, buildPostUrl, normalizePost, hasLocationSignal, mergePosts } from '../normalize.mjs';
+import {
+  parseGeo,
+  parseRegionName,
+  buildPostUrl,
+  normalizePost,
+  hasLocationSignal,
+  mergePosts,
+} from '../normalize.mjs';
 
 test('parseGeo: 合法 Point 按 [lat,lng] 解析(微博坐标顺序与标准 GeoJSON 相反)', () => {
   // 桂林实际坐标约 25.28N 110.26E,微博 geo.coordinates 数组第一位是纬度
@@ -31,11 +38,16 @@ test('parseRegionName: 去掉"发布于 "前缀,缺失返回 null', () => {
 
 test('normalizePost: 提取签到卡片标题,裁剪冗余字段', () => {
   const raw = {
-    id: 5321391748415878, mblogid: 'abc123', created_at: 'Thu Jul 16 19:42:01 +0800 2026',
-    text_raw: '在桂花公社', geo: '', pic_num: 2, region_name: '发布于 广西',
+    id: 5321391748415878,
+    mblogid: 'abc123',
+    created_at: 'Thu Jul 16 19:42:01 +0800 2026',
+    text_raw: '在桂花公社',
+    geo: '',
+    pic_num: 2,
+    region_name: '发布于 广西',
     url_struct: [{ object_type: 'webpage' }, { object_type: 'place', url_title: '桂林·桂花公社景区' }],
     retweeted_status: null,
-    mblog_feed_back_menus_format: [ /* 应被裁掉 */ ],
+    mblog_feed_back_menus_format: [/* 应被裁掉 */],
   };
   const p = normalizePost(raw, 1647375747);
   assert.strictEqual(p.checkinTitle, '桂林·桂花公社景区');
@@ -53,9 +65,18 @@ test('hasLocationSignal: geo 或签到卡片任一存在即为真', () => {
 });
 
 test('mergePosts: 按 id 去重,新数据覆盖旧数据,结果按 id 升序', () => {
-  const existing = [{ id: 1, textRaw: 'old' }, { id: 3, textRaw: 'c' }];
-  const incoming = [{ id: 2, textRaw: 'b' }, { id: 1, textRaw: 'new' }];
+  const existing = [
+    { id: 1, textRaw: 'old' },
+    { id: 3, textRaw: 'c' },
+  ];
+  const incoming = [
+    { id: 2, textRaw: 'b' },
+    { id: 1, textRaw: 'new' },
+  ];
   const merged = mergePosts(existing, incoming);
-  assert.deepStrictEqual(merged.map(p => p.id), [1, 2, 3]);
+  assert.deepStrictEqual(
+    merged.map(p => p.id),
+    [1, 2, 3]
+  );
   assert.strictEqual(merged[0].textRaw, 'new');
 });

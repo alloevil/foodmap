@@ -20,7 +20,8 @@ import * as weiboCookies from './weibo-cookies.mjs';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
 
-const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
+const UA =
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
 
 function delay(ms) {
   return new Promise(r => setTimeout(r, ms));
@@ -28,22 +29,35 @@ function delay(ms) {
 
 function httpsGetJson(url, uid) {
   return new Promise((resolve, reject) => {
-    https.get(url, {
-      headers: {
-        Cookie: weiboCookies.cookieHeader(),
-        'User-Agent': UA,
-        Referer: `https://weibo.com/u/${uid}`,
-        Accept: 'application/json, text/plain, */*',
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-    }, (res) => {
-      let body = '';
-      res.on('data', c => body += c);
-      res.on('end', () => {
-        if (res.statusCode !== 200) { reject(new Error(`HTTP ${res.statusCode}`)); return; }
-        try { resolve(JSON.parse(body)); } catch (e) { reject(new Error(`JSON 解析失败: ${e.message}`)); }
-      });
-    }).on('error', reject);
+    https
+      .get(
+        url,
+        {
+          headers: {
+            Cookie: weiboCookies.cookieHeader(),
+            'User-Agent': UA,
+            Referer: `https://weibo.com/u/${uid}`,
+            Accept: 'application/json, text/plain, */*',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+        },
+        res => {
+          let body = '';
+          res.on('data', c => (body += c));
+          res.on('end', () => {
+            if (res.statusCode !== 200) {
+              reject(new Error(`HTTP ${res.statusCode}`));
+              return;
+            }
+            try {
+              resolve(JSON.parse(body));
+            } catch (e) {
+              reject(new Error(`JSON 解析失败: ${e.message}`));
+            }
+          });
+        }
+      )
+      .on('error', reject);
   });
 }
 
@@ -87,14 +101,17 @@ function savePosts(dir, posts) {
 // --- 位置字段人工巡检:打印每条动态里疑似位置相关的字段,供人工确认结构 ---
 function surveyLocationFields(rawPosts) {
   console.log(`\n=== 位置字段巡检(${rawPosts.length} 条样本) ===`);
-  let geoCount = 0, checkinCount = 0;
+  let geoCount = 0,
+    checkinCount = 0;
   for (const raw of rawPosts) {
     const hasGeo = !!raw.geo && raw.geo !== '';
     const checkin = Array.isArray(raw.url_struct) && raw.url_struct.find(u => u?.object_type === 'place');
     if (hasGeo) geoCount++;
     if (checkin) checkinCount++;
     if (hasGeo || checkin) {
-      console.log(`  id=${raw.id} geo=${hasGeo ? JSON.stringify(raw.geo.coordinates) : '无'} checkin=${checkin?.url_title || '无'} region_name="${raw.region_name || ''}"`);
+      console.log(
+        `  id=${raw.id} geo=${hasGeo ? JSON.stringify(raw.geo.coordinates) : '无'} checkin=${checkin?.url_title || '无'} region_name="${raw.region_name || ''}"`
+      );
       console.log(`    text: ${(raw.text_raw || '').slice(0, 60).replace(/\n/g, ' ')}`);
     }
   }
@@ -107,11 +124,14 @@ async function main() {
     const i = args.indexOf(`--${name}`);
     return i !== -1 ? args[i + 1] : def;
   };
-  const flag = (name) => args.includes(`--${name}`);
+  const flag = name => args.includes(`--${name}`);
 
   const uid = opt('uid');
   const name = opt('name', uid);
-  if (!uid) { console.error('缺少 --uid'); process.exit(1); }
+  if (!uid) {
+    console.error('缺少 --uid');
+    process.exit(1);
+  }
 
   const probe = flag('probe');
   const mode = opt('mode', 'incremental'); // incremental | full
@@ -124,7 +144,9 @@ async function main() {
 
   const collected = [];
   const rawSample = []; // probe 模式下用于字段巡检
-  let page = 1, total = null, stopped = false;
+  let page = 1,
+    total = null,
+    stopped = false;
 
   while (page <= maxPages) {
     let data;
@@ -136,7 +158,10 @@ async function main() {
     }
     if (total == null) total = data.total;
     const list = data.list || [];
-    if (list.length === 0) { console.log('已到最后一页(空列表)'); break; }
+    if (list.length === 0) {
+      console.log('已到最后一页(空列表)');
+      break;
+    }
 
     if (probe) rawSample.push(...list);
 
@@ -166,4 +191,7 @@ async function main() {
   console.log(`\n完成:新增 ${collected.length} 条,合计 ${merged.length} 条,已存 ${path.join(dir, 'posts_raw.json')}`);
 }
 
-main().catch(e => { console.error(e); process.exit(1); });
+main().catch(e => {
+  console.error(e);
+  process.exit(1);
+});

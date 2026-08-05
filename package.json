@@ -6,14 +6,17 @@
   "scripts": {
     "test": "node --test",
     "login": "node login.mjs",
-    "serve": "node server.mjs"
+    "serve": "node server.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "puppeteer": "^24.43.0"
   },
   "devDependencies": {
     "eslint": "^9.39.4",
-    "eslint-config-prettier": "^10.1.8"
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.9.6"
   },
   "license": "MIT",
   "engines": {

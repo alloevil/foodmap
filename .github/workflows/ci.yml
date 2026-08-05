@@ -1,0 +1,24 @@
+# push 即 GitHub Pages 上线,这里是唯一的闸门:lint / 格式 / 单测任一挂掉,
+# 起码能在 commit 状态上看到红叉。不跑 verify-render(要 Chrome + 起本地
+# server,冒烟属于本地开发流程);puppeteer 依赖靠 .puppeteerrc.cjs 的
+# skipDownload 跳过浏览器下载,npm ci 不会卡在下载 Chrome 上。
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx eslint .
+      - run: npx prettier --check .
+      - run: npm test
