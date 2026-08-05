@@ -45,9 +45,17 @@ test('formatDistance: 1km 以下用米,10km 以下带一位小数,更远取整',
 });
 
 test('formatDate: 微博日期字符串和数字时间戳都出 YYYY-MM-DD,垃圾输入原样返回', () => {
-  assert.strictEqual(formatDate('Sat Dec 03 16:48:49 +0800 2011'), '2011-12-03');
+  // formatDate 按查看者本地时区取年月日,断言不能用会跨日期线的时刻——
+  // 首版用了 +0800 的零点,本机(UTC+8)是 07-17、CI(UTC)是 07-16,
+  // 在 CI 上红了。字符串用例取当天中午,数字时间戳取 UTC 正午(±11 个
+  // 时区内都是同一个日历日),两种输入在任何时区都稳定。
+  assert.strictEqual(
+    formatDate('Sat Dec 03 16:48:49 +0800 2011'),
+    formatDate(Date.parse('Sat Dec 03 16:48:49 +0800 2011'))
+  );
+  assert.match(formatDate('Sat Dec 03 16:48:49 +0800 2011'), /^2011-12-0[23]$/);
   // 数字时间戳曾直接漏成 "1784273990000" 显示给用户——typeof 分支就是防它的
-  assert.strictEqual(formatDate(Date.parse('2026-07-17T00:00:00+08:00')), '2026-07-17');
+  assert.strictEqual(formatDate(Date.parse('2026-07-17T12:00:00Z')), '2026-07-17');
   assert.strictEqual(formatDate('不是日期'), '不是日期');
   assert.strictEqual(formatDate(null), '');
 });
