@@ -8,7 +8,9 @@
     "login": "node login.mjs",
     "serve": "node server.mjs",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "test:coverage": "node --test --experimental-test-coverage",
+    "test:e2e": "node --test e2e.mjs"
   },
   "dependencies": {
     "puppeteer": "^24.43.0"
