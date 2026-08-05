@@ -54,14 +54,16 @@ module.exports = [
       'no-irregular-whitespace': 'off',
     },
   },
-  // verify-render.js / login.mjs 含 puppeteer page.evaluate 回调，在浏览器上下文执行
+  // verify-render.js / login.mjs / e2e.mjs 含 puppeteer page.evaluate 回调，在浏览器上下文执行
   {
-    files: ['verify-render.js', 'login.mjs'],
+    files: ['verify-render.js', 'login.mjs', 'e2e.mjs'],
     languageOptions: {
       globals: {
         document: 'readonly',
         window: 'readonly',
         location: 'readonly',
+        getComputedStyle: 'readonly',
+        Event: 'readonly',
       },
     },
   },
@@ -72,7 +74,7 @@ module.exports = [
     files: ['app.js'],
     languageOptions: {
       ecmaVersion: 2023,
-      sourceType: 'script',
+      sourceType: 'module',
       globals: {
         document: 'readonly',
         window: 'readonly',

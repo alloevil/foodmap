@@ -37,6 +37,7 @@ test('resolveRequest: 登录态/密钥/原始动态一律不放行', () => {
 test('resolveRequest: 地图页真正要读的路径放行', () => {
   assert.strictEqual(resolveRequest('/index.html').status, 200);
   assert.strictEqual(resolveRequest('/app.js').status, 200); // 前端逻辑抽出后的外链脚本
+  assert.strictEqual(resolveRequest('/map-core.mjs').status, 200); // app.js import 的纯逻辑模块
   assert.strictEqual(resolveRequest('/data/bloggers.json').status, 200);
   assert.strictEqual(resolveRequest('/data/陈晓卿/restaurants.json').status, 200);
   assert.strictEqual(resolveRequest('/assets/continents.geojson').status, 200);
@@ -74,5 +75,6 @@ test('MIME: svg 和 geojson 有正确的 Content-Type', () => {
   // 缺 .svg 时 favicon 以 application/octet-stream 下发,本地 server 上
   // 标签页图标不显示(GitHub Pages 自己认扩展名,所以只影响本地这条路)
   assert.strictEqual(MIME['.svg'], 'image/svg+xml');
+  assert.match(MIME['.mjs'], /javascript/); // module script 有严格 MIME 校验,octet-stream 会被浏览器拒绝执行
   assert.match(MIME['.geojson'], /json/);
 });

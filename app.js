@@ -11,10 +11,25 @@ const params = new URLSearchParams(location.search);
 const DEFAULT_BLOGGER = '陈晓卿';
 const bloggerName = params.get('name') || DEFAULT_BLOGGER;
 
-// 与 extract-restaurants.mjs 的 dataDir() 保持一致的目录名清洗规则
-function safeName(name) {
-    return String(name).replace(/[^a-zA-Z0-9一-鿿]/g, '_');
-}
+// 纯逻辑(格式化/搜索匹配/弧线数学等)在 map-core.mjs,Node 单测和浏览器
+// 共用同一份;本文件只留碰 DOM/Leaflet 的部分。
+import {
+    safeName,
+    escapeHtml,
+    distanceKm,
+    formatDistance,
+    formatDate,
+    normalizeSearchText,
+    matchesSearch,
+    matchedDishOf,
+    locationLabel,
+    regionOf,
+    pickFoodIcon,
+    arcControlPoint,
+    quadraticPoint,
+    arcPoints,
+    bendFor,
+} from './map-core.mjs';
 
 // 纯静态站点没法"列目录"看有哪些博主的数据,只能维护一份清单文件——
 // 加载失败(比如 fork 了仓库但还没建这个文件)就退化成只有当前博主一个
@@ -47,6 +62,9 @@ function setupBloggerSelect(allBloggers) {
 
 // 暖色底图(CartoDB Voyager,免 API key;比纯灰的 Positron 更暖,契合美食主题)
 const map = L.map('map', { zoomControl: false }).setView([34, 108], 5);
+// e2e 测试(e2e.mjs)要读缩放级别之类的地图状态;转成 ES module 后顶层
+// const 不再是 window 全局,这里显式开一个只读调试口——除测试外别依赖它
+window.__foodmap = { map };
 L.control.zoom({ position: 'topright' }).addTo(map); // 避免与左上角信息卡重叠
 const baseLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
@@ -285,52 +303,6 @@ function showPointerHint({ targetSelector, text, arrowLeft = false }, onDismisse
     hint.addEventListener('click', dismiss);
 }
 
-function escapeHtml(s) {
-    return String(s).replace(
-        /[&<>"']/g,
-        c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]
-    );
-}
-
-// 球面距离(公里),Haversine 公式,用于"附近好吃的"排序
-function distanceKm(lat1, lng1, lat2, lng2) {
-    const R = 6371;
-    const dLat = ((lat2 - lat1) * Math.PI) / 180;
-    const dLng = ((lng2 - lng1) * Math.PI) / 180;
-    const a =
-        Math.sin(dLat / 2) ** 2 +
-        Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * Math.sin(dLng / 2) ** 2;
-    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-}
-function formatDistance(km) {
-    return km < 1 ? `${Math.round(km * 1000)}m` : `${km.toFixed(km < 10 ? 1 : 0)}km`;
-}
-
-// 去空格再转小写——之前的搜索只做了小写转换,店名/查询词里偶尔有的
-// 空格(全角/半角)会让本该命中的结果搜不到,比如"陈 记"搜"陈记"落空。
-// 提到顶层是因为搜索现在同时驱动侧栏列表和地图图层(见 setupFilters 的
-// apply()),两边必须用同一套匹配逻辑,不然会出现"列表里有、地图上没有"。
-function normalizeSearchText(s) {
-    return String(s || '')
-        .toLowerCase()
-        .replace(/\s+/g, '');
-}
-// 店名搜不到时,再看看是不是搜的是某道推荐菜——数据里每次拜访都存了
-// 菜品,搜"牛河"应该能翻出"利苑"这种店名完全不沾边的结果。命中就返回
-// 那道菜的原文,用于在列表里标注"因为这道菜被搜到"。
-function matchedDishOf(r, q) {
-    for (const v of r.visits) {
-        for (const d of v.dishes || []) {
-            if (normalizeSearchText(d).includes(q)) return d;
-        }
-    }
-    return null;
-}
-function matchesSearch(r, q) {
-    if (!q) return true;
-    return normalizeSearchText(r.name).includes(q) || !!matchedDishOf(r, q);
-}
-
 // 把镜头对到一组餐厅上。fitBounds 对"分布横跨三大洲"的数据在窄屏上会
 // 缩到 zoom 1 的世界条——390px 宽的屏幕上地图只剩中间一细条,上下全是
 // 空白画布(移动端截图复盘的主要观感问题)。缩得太远时改用数据的平均
@@ -347,42 +319,6 @@ function frameRestaurants(list) {
     }
 }
 
-function formatDate(raw) {
-    // Date.parse 只认字符串——数字类型的时间戳传进来会先被强制转成字符串
-    // (比如 "1784273990000"),不是合法的日期格式,直接判定 NaN 走进原样
-    // 返回的兜底分支。数据新鲜度提示传的就是 Math.max(...timestamps) 算出
-    // 来的数字,不特殊处理这里会直接把时间戳数字显示给用户看。
-    const t = typeof raw === 'number' ? raw : Date.parse(raw);
-    if (isNaN(t)) return raw || '';
-    const d = new Date(t);
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-}
-
-// 按名称哈希挑一个食物 emoji,同一家餐厅在标记/侧栏/弹窗里始终显示同一个
-// 图标——纯函数、不依赖任何状态,提到顶层后弹窗和侧栏可以直接调用,不用
-// 再作为参数一路传下去。
-// 图标本体是微软 Fluent Emoji 的 3D 渲染图(MIT 协议,存在 assets/food-icons/
-// 下),不再是纯 emoji 文字——立体渲染质感跟之前给标记加的玻璃高光是同一个
-// "让图标更有质感"的思路,只是这次换成真正的立体插画而不是 CSS 模拟。
-const FOOD_ICONS = [
-    'dumpling',
-    'oden',
-    'fried_shrimp',
-    'curry_rice',
-    'cooked_rice',
-    'bento_box',
-    'cut_of_meat',
-    'pancakes',
-    'fish',
-    'dango',
-    'cookie',
-    'fortune_cookie',
-];
-function pickFoodIcon(name) {
-    let h = 0;
-    for (const ch of name) h = (h * 31 + ch.codePointAt(0)) % FOOD_ICONS.length;
-    return FOOD_ICONS[h];
-}
 function foodIconImg(name, size) {
     return `<img class="food-icon-img" src="assets/food-icons/${pickFoodIcon(name)}.png" width="${size}" height="${size}" alt="">`;
 }
@@ -396,12 +332,9 @@ function renderPopup(r) {
     const bloggerTag =
         isCombinedView && r._blogger ? `<span class="poi-blogger-tag">${escapeHtml(r._blogger)}</span>` : '';
     let html = `<div class="poi-name">${foodIconImg(r.name, 20)} ${escapeHtml(r.name)}${bloggerTag}</div>`;
-    // 店在哪个城市:之前只有店名+拜访记录,位置要靠盯地图猜。国内显示
-    // 省·市,国外显示国家·城市;没跑过地区反查的老数据退回 region
-    // (发帖 IP 归属地,粗但聊胜于无)。
-    const loc = r.location || {};
-    const whereParts = loc.country === '中国' ? [loc.province, loc.city] : [loc.country, loc.city];
-    const where = [...new Set(whereParts.filter(Boolean))].join(' · ') || r.region;
+    // 店在哪个城市:之前只有店名+拜访记录,位置要靠盯地图猜(拼法规则见
+    // map-core.mjs 的 locationLabel)
+    const where = locationLabel(r);
     if (where) html += `<div class="poi-location">📍 ${escapeHtml(where)}</div>`;
     const hiddenCount = Math.max(0, r.visits.length - POPUP_VISIT_COLLAPSE_THRESHOLD);
     if (hiddenCount > 0) {
@@ -663,42 +596,10 @@ function setupJourney(clusterGroup) {
     // 年份上色——这样跨年移动时颜色会在年份边界处切换,同一年内的移动始终
     // 是同一色,一眼就能分清"这一片是哪年在这边转"而不是一整条糊在一起。
     let segments = [];
-    // 远距离(飞机)的这一段画成弧线而不是直线——航线图传统上都用弧线表示
-    // 长途飞行,直线反而不像"飞过去"、更像"贴地挪过去"。用二次贝塞尔曲线
-    // 近似:取两点中点,往垂直方向偏移一点当控制点,弯曲程度跟距离成比例
-    // (偏移量是中点到两端距离的固定比例,不是绝对像素值,长途线看起来
-    // 弯得自然,短途线不会突然弓起一个很夸张的包)。
-    // arcControlPoint/quadraticPoint 单独抽出来,是因为画弧线的 arcPoints
-    // 和让飞机图标沿弧线滑动的 animateMarkerTo 必须用同一个控制点、同一条
-    // 曲线——之前两边各算一套(画线用弧线公式,图标用直线插值),导致图标
-    // 走的是直线、背后的线却是弯的,两者对不上。
-    function arcControlPoint(a, b, bend) {
-        const midLat = (a.lat + b.lat) / 2,
-            midLng = (a.lng + b.lng) / 2;
-        const dLat = b.lat - a.lat,
-            dLng = b.lng - a.lng;
-        return { lat: midLat - dLng * bend, lng: midLng + dLat * bend };
-    }
-    function quadraticPoint(a, ctrl, b, t) {
-        return {
-            lat: (1 - t) ** 2 * a.lat + 2 * (1 - t) * t * ctrl.lat + t ** 2 * b.lat,
-            lng: (1 - t) ** 2 * a.lng + 2 * (1 - t) * t * ctrl.lng + t ** 2 * b.lng,
-        };
-    }
-    function arcPoints(a, b, bend, steps = 24) {
-        const ctrl = arcControlPoint(a, b, bend);
-        const pts = [];
-        for (let i = 0; i <= steps; i++) {
-            const p = quadraticPoint(a, ctrl, b, i / steps);
-            pts.push([p.lat, p.lng]);
-        }
-        return pts;
-    }
-    // 开车(近距离)的弧度比飞机(远距离)小得多——短途一小段路弓成跟长途
-    // 一样的弧度会显得很夸张,只给一点点弯曲意思一下就够了
-    function bendFor(isFar) {
-        return isFar ? 0.45 : 0.15;
-    }
+    // 远距离(飞机)的一段画成弧线而不是直线,弧线数学(arcControlPoint/
+    // quadraticPoint/arcPoints/bendFor)在 map-core.mjs——画线和让飞机图标
+    // 沿线滑动(animateMarkerTo)必须共用同一条曲线,之前两边各算一套,
+    // 图标走直线、背后的线却是弯的,对不上。
     function rebuildSegments(uptoIndex) {
         for (const seg of segments) map.removeLayer(seg);
         segments = [];
@@ -1156,18 +1057,6 @@ const REGION_LEVELS = [
     { key: 'province', id: 'provinceSelect', placeholder: '全部省' },
     { key: 'city', id: 'citySelect', placeholder: '全部市' },
 ];
-
-// 兼容两种数据来源:geocode-regions.mjs 写入的结构化 location(优先),
-// 或旧版按发帖 IP 算出的扁平 region 字段(退化成"只有市"这一级)。
-function regionOf(r) {
-    const loc = r.location || {};
-    return {
-        continent: loc.continent || null,
-        country: loc.country || null,
-        province: loc.province || null,
-        city: loc.city || r.region || null,
-    };
-}
 
 // "清除筛选"一键复位(侧栏空态里的快捷出路),由 setupFilters 装配——
 // 搜索、年份、地区三套状态都归它管,别处只负责触发

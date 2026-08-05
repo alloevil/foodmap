@@ -28,6 +28,10 @@ export const MIME = {
   '.json': 'application/json; charset=utf-8',
   '.geojson': 'application/geo+json; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
+  // 浏览器对 <script type="module"> 有严格 MIME 校验:.mjs 若落到下面的
+  // octet-stream 兜底,import './map-core.mjs' 会被直接拒绝执行、整页
+  // JS 不跑——e2e 全套超时抓出来的就是这个
+  '.mjs': 'text/javascript; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
   '.svg': 'image/svg+xml',
   '.png': 'image/png',
@@ -35,7 +39,7 @@ export const MIME = {
 };
 
 // 单文件白名单(根目录下只有这几个该被访问)
-const ROOT_FILES = new Set(['index.html', 'app.js', '.nojekyll']);
+const ROOT_FILES = new Set(['index.html', 'app.js', 'map-core.mjs', '.nojekyll']);
 
 /** 路径段数组是否在白名单内。段已保证不含 '' / '.' / '..'。 */
 function isAllowed(segments) {

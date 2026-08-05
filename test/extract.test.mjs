@@ -359,3 +359,30 @@ test('mergeNearbyAliases: 三条链式包含关系并成一组', () => {
   assert.strictEqual(merged[0].name, '甘家口柴氏牛肉面');
   assert.strictEqual(merged[0].visits.length, 3);
 });
+
+test('aggregateRestaurants: 首访无坐标、后续拜访带坐标时补上落点', () => {
+  // 覆盖此前唯一没测到的分支:entry.lat 为 null 且后来的 item 带 geo
+  const r = aggregateRestaurants([
+    {
+      name: '星冈',
+      dishes: [],
+      quote: '第一次没定位',
+      geo: null,
+      createdAt: 'Thu Jul 10 2026',
+      postId: 1,
+      postUrl: 'u1',
+    },
+    {
+      name: '星冈',
+      dishes: [],
+      quote: '第二次带定位',
+      geo: { lat: 39.9, lng: 116.4 },
+      createdAt: 'Thu Jul 20 2026',
+      postId: 2,
+      postUrl: 'u2',
+    },
+  ]);
+  assert.strictEqual(r.length, 1);
+  assert.strictEqual(r[0].lat, 39.9);
+  assert.strictEqual(r[0].lng, 116.4);
+});
