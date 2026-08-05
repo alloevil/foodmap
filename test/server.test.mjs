@@ -36,6 +36,7 @@ test('resolveRequest: 登录态/密钥/原始动态一律不放行', () => {
 
 test('resolveRequest: 地图页真正要读的路径放行', () => {
   assert.strictEqual(resolveRequest('/index.html').status, 200);
+  assert.strictEqual(resolveRequest('/app.js').status, 200); // 前端逻辑抽出后的外链脚本
   assert.strictEqual(resolveRequest('/data/bloggers.json').status, 200);
   assert.strictEqual(resolveRequest('/data/陈晓卿/restaurants.json').status, 200);
   assert.strictEqual(resolveRequest('/assets/continents.geojson').status, 200);

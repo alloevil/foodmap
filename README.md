@@ -89,7 +89,7 @@ node server.mjs
 3. **AI 抽取**(`extract.mjs` + `extract-restaurants.mjs`):把带位置信号、非转发的动态正文批量喂给 LLM,判断"是否在描述一次具体餐馆就餐",抽取餐厅名和推荐菜品;输出用管道分隔的行式协议而非 JSON(聊天文本常带引号/换行,JSON 转义很容易出错)。
 4. **聚合**:同名餐厅合并成一条,多次拜访按时间排序。
 5. **地区反查**(`geocode-regions.mjs`,可选):用坐标反查洲/国/省/市——比微博发帖时的 IP 归属地更准,因为餐厅的实际位置不该取决于博主发帖时人在哪。免 API key(Nominatim),按坐标缓存减少重复请求。
-6. **展示**(`index.html` + `server.mjs`):Leaflet + CARTO Voyager 暖色底图(免 API key,叠加 CSS 滤镜调色),点击标记弹出该餐厅所有拜访记录(日期/菜品/引用/原微博链接)。`restaurants.json` 是唯一被地图页消费的数据文件,体量小(几十到几百 KB),可以放心提交进 git 公开展示。
+6. **展示**(`index.html` + `app.js` + `server.mjs`):Leaflet + CARTO Voyager 暖色底图(免 API key,叠加 CSS 滤镜调色),点击标记弹出该餐厅所有拜访记录(日期/菜品/引用/原微博链接)。`restaurants.json` 是唯一被地图页消费的数据文件,体量小(几十到几百 KB),可以放心提交进 git 公开展示。
 
 ## 已知限制
 
@@ -101,21 +101,21 @@ node server.mjs
 
 ## 文件说明
 
-| 文件 | 作用 |
-|---|---|
-| `weibo-cookies.mjs` | Cookie 存取(独立文件,不与其他项目共用) |
-| `login.mjs` | 扫码登录 weibo.com 主站 |
-| `normalize.mjs` | 微博动态字段裁剪/归一(纯函数) |
-| `fetch-posts.mjs` | 抓取个人主页动态(CLI) |
-| `extract.mjs` | 位置识别 + LLM 抽取 + 按餐厅聚合(纯函数) |
-| `extract-restaurants.mjs` | 调用 extract.mjs 的 CLI |
-| `geocode-regions.mjs` | 坐标反查洲/国/省/市(纯函数 + CLI,可选步骤) |
-| `index.html` / `server.mjs` | 地图展示页 + 纯静态文件 server(本地/GitHub Pages 通用;server 默认只监听 127.0.0.1,要对外暴露传 `--host`) |
-| `assets/continents.geojson` | 洲背景色图层用的世界国家边界数据(裁剪自 Natural Earth 110m,只留 continent 属性) |
-| `verify-render.js` | Puppeteer 冒烟测试,截图确认标记正常渲染 |
-| `data/<博主名>/posts_raw.json` | 归一化后的原始动态(增量合并,默认 gitignore) |
-| `data/<博主名>/restaurants.json` | 最终结构化餐厅数据,地图页直接读取,可提交公开 |
-| `data/bloggers.json` | 已收录博主名单,驱动地图页顶部的切换下拉框和"全部"合并视图 |
+| 文件                                   | 作用                                                                                                                                                       |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `weibo-cookies.mjs`                    | Cookie 存取(独立文件,不与其他项目共用)                                                                                                                     |
+| `login.mjs`                            | 扫码登录 weibo.com 主站                                                                                                                                    |
+| `normalize.mjs`                        | 微博动态字段裁剪/归一(纯函数)                                                                                                                              |
+| `fetch-posts.mjs`                      | 抓取个人主页动态(CLI)                                                                                                                                      |
+| `extract.mjs`                          | 位置识别 + LLM 抽取 + 按餐厅聚合(纯函数)                                                                                                                   |
+| `extract-restaurants.mjs`              | 调用 extract.mjs 的 CLI                                                                                                                                    |
+| `geocode-regions.mjs`                  | 坐标反查洲/国/省/市(纯函数 + CLI,可选步骤)                                                                                                                 |
+| `index.html` / `app.js` / `server.mjs` | 地图展示页(结构/样式在 html,交互逻辑在 app.js,零构建直接引入)+ 纯静态文件 server(本地/GitHub Pages 通用;server 默认只监听 127.0.0.1,要对外暴露传 `--host`) |
+| `assets/continents.geojson`            | 洲背景色图层用的世界国家边界数据(裁剪自 Natural Earth 110m,只留 continent 属性)                                                                            |
+| `verify-render.js`                     | Puppeteer 冒烟测试,截图确认标记正常渲染                                                                                                                    |
+| `data/<博主名>/posts_raw.json`         | 归一化后的原始动态(增量合并,默认 gitignore)                                                                                                                |
+| `data/<博主名>/restaurants.json`       | 最终结构化餐厅数据,地图页直接读取,可提交公开                                                                                                               |
+| `data/bloggers.json`                   | 已收录博主名单,驱动地图页顶部的切换下拉框和"全部"合并视图                                                                                                  |
 
 ## 测试
 
