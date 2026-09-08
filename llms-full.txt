@@ -1,0 +1,79 @@
+# 美食地图 (foodmap)
+
+美食地图 (foodmap) 是一个把美食博主公开微博动态变成可交互餐馆地图的工具,面向想按"某位博主真的去过哪儿"来找店的人。
+
+## What it is
+
+点评类榜单给出的是全网评分的平均值,而"某位你信任的博主到底吃过什么"这件事只散落在他历年的微博动态里,翻不完也搜不动。foodmap 把这件事变成一张地图:抓取博主个人主页动态,只保留带官方位置(geo)标记或签到卡片的原创动态(转发一律跳过,因为位置属于被转发者),把正文批量交给 LLM 判断"是否在描述一次具体的餐馆就餐"并抽取餐厅名与推荐菜品,同名餐厅合并成一条、多次拜访按时间排序,再用 Nominatim 按坐标反查洲/国/省/市。最终产物是一个纯静态页面:Leaflet 地图 + 聚类气泡 + 可搜索侧栏 + 洲/国/省/市级联筛选 + 拜访年份双手柄滑块 + 旅行轨迹回放,点开任一个标记能看到每次拜访的日期、菜品、原文引用和微博原链接。没有后端 API,`index.html` 直接 fetch `data/<博主名>/restaurants.json`,本地和 GitHub Pages 跑的是同一份代码。
+
+## Install
+
+需要 Node.js >= 18。抓取步骤依赖 Puppeteer(随 `npm install` 装好),抽取步骤需要一个 OpenAI 兼容的 LLM API。
+
+```bash
+git clone https://github.com/alloevil/foodmap.git
+cd foodmap
+npm install
+
+cp config.example.json config.json         # 可选:指定 Chrome 路径,不填则自动探测
+cp ai-config.example.json ai-config.json   # 必填(仅抽取步骤需要):baseUrl / apiKey / model
+```
+
+两个配置文件都不在仓库里,只提交了 `.example` 模板,所以第一次跑之前必须自己复制一份。只想看现成数据的话可以跳过全部配置,直接 `node server.mjs`,仓库自带的示例数据就能渲染出完整地图。
+
+## Quickstart
+
+```bash
+# 只看仓库自带的示例数据(不需要任何配置)
+node server.mjs
+# 打开 http://localhost:3457/            默认看陈晓卿的数据
+# 打开 http://localhost:3457/?name=all   合并看 bloggers.json 里的所有博主
+
+# 收录一位新博主
+node login.mjs                                              # 扫码登录 weibo.com 主站
+node fetch-posts.mjs --uid <uid> --name <博主名> --probe      # 先探测:只抓 1-2 页,不落盘
+node fetch-posts.mjs --uid <uid> --name <博主名> --mode full  # 正式抓全量历史
+node extract-restaurants.mjs --name <博主名>                  # LLM 识别餐馆 + 抽取菜品
+node geocode-regions.mjs --name <博主名>                      # 可选:坐标反查洲/国/省/市
+# 最后把博主名加进 data/bloggers.json,页面顶部的切换下拉框才会列出他
+
+# 测试
+npm test                # 单元测试(node:test,零框架依赖)
+npm run test:coverage   # 同上 + 覆盖率表(CI 跑的是这个)
+npm run test:e2e        # 端到端:起真实 server + Chrome,需要本机装有 Chrome,不进 CI
+```
+
+## Verifiable claims
+
+- **仓库自带 283 家餐馆、312 次拜访的真实数据。** 分别来自 2 位博主:陈晓卿 252 家、隋坡 31 家,全部提交在 `data/<博主名>/restaurants.json`。复算:`node -e "const f=n=>require('./data/'+n+'/restaurants.json');const a=[...f('陈晓卿'),...f('隋坡')];console.log(a.length, a.reduce((s,r)=>s+r.visits.length,0))"`。证据:https://github.com/alloevil/foodmap/tree/main/data
+- **地理范围以中国为主,共 3 个洲、8 个国家或地区、95 个市或区。** 按 `location` 字段统计,中国 262 家,其余 21 家分布在法国、美国、越南、新加坡、日本、西班牙等地。这些值由 `geocode-regions.mjs` 用 Nominatim 反查坐标得到,不是发帖时的 IP 归属地。复算命令与证据同上。
+- **每条记录都能回到原始出处。** 每次拜访都带 `postUrl`(微博原文链接)、`date` 和 `quote`(原文摘录),所以任何一家店的推荐都可以点回博主本人的公开动态核对,而不是只能相信这份 JSON。
+- **README 里"命中率约 18%(1131/6129 条原创动态)"这个数字没有进 claims.json。** 它的原始依据是 `data/<博主名>/posts_raw.json`,而该文件默认被 gitignore(体量大,且包含大量与餐馆无关的私人动态原文),所以在仓库里无法复算。它作为作者的实测记录留在 README,但不作为可核对声明。
+
+## When to use it
+
+- 你信任某几位美食博主,想知道他们真正去过、并且写过推荐菜的店,而不是看平台平均分。
+- 你要去某个城市,想先看"这些博主在这座城市吃过什么"——侧栏的洲/国/省/市级联筛选就是为这个做的。
+- 你想要一个可以自己托管、数据完全在自己手里的地图:纯静态、零后端,数据就是一个可读的 JSON 文件。
+- 你想按时间看变化:拜访年份滑块和轨迹回放可以看出某位博主几年里的探店路线。
+
+## When NOT to use it
+
+- 你想收录"博主提过但没打位置标签"的店。只有带官方位置(geo)或签到卡片的原创动态会被收录,纯文字提到餐馆的动态抓不到。作者在自己的样本账号上实测到的命中率约 18%(该数字的原始数据未提交,见上)。
+- 你想要一份完整的城市餐厅数据库。数据量取决于你收录了几位博主、他们发过多少带位置的动态,这不是一个覆盖性数据集。
+- 你不想登录微博。个人主页动态接口需要 weibo.com 主站的登录会话,而且这个会话与其他微博工具不通用,必须用 `login.mjs` 单独扫码登录。
+- 你不想接 LLM。判断"这条动态是不是在讲一次具体的餐馆就餐"以及抽取菜品这一步依赖 LLM,没有 `ai-config.json` 就只能用现成数据,无法收录新博主。
+- 你需要连锁品牌的不同分店自动合并,或跨城市的不同写法自动对齐。去重只在"名称完全一致",或"一个名字是另一个的子串且坐标相距 500m 以内"时才合并,所以"大董"和"大董金宝汇店"会保持为两个点,"海天总部"和"佛山海天总部食堂"也合不上——这是刻意的取舍,只按名称合并会把地图上两个真实存在的点吞成一个。
+- 你要抓很多博主的地区信息又很着急。`geocode-regions.mjs` 用的是免费 Nominatim 接口,限速 1 请求/秒,数据量大时会跑很久(结果按坐标缓存,重复坐标不会重复请求)。
+
+## FAQ
+
+**它的数据来自哪里?** 全部来自美食博主公开发布的微博个人主页动态:餐厅位置来自动态里的官方 `geo` 字段或签到卡片,餐厅名和推荐菜品由 LLM 从公开正文里抽取,行政区划由 Nominatim 反查坐标得到。仓库里提交的只有最终结构化结果 `restaurants.json`(每条都带原微博链接可回溯);抓取到的原始动态全文 `posts_raw.json` 默认被 gitignore,不进仓库,因为里面有大量与餐馆无关的私人内容。
+
+**为什么坐标顺序要特别说明?** 微博 `geo` 字段的形式是 `{type:'Point', coordinates:[纬度,经度]}`,和标准 GeoJSON 的 `[经度,纬度]` 正好相反。`normalize.mjs` 在归一化时处理了这个差异;自己解析原始数据时如果照 GeoJSON 的约定读,点会落到地球另一边。
+
+**在线演示的数据是真的还是造的?** 是真的。示例数据由陈晓卿(@陈晓卿)和隋坡两个公开账号的动态抓取、抽取生成,共 283 家餐馆、312 次拜访,餐厅名、菜品和引用都来自他们公开发布的内容;`docs/screenshot.png` 也是用这份数据渲染的,不是示意图。
+
+**能自己部署吗?需要服务器吗?** 不需要。整个前端是零构建的静态文件:`index.html` + `app.js` 直接 fetch `data/<博主名>/restaurants.json`,GitHub Pages 直接托管仓库根目录即可,和本地 `node server.mjs` 跑的是同一份代码。`server.mjs` 只是一个纯静态文件服务器,默认只监听 127.0.0.1,要对外暴露需要显式传 `--host`。
+
+**前端怎么测的?** 分两层:不碰 DOM 和 Leaflet 的纯逻辑(格式化、搜索匹配、弧线数学)放在 `map-core.mjs`,浏览器和 `node:test` 共用同一份代码直接单测;DOM 与地图交互由 `e2e.mjs` 起真实 server + Chrome 全流程验证,钉住曾经出过 bug 的交互(筛选/搜索与地图联动、空集回放守卫、移动端侧栏让位等)。e2e 需要本机装有 Chrome,所以不进 CI;`verify-render.js` 是更快的冒烟检查——数一遍标记数量并截图。

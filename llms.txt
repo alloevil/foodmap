@@ -1,0 +1,21 @@
+# 美食地图 (foodmap)
+
+> 美食地图 (foodmap) 是一个把美食博主公开微博动态变成可交互餐馆地图的工具,面向想按"某位博主真的去过哪儿"来找店的人。
+
+大众点评式的榜单是全网打分的平均值,而"某位你信任的博主吃过什么"这件事只散落在他历年的微博动态里。foodmap 抓取博主个人主页动态,只保留带官方位置(geo)标记或签到卡片的原创动态,把正文交给 LLM 判断"是否在描述一次具体的餐馆就餐"并抽取餐厅名与推荐菜品,再按坐标反查洲/国/省/市,最后生成一张纯静态的 Leaflet 地图:可以按博主切换或合并、按地区级联筛选、按拜访年份拉时间轴、回放旅行轨迹,点开任一个标记能看到每次拜访的日期、菜品、原文引用和微博原链接。前端零构建、零后端 API,本地和 GitHub Pages 跑的是同一份 `index.html`。抽取步骤需要自己配置一个 OpenAI 兼容的 LLM API(`ai-config.json`),抓取步骤需要 weibo.com 的登录会话。
+
+仓库自带 2 位博主(陈晓卿、隋坡)的示例数据,可以直接看在线演示,不需要任何配置。
+
+## Docs
+- [在线地图](https://alloevil.github.io/foodmap/): 示例数据的可交互地图,`?name=<博主名>` 直达某位博主,`?name=all` 看合并视图
+- [README(中文)](https://github.com/alloevil/foodmap/blob/main/README.zh-CN.md): 完整的抓取 → 抽取 → 反查 → 展示流程和每个脚本的作用
+- [README (English)](https://github.com/alloevil/foodmap/blob/main/README.md): 同上,英文版
+- [已知限制](https://github.com/alloevil/foodmap/blob/main/README.zh-CN.md#已知限制): 只收录带位置标记的动态、跳过转发、去重规则的边界
+
+## Evidence
+- [claims.json](https://alloevil.github.io/foodmap/claims.json): 仓库自带数据集的可核对数字及复算命令
+- [示例数据](https://github.com/alloevil/foodmap/tree/main/data): 地图页唯一消费的数据文件 `restaurants.json`,每条记录都带坐标、拜访日期和原微博链接,可以逐条回到原始出处
+- [截图](https://raw.githubusercontent.com/alloevil/foodmap/main/docs/screenshot.png): 用仓库自带的真实数据渲染,不是示意图
+
+## Source
+- [GitHub 仓库](https://github.com/alloevil/foodmap)

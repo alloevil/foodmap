@@ -1,0 +1,38 @@
+{
+  "project": "foodmap",
+  "url": "https://alloevil.github.io/foodmap/",
+  "repository": "https://github.com/alloevil/foodmap",
+  "updated": "2026-09-08",
+  "claims": [
+    {
+      "id": "committed-dataset-size",
+      "claim": "The repository ships 283 restaurants and 312 visits extracted from two food bloggers' public Weibo posts.",
+      "value": "283 restaurants / 312 visits / 2 bloggers",
+      "metric": "number of restaurant records and visit records in the committed restaurants.json files",
+      "method": "counted directly from data/陈晓卿/restaurants.json (252 restaurants) and data/隋坡/restaurants.json (31 restaurants); a visit is one entry in a restaurant's visits array, each carrying its source Weibo post URL",
+      "repro": "node -e \"const f=n=>require('./data/'+n+'/restaurants.json');const a=[...f('陈晓卿'),...f('隋坡')];console.log(a.length, a.reduce((s,r)=>s+r.visits.length,0))\"",
+      "evidence": "https://github.com/alloevil/foodmap/tree/main/data",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "committed-dataset-geography",
+      "claim": "That dataset is predominantly Chinese: 262 of the 283 restaurants are in China, spread over 3 continents, 8 countries or regions and 95 cities or districts in total.",
+      "value": "262/283 in China; 3 continents, 8 countries or regions, 95 cities or districts",
+      "metric": "distinct values of the continent / country / city fields of the location object across the committed restaurant records",
+      "method": "the location object is written by geocode-regions.mjs, which reverse-geocodes each restaurant's own coordinates through Nominatim, so the region reflects where the restaurant is rather than where the blogger was posting from",
+      "repro": "node -e \"const f=n=>require('./data/'+n+'/restaurants.json');const a=[...f('陈晓卿'),...f('隋坡')];const g=k=>new Set(a.map(r=>(r.location||{})[k]).filter(Boolean));console.log(g('continent').size,g('country').size,g('city').size,a.filter(r=>(r.location||{}).country==='中国').length)\"",
+      "evidence": "https://github.com/alloevil/foodmap/tree/main/data",
+      "verified": "2026-09-08"
+    },
+    {
+      "id": "every-visit-traceable",
+      "claim": "Every visit record links back to the public Weibo post it was extracted from.",
+      "value": "312/312 visits carry a postUrl",
+      "metric": "share of visit records containing a non-empty postUrl field",
+      "method": "extract.mjs keeps the source post id, URL, date and a quoted excerpt on each visit, so any recommendation on the map can be checked against the blogger's own public post instead of being taken on trust",
+      "repro": "node -e \"const f=n=>require('./data/'+n+'/restaurants.json');const v=[...f('陈晓卿'),...f('隋坡')].flatMap(r=>r.visits);console.log(v.filter(x=>x.postUrl).length+'/'+v.length)\"",
+      "evidence": "https://github.com/alloevil/foodmap/tree/main/data",
+      "verified": "2026-09-08"
+    }
+  ]
+}
