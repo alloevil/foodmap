@@ -177,7 +177,11 @@ const topbarEl = document.querySelector('.topbar');
 const sidebarEl0 = document.getElementById('sidebar');
 const sidebarToggleEl0 = document.getElementById('sidebarToggle');
 function repositionSidebar() {
-    const top = topbarEl.getBoundingClientRect().bottom + 12 + 'px';
+    // 用 offsetTop/offsetHeight 而不是 getBoundingClientRect():标题卡和侧栏都是
+    // 相对初始包含块定位的,rect 是视口坐标,页面能上下滚之后(首屏地图下面接了
+    // 「关于这张地图」说明区)一旦在滚动状态下触发这个回调,算出来的 top 会少掉
+    // 一个 scrollY。offset* 是文档坐标,跟滚动位置无关。
+    const top = topbarEl.offsetTop + topbarEl.offsetHeight + 12 + 'px';
     sidebarEl0.style.top = top;
     sidebarToggleEl0.style.top = top;
 }
@@ -288,10 +292,16 @@ function showPointerHint({ targetSelector, text, arrowLeft = false }, onDismisse
     position();
     requestAnimationFrame(() => hint.classList.add('show'));
     window.addEventListener('resize', position);
+    // 气泡是 position:fixed,坐标按目标按钮的视口 rect 算。首屏地图下面接了
+    // 「关于这张地图」说明区之后页面可以上下滚,只监听 resize 的话:按钮跟着
+    // 地图滚出视口,气泡还钉在原处指着空气。跟着滚动重算一次,它就会跟目标
+    // 一起滚出屏幕。
+    window.addEventListener('scroll', position, { passive: true });
 
     const dismiss = () => {
         if (activeHintDismiss === dismiss) activeHintDismiss = null;
         window.removeEventListener('resize', position);
+        window.removeEventListener('scroll', position);
         hint.classList.remove('show');
         setTimeout(() => hint.remove(), 300);
         if (onDismissed) onDismissed();
