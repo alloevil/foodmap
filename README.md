@@ -1,3 +1,7 @@
+# foodmap
+
+**foodmap** is a tool that turns a food blogger's public Weibo posts into an interactive restaurant map, for people who would rather eat where a blogger they trust actually ate than trust a platform's average rating.
+
 English | [简体中文](README.zh-CN.md)
 
 <p align="center">
@@ -21,6 +25,8 @@ English | [简体中文](README.zh-CN.md)
 </p>
 
 ---
+
+## What it is
 
 Scrape a food blogger's Weibo profile feed, identify geo-tagged restaurants, use AI to extract recommended dishes and visit dates, and generate an interactive map.
 
@@ -48,6 +54,21 @@ Hosted as pure static files on GitHub Pages (`index.html` fetches `data/<name>/r
 - **Travel route replay**: plays back visits in chronological order — short hops use a car icon along an arced street-level view; long hops switch to a plane icon flying an arced route while the map auto-zooms out to fit start and end; one color per year, and every place passed leaves a small icon behind
 - **Continent-colored background layer**: color intensity reflects visit counts per continent, synced with the filters
 - **Mobile-friendly**, plus a warm-toned basemap (CSS-filter color grading whose strength adapts to the zoom level)
+
+## Install
+
+Node.js >= 18. Puppeteer is installed by `npm install`; the AI extraction step additionally needs an OpenAI-compatible LLM API.
+
+```bash
+git clone https://github.com/alloevil/foodmap.git
+cd foodmap
+npm install
+
+cp config.example.json config.json         # Optional: pin a Chrome path; auto-detected if left empty
+cp ai-config.example.json ai-config.json   # Required for extraction only: baseUrl / apiKey / model
+```
+
+Neither config file is committed — only the `.example` templates are — so both copies have to be made before the first extraction run. To just look at the sample data, skip the config entirely and run `node server.mjs`: the two bloggers shipped in `data/` render the full map with no keys and no login.
 
 ## Quick Start
 
@@ -94,6 +115,21 @@ node server.mjs
 5. **Region reverse-geocoding** (`geocode-regions.mjs`, optional): reverse-geocodes coordinates into continent/country/province/city — more accurate than the poster's IP location at posting time, because a restaurant's actual location shouldn't depend on where the blogger happened to be when posting. No API key needed (Nominatim); results are cached by coordinates to reduce duplicate requests.
 6. **Display** (`index.html` + `app.js` + `server.mjs`): Leaflet + the CARTO Voyager warm basemap (no API key, with CSS-filter color grading on top); clicking a marker pops up all visits to that restaurant (date / dishes / quote / link to the original post). `restaurants.json` is the only data file consumed by the map page, and it's small (tens to hundreds of KB), so it's safe to commit to git for public display.
 
+## When to use it
+
+- You trust a handful of food bloggers and want the places they actually visited and wrote a dish recommendation for, rather than a platform-wide average score.
+- You are travelling somewhere and want to see what those bloggers ate in that city — that is what the sidebar's continent/country/province/city cascade is for.
+- You want a map you can self-host with the data in your own hands: pure static files, no backend, and the dataset is one readable JSON file per blogger.
+- You want to see change over time: the visit-year slider and the route replay show a blogger's eating route across years.
+
+## When NOT to use it
+
+- You want restaurants a blogger only mentioned in plain text. Only posts carrying an official location (geo) tag or a check-in card are collected; on the author's sample account the measured hit rate was about 18%.
+- You want a complete restaurant database for a city. Coverage depends entirely on which bloggers you ingest and how many geo-tagged posts they wrote — this is not an exhaustive dataset.
+- You do not want to log in to Weibo. The profile-feed endpoints require a weibo.com session that is not shared with other Weibo tools, so `login.mjs` is a separate QR-code login.
+- You do not want to involve an LLM. Deciding "is this post describing a specific restaurant meal" and extracting the dishes both depend on one, so without `ai-config.json` you can browse existing data but cannot ingest a new blogger.
+- You need branches of one brand merged automatically, or the same place spelled differently across cities to align. Dedup merges only on an exact name match, or a substring match within 500m — a deliberate trade-off, detailed in Known Limitations below.
+
 ## Known Limitations
 
 - Only posts tagged with an official "location (geo)" or "check-in card" are included; posts that mention a restaurant in plain text without a location tag are not. Measured hit rate on the Chen Xiaoqing account is about 18% (1131/6129 original posts carry a location signal).
@@ -130,6 +166,18 @@ npm run test:e2e      # End-to-end interaction tests: real server + Chrome, pinn
 ```
 
 The frontend is tested in two layers: pure logic that doesn't touch the DOM/Leaflet (formatting, search matching, arc math) lives in `map-core.mjs`, shared verbatim between the browser and `node:test` for direct unit testing; DOM/map interactions are covered end-to-end by `e2e.mjs`. `verify-render.js` is the quicker at-a-glance smoke test (count markers + screenshot), handy to run while developing.
+
+## FAQ
+
+**Where does the data come from?** Entirely from food bloggers' publicly posted Weibo profile feeds: the restaurant coordinates come from the post's official `geo` field or a check-in card, the restaurant name and recommended dishes are extracted from the public post body by an LLM, and the administrative region is reverse-geocoded from the coordinates via Nominatim. Only the final structured result (`restaurants.json`, every visit carrying its source post URL) is committed; the scraped raw post text (`posts_raw.json`) is gitignored because it contains large amounts of personal content unrelated to restaurants.
+
+**Why does the coordinate order need a warning?** Weibo's `geo` field is `{type:'Point', coordinates:[lat,lng]}`, the reverse of standard GeoJSON's `[lng,lat]`. `normalize.mjs` handles the difference during normalization; if you parse the raw data yourself assuming the GeoJSON convention, your points land on the other side of the planet.
+
+**Is the live demo real data or a mock?** Real. It is generated from the public accounts of Chen Xiaoqing (@陈晓卿) and Sui Po (隋坡) — 283 restaurants and 312 visits, with restaurant names, dishes and quotes all taken from their public posts. `docs/screenshot.png` is rendered from that same data, not an illustration.
+
+**Can I host it myself? Does it need a server?** No server. The frontend is zero-build static files: `index.html` plus `app.js` fetch `data/<blogger>/restaurants.json` directly, so GitHub Pages can serve the repository root as-is, running the same code as a local `node server.mjs`. That server is a plain static file server and listens on 127.0.0.1 only unless you pass `--host`.
+
+**How is the frontend tested?** In two layers. Pure logic that never touches the DOM or Leaflet (formatting, search matching, arc maths) lives in `map-core.mjs` and is shared verbatim between the browser and `node:test`, so it is unit-tested directly. DOM and map interactions are covered end-to-end by `e2e.mjs` against a real server plus Chrome, pinning interactions that previously broke; it needs a local Chrome so it is not in CI. `verify-render.js` is the faster smoke check — count the markers, take a screenshot.
 
 ## License
 
