@@ -1,53 +1,119 @@
 <svg xmlns="http://www.w3.org/2000/svg"
-     width="1200" height="320" viewBox="0 0 1200 320"
+     width="1200" height="420" viewBox="0 0 1200 420"
      role="img" aria-labelledby="title desc">
-  <title id="title">foodmap</title>
-  <desc id="desc">A warm cream hero showing scattered terracotta pins across an abstract world silhouette, representing restaurants extracted from a food blogger's Weibo posts.</desc>
+  <title id="title">foodmap — a food blogger's Weibo posts on an interactive restaurant map</title>
+  <desc id="desc">foodmap in large type beside a warm city-map panel: three geo-tagged pins of different sizes sit on a pale street basemap, each connected by a dotted line to a card that lists the dishes extracted from the post and the restaurant with its source post date. A strip below names the pipeline files: fetch-posts.mjs, normalize.mjs, extract.mjs, geocode-regions.mjs, index.html + app.js.</desc>
 
   <defs>
-    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#c1642a"/>
-      <stop offset="100%" stop-color="#e0a05a"/>
-    </linearGradient>
-    <radialGradient id="pinGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#c1642a" stop-opacity="0.55"/>
-      <stop offset="100%" stop-color="#c1642a" stop-opacity="0"/>
-    </radialGradient>
+    <clipPath id="panel-clip">
+      <rect x="552" y="76" width="592" height="244" rx="18"/>
+    </clipPath>
   </defs>
 
-  <!-- Background -->
-  <rect width="1200" height="320" fill="#f5ede0"/>
+  <rect width="1200" height="420" rx="24" fill="#f5ede0"/>
 
-  <!-- Abstract world dot-grid silhouette (loosely China/Asia-weighted, echoing the real data) -->
-  <g fill="#d8c8ab">
-    <circle cx="120" cy="120" r="2.5"/><circle cx="140" cy="130" r="2.5"/><circle cx="160" cy="115" r="2.5"/>
-    <circle cx="300" cy="90" r="2.5"/><circle cx="320" cy="105" r="2.5"/><circle cx="340" cy="95" r="2.5"/>
-    <circle cx="600" cy="150" r="2.5"/><circle cx="620" cy="140" r="2.5"/><circle cx="640" cy="160" r="2.5"/>
-    <circle cx="660" cy="135" r="2.5"/><circle cx="680" cy="150" r="2.5"/><circle cx="700" cy="120" r="2.5"/>
-    <circle cx="720" cy="145" r="2.5"/><circle cx="740" cy="130" r="2.5"/><circle cx="760" cy="160" r="2.5"/>
-    <circle cx="630" cy="180" r="2.5"/><circle cx="650" cy="195" r="2.5"/><circle cx="690" cy="185" r="2.5"/>
-    <circle cx="710" cy="200" r="2.5"/><circle cx="670" cy="210" r="2.5"/>
-    <circle cx="900" cy="180" r="2.5"/><circle cx="920" cy="165" r="2.5"/><circle cx="940" cy="190" r="2.5"/>
-    <circle cx="450" cy="220" r="2.5"/><circle cx="470" cy="235" r="2.5"/><circle cx="490" cy="215" r="2.5"/>
-    <circle cx="1000" cy="230" r="2.5"/><circle cx="1020" cy="245" r="2.5"/>
+  <!-- Title block -->
+  <g id="title-block">
+    <text x="56" y="104" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+          font-size="18" letter-spacing="2.4" fill="#c1642a">INTERACTIVE RESTAURANT MAP</text>
+    <text x="56" y="184" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+          font-size="72" font-weight="700" fill="#2b2118">foodmap</text>
+    <text x="56" y="230" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+          font-size="22" fill="#5c4d3d">Turn a food blogger's public Weibo posts</text>
+    <text x="56" y="258" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+          font-size="22" fill="#5c4d3d">into an interactive restaurant map.</text>
+    <text x="56" y="300" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+          font-size="18" fill="#5c4d3d">283 restaurants · 312 visits</text>
   </g>
 
-  <!-- Glowing pins over the densest cluster, echoing the real screenshot -->
-  <g>
-    <circle cx="665" cy="165" r="22" fill="url(#pinGlow)"/>
-    <circle cx="700" cy="145" r="18" fill="url(#pinGlow)"/>
-    <circle cx="640" cy="185" r="16" fill="url(#pinGlow)"/>
-    <circle cx="665" cy="165" r="4" fill="#c1642a"/>
-    <circle cx="700" cy="145" r="3.5" fill="#c1642a"/>
-    <circle cx="640" cy="185" r="3" fill="#c1642a"/>
-    <circle cx="720" cy="170" r="3" fill="#c1642a"/>
-    <circle cx="680" cy="200" r="3" fill="#c1642a"/>
+  <!-- City map panel: basemap, route, pins -->
+  <g id="map-panel">
+    <rect x="552" y="76" width="592" height="244" rx="18" fill="#fffaf2" stroke="#e8dcc8" stroke-width="1.5"/>
+
+    <g clip-path="url(#panel-clip)" fill="none" stroke-linecap="round">
+      <path d="M556 152 C612 140 664 162 748 148" stroke="#f0e4d0" stroke-width="9"/>
+      <path d="M556 252 C616 264 664 238 748 256" stroke="#f0e4d0" stroke-width="9"/>
+      <path d="M624 80 C632 140 614 216 630 316" stroke="#f0e4d0" stroke-width="7"/>
+      <path d="M710 80 C700 148 716 240 706 316" stroke="#f0e4d0" stroke-width="7"/>
+      <path d="M600 206 C640 196 660 212 700 202" stroke="#e8dcc8" stroke-width="2"/>
+    </g>
+
+    <!-- travel-route replay hop between two visits -->
+    <path d="M660 122 C600 168 580 196 606 205" fill="none" stroke="#2f6f4f"
+          stroke-width="2.5" stroke-dasharray="7 6" stroke-linecap="round"/>
+
+    <!-- pins: size grows with visit count -->
+    <g id="pins">
+      <g transform="translate(660 150) scale(2.4)">
+        <path d="M0 0 C-4.4 -6 -8 -8.6 -8 -14 A8 8 0 1 1 8 -14 C8 -8.6 4.4 -6 0 0 Z" fill="#963a17"/>
+        <circle cx="0" cy="-14" r="3.2" fill="#fffaf2"/>
+      </g>
+      <g transform="translate(606 232) scale(1.9)">
+        <path d="M0 0 C-4.4 -6 -8 -8.6 -8 -14 A8 8 0 1 1 8 -14 C8 -8.6 4.4 -6 0 0 Z" fill="#c1642a"/>
+        <circle cx="0" cy="-14" r="3.2" fill="#fffaf2"/>
+      </g>
+      <g transform="translate(692 300) scale(1.5)">
+        <path d="M0 0 C-4.4 -6 -8 -8.6 -8 -14 A8 8 0 1 1 8 -14 C8 -8.6 4.4 -6 0 0 Z" fill="#b9743a"/>
+        <circle cx="0" cy="-14" r="3.2" fill="#fffaf2"/>
+      </g>
+    </g>
+
+    <!-- pin resolving into its extracted dish card -->
+    <g fill="none" stroke="#c1642a" stroke-width="1.5" stroke-dasharray="4 6">
+      <path d="M680 124 L744 121"/>
+      <path d="M622 205 L744 197"/>
+      <path d="M705 279 L744 273"/>
+    </g>
   </g>
 
-  <!-- Title -->
-  <text x="90" y="150" font-family="-apple-system, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="64" font-weight="700" fill="#2b2118">foodmap</text>
-  <text x="90" y="190" font-family="-apple-system, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif" font-size="22" fill="#8a7a66">微博美食博主主页动态 → AI 抽取推荐菜品 → 可视化地图</text>
+  <!-- Dish cards: extracted dishes + restaurant + source post -->
+  <g id="dish-cards" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+    <g>
+      <rect x="744" y="88" width="384" height="66" rx="14" fill="#fffaf2" stroke="#e8dcc8" stroke-width="1.5"/>
+      <rect x="760" y="108" width="4" height="26" rx="2" fill="#963a17"/>
+      <text x="778" y="118" font-size="22" font-weight="600" fill="#2b2118">双皮奶 · 姜撞奶</text>
+      <text x="778" y="144" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#5c4d3d">民信老店 · post 2011-12-03</text>
+      <text x="1112" y="144" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#c1642a" text-anchor="end">↗</text>
+    </g>
+    <g>
+      <rect x="744" y="164" width="384" height="66" rx="14" fill="#fffaf2" stroke="#e8dcc8" stroke-width="1.5"/>
+      <rect x="760" y="184" width="4" height="26" rx="2" fill="#c1642a"/>
+      <text x="778" y="194" font-size="22" font-weight="600" fill="#2b2118">油鸡枞 · 炸酱面</text>
+      <text x="778" y="220" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#5c4d3d">江南驿 · post 2017-09-19</text>
+      <text x="1112" y="220" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#c1642a" text-anchor="end">↗</text>
+    </g>
+    <g>
+      <rect x="744" y="240" width="384" height="66" rx="14" fill="#fffaf2" stroke="#e8dcc8" stroke-width="1.5"/>
+      <rect x="760" y="260" width="4" height="26" rx="2" fill="#b9743a"/>
+      <text x="778" y="270" font-size="22" font-weight="600" fill="#2b2118">黄鳝饭 · 烧羊肉</text>
+      <text x="778" y="296" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#5c4d3d">惠食佳 · post 2019-12-11</text>
+      <text x="1112" y="296" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#c1642a" text-anchor="end">↗</text>
+    </g>
+  </g>
 
-  <!-- Accent underline -->
-  <rect x="90" y="205" width="140" height="4" rx="2" fill="url(#accent)"/>
+  <!-- Pipeline strip -->
+  <g id="pipeline">
+    <path d="M56 344 H1144" stroke="#e8dcc8" stroke-width="1.5" fill="none"/>
+    <g fill="#c1642a">
+      <circle cx="56" cy="344" r="4"/>
+      <circle cx="274" cy="344" r="4"/>
+      <circle cx="492" cy="344" r="4"/>
+      <circle cx="710" cy="344" r="4"/>
+      <circle cx="928" cy="344" r="4"/>
+    </g>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#2b2118">
+      <text x="56" y="376">fetch-posts.mjs</text>
+      <text x="274" y="376">normalize.mjs</text>
+      <text x="492" y="376">extract.mjs</text>
+      <text x="710" y="376">geocode-regions.mjs</text>
+      <text x="928" y="376">index.html + app.js</text>
+    </g>
+    <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="18" fill="#5c4d3d">
+      <text x="56" y="400">scrape profile feed</text>
+      <text x="274" y="400">geo tag (lat, lng)</text>
+      <text x="492" y="400">LLM: name + dishes</text>
+      <text x="710" y="400">region from coords</text>
+      <text x="928" y="400">Leaflet map, static</text>
+    </g>
+  </g>
 </svg>
