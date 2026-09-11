@@ -178,6 +178,10 @@ npm run test:e2e      # 端到端交互测试:起真实 server + Chrome,钉住�
 
 **前端是怎么测的?** 分两层。不碰 DOM 和 Leaflet 的纯逻辑(格式化、搜索匹配、弧线数学)放在 `map-core.mjs`,浏览器与 `node:test` 共用同一份代码,直接单测;DOM 与地图交互由 `e2e.mjs` 起真实 server + Chrome 全流程验证,钉住曾经出过 bug 的交互。e2e 需要本机装有 Chrome,所以不进 CI;`verify-render.js` 是更快的冒烟检查——数一遍标记数量并截图。
 
+<p align="center">
+  <a href="https://github.com/oil-oil/beautify-github-readme"><img src="./assets/readme/made-with-beautify.svg" width="300" alt="README made with beautify-github-readme"></a>
+</p>
+
 ## License
 
 MIT

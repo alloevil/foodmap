@@ -179,6 +179,10 @@ The frontend is tested in two layers: pure logic that doesn't touch the DOM/Leaf
 
 **How is the frontend tested?** In two layers. Pure logic that never touches the DOM or Leaflet (formatting, search matching, arc maths) lives in `map-core.mjs` and is shared verbatim between the browser and `node:test`, so it is unit-tested directly. DOM and map interactions are covered end-to-end by `e2e.mjs` against a real server plus Chrome, pinning interactions that previously broke; it needs a local Chrome so it is not in CI. `verify-render.js` is the faster smoke check — count the markers, take a screenshot.
 
+<p align="center">
+  <a href="https://github.com/oil-oil/beautify-github-readme"><img src="./assets/readme/made-with-beautify.svg" width="300" alt="README made with beautify-github-readme"></a>
+</p>
+
 ## License
 
 MIT
