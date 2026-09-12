@@ -2,7 +2,7 @@
   "project": "foodmap",
   "url": "https://alloevil.github.io/foodmap/",
   "repository": "https://github.com/alloevil/foodmap",
-  "updated": "2026-09-08",
+  "updated": "2026-09-13",
   "claims": [
     {
       "id": "committed-dataset-size",
@@ -12,7 +12,14 @@
       "method": "counted directly from data/陈晓卿/restaurants.json (252 restaurants) and data/隋坡/restaurants.json (31 restaurants); a visit is one entry in a restaurant's visits array, each carrying its source Weibo post URL",
       "repro": "node -e \"const f=n=>require('./data/'+n+'/restaurants.json');const a=[...f('陈晓卿'),...f('隋坡')];console.log(a.length, a.reduce((s,r)=>s+r.visits.length,0))\"",
       "evidence": "https://github.com/alloevil/foodmap/tree/main/data",
-      "verified": "2026-09-08"
+      "verified": "2026-09-08",
+      "check": {
+        "cmd": "node -e \"const f=n=>require('./data/'+n+'/restaurants.json');const a=[...f('陈晓卿'),...f('隋坡')];const v=a.flatMap(r=>r.visits);console.log(a.length, v.length, require('./data/bloggers.json').length)\"",
+        "expect": {
+          "equals": "283 312 2"
+        },
+        "timeout": 60
+      }
     },
     {
       "id": "committed-dataset-geography",
@@ -22,7 +29,14 @@
       "method": "the location object is written by geocode-regions.mjs, which reverse-geocodes each restaurant's own coordinates through Nominatim, so the region reflects where the restaurant is rather than where the blogger was posting from",
       "repro": "node -e \"const f=n=>require('./data/'+n+'/restaurants.json');const a=[...f('陈晓卿'),...f('隋坡')];const g=k=>new Set(a.map(r=>(r.location||{})[k]).filter(Boolean));console.log(g('continent').size,g('country').size,g('city').size,a.filter(r=>(r.location||{}).country==='中国').length)\"",
       "evidence": "https://github.com/alloevil/foodmap/tree/main/data",
-      "verified": "2026-09-08"
+      "verified": "2026-09-08",
+      "check": {
+        "cmd": "node -e \"const f=n=>require('./data/'+n+'/restaurants.json');const a=[...f('陈晓卿'),...f('隋坡')];const s=k=>[...new Set(a.map(r=>(r.location||{})[k]).filter(Boolean))];console.log(s('continent').length, s('country').length, s('city').length, a.filter(r=>(r.location||{}).country==='中国').length)\"",
+        "expect": {
+          "equals": "3 8 95 262"
+        },
+        "timeout": 60
+      }
     },
     {
       "id": "every-visit-traceable",
@@ -32,7 +46,14 @@
       "method": "extract.mjs keeps the source post id, URL, date and a quoted excerpt on each visit, so any recommendation on the map can be checked against the blogger's own public post instead of being taken on trust",
       "repro": "node -e \"const f=n=>require('./data/'+n+'/restaurants.json');const v=[...f('陈晓卿'),...f('隋坡')].flatMap(r=>r.visits);console.log(v.filter(x=>x.postUrl).length+'/'+v.length)\"",
       "evidence": "https://github.com/alloevil/foodmap/tree/main/data",
-      "verified": "2026-09-08"
+      "verified": "2026-09-08",
+      "check": {
+        "cmd": "node -e \"const f=n=>require('./data/'+n+'/restaurants.json');const v=[...f('陈晓卿'),...f('隋坡')].flatMap(r=>r.visits);console.log(v.filter(x=>x.postUrl).length+'/'+v.length)\"",
+        "expect": {
+          "equals": "312/312"
+        },
+        "timeout": 60
+      }
     }
   ]
 }
