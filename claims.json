@@ -54,6 +54,79 @@
         },
         "timeout": 60
       }
+    },
+    {
+      "id": "per-blogger-counts",
+      "claim": "The live demo's per-blogger totals are 252 restaurants / 281 visits for Chen Xiaoqing (陈晓卿) and 31 restaurants / 31 visits for Sui Po (隋坡).",
+      "value": "陈晓卿 252 restaurants / 281 visits; 隋坡 31 restaurants / 31 visits",
+      "metric": "length of each committed data/<blogger>/restaurants.json, and the total length of the visits arrays inside it",
+      "method": "each blogger has exactly one committed restaurants.json, so the per-blogger figure is that file's own record count and visit count; the two files sum to the 283 / 312 repository total, and data/bloggers.json lists the two names the dropdown switches between",
+      "repro": "node -e \"const f=n=>require('./data/'+n+'/restaurants.json');const c=x=>x.length+'/'+x.reduce((s,r)=>s+r.visits.length,0);console.log(c(f('陈晓卿')),c(f('隋坡')))\"",
+      "evidence": "https://github.com/alloevil/foodmap/tree/main/data",
+      "verified": "2026-09-14",
+      "check": {
+        "cmd": "node -e \"const f=n=>require('./data/'+n+'/restaurants.json');const c=x=>x.length+'/'+x.reduce((s,r)=>s+r.visits.length,0);console.log(c(f('陈晓卿')),c(f('隋坡')))\"",
+        "expect": {
+          "equals": "252/281 31/31"
+        },
+        "timeout": 60
+      }
+    },
+    {
+      "id": "dedup-radius-500m",
+      "claim": "Restaurant dedup merges two spellings only when one name is a substring of the other and the coordinates are within 500m (e.g. \"柴氏\" / \"甘家口柴氏\"); the threshold lives in extract.mjs.",
+      "value": "500 m (ALIAS_MAX_DISTANCE_KM = 0.5 km in extract.mjs)",
+      "metric": "the value of the distance threshold used by mergeNearbyAliases, converted to metres",
+      "method": "mergeNearbyAliases() in extract.mjs skips the merge when the spherical distance between the two points exceeds ALIAS_MAX_DISTANCE_KM, declared as 0.5 km at the top of the file; the check parses that declaration out of the source and converts it to metres, so the README's \"within 500m\" rule is pinned to the code that implements it",
+      "repro": "node -e \"const s=require('fs').readFileSync('extract.mjs','utf8');console.log(Math.round(Number(s.match(/const ALIAS_MAX_DISTANCE_KM\\s*=\\s*([\\d.]+)/)[1])*1000)+'m')\"",
+      "evidence": "https://github.com/alloevil/foodmap/blob/main/extract.mjs",
+      "verified": "2026-09-14",
+      "check": {
+        "cmd": "node -e \"const s=require('fs').readFileSync('extract.mjs','utf8');console.log(Math.round(Number(s.match(/const ALIAS_MAX_DISTANCE_KM\\s*=\\s*([\\d.]+)/)[1])*1000)+'m')\"",
+        "expect": {
+          "equals": "500m"
+        },
+        "timeout": 60
+      }
+    },
+    {
+      "id": "geo-signal-share",
+      "claim": "Only posts carrying an official location (geo) tag or a check-in card are collected; the author's local scrape of the Chen Xiaoqing account measured a hit rate of about 18% (1131 of 6129 original posts).",
+      "value": "1131/6129 ≈ 18%",
+      "metric": "share of the blogger's original posts carrying a location signal",
+      "method": "measured by the author's local raw scrape of the Chen Xiaoqing profile feed; posts without a geo field or a check-in card are dropped before extraction, so this ratio is a property of the raw feed rather than of the committed dataset",
+      "repro": "cannot be run here: it needs data/陈晓卿/posts_raw.json, which .gitignore excludes (data/*/posts_raw.json)",
+      "evidence": "README Known Limitations, both languages",
+      "verified": "2026-09-14",
+      "check": {
+        "manual": "Neither the 6129 original posts nor the 1131 of them that carry a location signal exist in the repository: the raw scrape data/<blogger>/posts_raw.json is gitignored (.gitignore: data/*/posts_raw.json) and only the post-extraction restaurants.json is committed, so no committed artifact can recompute the ratio. What is missing is a committed copy of the raw feed, or at least a committed per-post location-signal count derived from it — the same caveat the README states verbatim."
+      }
+    },
+    {
+      "id": "normalize-probe-13-of-25",
+      "claim": "The only committed measurement of the geo hit rate is normalize.mjs's own probe: 13 of 25 posts (≈52%) on a 25-post sample of a test account (2026-07).",
+      "value": "13/25 ≈ 52%",
+      "metric": "share of sampled posts whose geo field parses, on the probe sample recorded in normalize.mjs",
+      "method": "recorded as a field finding in the normalize.mjs header comment (sample of a test account, 2026-07); parseGeo() is the function that decides whether a post counts as a hit",
+      "repro": "cannot be run here: only the resulting 13/25 figure is committed (in normalize.mjs's comment), not the 25 posts it was measured on",
+      "evidence": "https://github.com/alloevil/foodmap/blob/main/normalize.mjs",
+      "verified": "2026-09-14",
+      "check": {
+        "manual": "The probe requires the raw posts of the test account it was run against; those posts are not committed (the repository ships no posts_raw.json at all — .gitignore excludes data/*/posts_raw.json — and the account is a live Weibo test account that nothing in the repo can reach). What is missing is the 25-post sample, or a committed fixture of it, from which parseGeo() could be re-run."
+      }
+    },
+    {
+      "id": "screenshot-captured-earlier",
+      "claim": "docs/screenshot.png is a real capture of the same page from an earlier extraction: it shows 264 restaurants / 285 visits for Chen Xiaoqing, where the shipped data now holds 252 / 281.",
+      "value": "264 restaurants / 285 visits for 陈晓卿 in docs/screenshot.png, vs 252 / 281 shipped",
+      "metric": "the restaurant and visit counts rendered in the committed screenshot",
+      "method": "the PNG was captured with verify-render.js against an older data cut, while the shipped figure is counted from data/陈晓卿/restaurants.json; the README tells the reader to re-capture it if the image should match the current data",
+      "repro": "cannot be run here: the 264 / 285 figures live in the pixels of a committed image, not in any committed data file",
+      "evidence": "https://github.com/alloevil/foodmap/blob/main/docs/screenshot.png",
+      "verified": "2026-09-14",
+      "check": {
+        "manual": "264 / 285 is a property of the committed image docs/screenshot.png, which no command here can read: it is a rendered screenshot, so recovering the stat line would need OCR of the pixels, and the pre-extraction dataset the capture came from is not committed either. What is missing is either the dataset snapshot the image was captured from or an OCR step able to read the numbers back out of the PNG."
+      }
     }
   ]
 }
