@@ -167,6 +167,26 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
    基础版本,依然比完全没有动画生硬地贴上去要好。 */
 @keyframes pin-pop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .food-pin, .cluster-pin { animation: pin-pop .3s cubic-bezier(.34,1.56,.64,1) backwards; }
+
+/* reduced-motion：这些动效全部是装饰，关掉不丢任何信息。
+   - 入场（pin-pop）直接出现在最终位置；
+   - 循环（转圈、脉冲圈、提示箭头抖动）停住，但元素保持可见：
+     提示箭头仍然指着方向，只是不再动；"你在这里"的圆点与圆环仍在；
+   - 面板与标记的过渡改为瞬时。 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+  /* 脉冲圈是"你在这里"的辅助，停掉后保留一个静态圆环 */
+  .user-dot::after, .journey-marker::after {
+    animation: none !important;
+    opacity: .55;
+  }
+  /* 提示箭头：不再抖动，但方向仍在 */
+  .pointer-hint, .pointer-hint.arrow-left, .pointer-hint.arrow-up { animation: none !important; }
+}
 .food-pin { display: flex; align-items: center; justify-content: center; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #fffdf8, var(--surface-1) 60%, #e9dcc4 100%); border: 2px solid var(--primary); box-shadow: inset 0 1px 2px rgba(255,255,255,.9), inset 0 -3px 4px rgba(43,33,24,.18), 0 2px 8px rgba(43,33,24,.25); }
 .food-icon-img { display: block; } /* img 默认是 inline,基线对齐会留一点缝,block 才能真正居中 */
 .food-pin.repeat { border-color: var(--gold); box-shadow: inset 0 1px 2px rgba(255,255,255,.9), inset 0 -3px 4px rgba(43,33,24,.18), 0 0 10px rgba(163,105,15,.4); }
