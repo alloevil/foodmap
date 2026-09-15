@@ -138,7 +138,7 @@
       "as_of": "2026-09-15",
       "evidence": "foodmap/index.html",
       "check": {
-        "cmd": "python3 - <<'PY'\nimport pathlib, re\n\n# 三种动效来源：CSS 动画/关键帧、SVG SMIL、以及 JS 的 requestAnimationFrame。\nMOVES = re.compile(r'animation\\s*:|@keyframes|<animate\\b|<animateTransform\\b|requestAnimationFrame')\nRELAX = 'prefers-reduced-motion'\npages = sorted(p for p in list(pathlib.Path('.').glob('*.html'))\n               + list(pathlib.Path('.').glob('docs/*.html')) if p.name != 'template.html')\nanimated, missing = 0, []\nfor p in pages:\n    t = p.read_text(encoding='utf-8', errors='replace')\n    if MOVES.search(t):\n        animated += 1\n        if RELAX not in t:\n            missing.append(p.name)\nprint('pages', len(pages), 'animated', animated, 'missing', missing)\nassert animated and not missing\nPY",
+        "cmd": "python3 - <<'PY'\nimport pathlib, re\n\n# 三种动效来源：CSS 动画/关键帧、SVG SMIL、以及 JS 的 requestAnimationFrame。\nMOVES = re.compile(r'animation\\s*:|@keyframes|<animate\\b|<animateTransform\\b|requestAnimationFrame|\\.animate\\(|transition\\s*:')\nRELAX = 'prefers-reduced-motion'\npages = sorted(p for p in list(pathlib.Path('.').glob('*.html'))\n               + list(pathlib.Path('.').glob('docs/*.html')) if p.name != 'template.html')\nanimated, missing = 0, []\nfor p in pages:\n    t = p.read_text(encoding='utf-8', errors='replace')\n    if MOVES.search(t):\n        animated += 1\n        if RELAX not in t:\n            missing.append(p.name)\nprint('pages', len(pages), 'animated', animated, 'missing', missing)\nassert animated and not missing\nPY",
         "expect": {
           "regex": "missing \\[\\]$"
         },
