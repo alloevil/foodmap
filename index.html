@@ -78,7 +78,7 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 .topbar .data-freshness { font-size: 11px; color: var(--ink-subtle); margin-top: 2px; }
 .blogger-select {
     margin-top: 6px; padding: 4px 6px; border-radius: var(--radius-small); border: 1px solid var(--hairline);
-    background: var(--surface-2); color: var(--ink); font-size: 12px; outline: none; cursor: pointer; width: 100%;
+    background: var(--surface-2); color: var(--ink); font-size: 12px; cursor: pointer; width: 100%;
 }
 .blogger-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
 .blogger-legend .item { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--ink-subtle); }
@@ -215,7 +215,7 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 .sidebar.collapsed { transform: translateX(-260px); opacity: 0; pointer-events: none; }
 .sidebar-search {
     margin: 10px; padding: 8px 10px; border-radius: var(--radius-small); border: 1px solid var(--hairline);
-    background: var(--surface-2); color: var(--ink); font-size: 13px; outline: none;
+    background: var(--surface-2); color: var(--ink); font-size: 13px;
 }
 .sidebar-search::placeholder { color: var(--ink-subtle); }
 .region-filters {
@@ -223,7 +223,7 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
 }
 .region-filters select {
     width: 100%; padding: 6px 6px; border-radius: var(--radius-small); border: 1px solid var(--hairline);
-    background: var(--surface-2); color: var(--ink); font-size: 12px; outline: none; cursor: pointer;
+    background: var(--surface-2); color: var(--ink); font-size: 12px; cursor: pointer;
 }
 /* overscroll-behavior:contain——侧栏列表滚到底之后,滚动不再"链"到页面上把
    整页往下拽,免得在列表里翻餐厅时地图突然滚出视口 */
@@ -384,6 +384,14 @@ body { font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter"
     /* 16 个年份点叠三行会把进度条挤没,窄屏改单行横向滑动 */
     .journey-legend { flex-wrap: nowrap; overflow-x: auto; max-width: calc(100vw - 44px); padding-bottom: 2px; }
 }
+/* 键盘焦点必须看得见:上面几处 outline:none 的本意只是"鼠标点进来时别冒出
+   浏览器默认焦点环",但它连键盘 Tab 的焦点环一起抹掉了——用键盘在博主下拉、
+   搜索框、筛选下拉之间移动时,完全看不出焦点落在哪个控件上。这里改成只对指针
+   焦点静默::focus-visible 在现代浏览器里只在键盘(以及文本输入)操作时命中,
+   所以鼠标点击仍是原来的无环外观,键盘操作则拿到一个跟主色一致的 2px 焦点环
+   (#c1642a 与米色画布的对比度约 3.6:1,满足非文本元素 3:1 的对比度要求)。 */
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+:focus:not(:focus-visible) { outline: none; }
 </style>
 <script type="application/ld+json">
 {
